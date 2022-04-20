@@ -32,6 +32,9 @@ overwrite_with_symlink $CONFIG_HOME/ipython_history.sqlite ~/.ipython/profile_de
 overwrite_with_symlink $CONFIG_HOME/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 # iterm
+cp $CONFIG_HOME/com.googlecode.iterm2.xml $CONFIG_HOME/com.googlecode.iterm2.plist
+sed -i '' "s/{}/$USER/g" $CONFIG_HOME/com.googlecode.iterm2.plist
+plutil -convert binary1 com.googlecode.iterm2.plist
 overwrite_with_symlink $CONFIG_HOME/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
 # others
