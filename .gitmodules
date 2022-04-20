@@ -1,0 +1,9 @@
+[submodule "monokai.terminal"]
+	path = monokai.terminal
+	url = https://github.com/stephenway/monokai.terminal
+[submodule "emacs"]
+	path = emacs
+	url = https://github.com/purajit/emacs
+[submodule "zsh"]
+	path = zsh
+	url = https://github.com/purajit/zsh
