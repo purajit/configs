@@ -1,0 +1,8 @@
+aspell
+coreutils
+font-source-code-pro-for-powerline
+graphviz
+pdsh
+reattach-to-user-namespace
+tmux
+zsh-syntax-highlighting
