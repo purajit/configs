@@ -1,0 +1,25 @@
+External
+--------
+Rectangle https://rectangleapp.com/
+Nightly https://www.mozilla.org/en-US/firefox/channel/desktop/
+Emacs https://emacsformacosx.com/
+Docker https://docs.docker.com/desktop/mac/install/
+Logi Options+ https://www.logitech.com/en-us/software/logi-options-plus.html
+iTerm2 https://iterm2.com/
+Steam https://store.steampowered.com/about/
+Notion https://www.notion.so/desktop/apple-silicon/download
+
+App Store
+---------
+Paste
+Parcel
+
+Fonts
+-----
+Noto Sans https://fonts.google.com/noto/specimen/Noto+Sans
+Noto Sans Mono https://fonts.google.com/noto/specimen/Noto+Sans+Mono
+
+Others
+------
+Ableton
+Jiggler
