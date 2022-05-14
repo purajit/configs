@@ -6,3 +6,6 @@
 
 [oh-my-zsh]
 	hide-dirty = 1
+[user]
+	name = Purajit Malalur
+	email = purajit@gmail.com

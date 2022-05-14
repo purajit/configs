@@ -10,6 +10,7 @@ function overwrite_with_symlink {
 sh $CONFIG_HOME/zsh/setup.sh
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
 overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh ~/.oh-my-zsh
+overwrite_with_symlink $CONFIG_HOME/zsh/_zprofile ~/.zprofile
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
 overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh_custom ~/.zshcustom
 
