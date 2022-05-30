@@ -3,15 +3,23 @@ CONFIG_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo $CONFIG_HOME
 
 function overwrite_with_symlink {
+    if [ -L $2 ] && [ $(readlink $2) == $1 ]; then
+        # symlink to expected file already exists
+        return
+    fi
     rm -rf $2 && ln -s $1 $2
 }
 
 # zsh
 sh $CONFIG_HOME/zsh/setup.sh
+touch $CONFIG_HOME/zsh/_zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
-overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh ~/.oh-my-zsh
+overwrite_with_symlink $CONFIG_HOME/zsh/_zshwork ~/.zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zprofile ~/.zprofile
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
+
+# oh-my-zsh
+overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh ~/.oh-my-zsh
 overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh_custom ~/.zshcustom
 
 # bash

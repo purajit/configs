@@ -9,3 +9,5 @@
 [user]
 	name = Purajit Malalur
 	email = purajit@gmail.com
+[commit]
+	gpgsign = false
