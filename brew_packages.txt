@@ -6,3 +6,4 @@ pdsh
 reattach-to-user-namespace
 tmux
 zsh-syntax-highlighting
+derailed/k9s/k9s
