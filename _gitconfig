@@ -7,7 +7,7 @@
 [oh-my-zsh]
 	hide-dirty = 1
 [user]
-	name = Purajit Malalur
-	email = purajit@gmail.com
+	name = purajit
+	email = malalur2@illinois.edu
 [commit]
 	gpgsign = false
