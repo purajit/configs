@@ -7,7 +7,7 @@ function overwrite_with_symlink {
         # symlink to expected file already exists
         return
     fi
-    rm -rf $2 && ln -s $1 $2
+    ln -Fs $1 $2
 }
 
 # zsh
@@ -37,7 +37,6 @@ overwrite_with_symlink $CONFIG_HOME/_gitignore_global ~/.gitignore_global
 
 # ipython
 mkdir -p ~/.ipython/profile_default/
-overwrite_with_symlink $CONFIG_HOME/ipython_history.sqlite ~/.ipython/profile_default/history.sqlite
 overwrite_with_symlink $CONFIG_HOME/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 # iterm
