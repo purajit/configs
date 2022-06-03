@@ -10,6 +10,8 @@ function overwrite_with_symlink {
     ln -Fs $1 $2
 }
 
+git submodule update --recursive --init
+
 # zsh
 sh $CONFIG_HOME/zsh/setup.sh
 touch $CONFIG_HOME/zsh/_zshwork
