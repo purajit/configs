@@ -48,6 +48,8 @@ plutil -convert binary1 com.googlecode.iterm2.plist
 overwrite_with_symlink $CONFIG_HOME/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
 # others
+mkdir -p ~/.terraform.d/plugin-cache
+overwrite_with_symlink $CONFIG_HOME/_terraformrc ~/.terraformrc
 overwrite_with_symlink $CONFIG_HOME/_tmux.conf ~/.tmux.conf
 overwrite_with_symlink $CONFIG_HOME/ssh_config ~/.ssh/config
 
