@@ -57,9 +57,9 @@ sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 
 # brew
 if [[ "$(arch)" == "i386" ]]; then
-    local homebrew_dir=/opt/homebrew-x86_64
+    homebrew_dir=/opt/homebrew-x86_64
 else
-    local homebrew_dir=/opt/homebrew
+    homebrew_dir=/opt/homebrew
 fi
 sudo mkdir -p $homebrew_dir && sudo chown -R $(whoami):admin $homebrew_dir && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $homebrew_dir
 brew tap homebrew/cask-fonts
