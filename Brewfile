@@ -9,6 +9,7 @@ brew "graphviz"
 brew "pdsh"
 brew "reattach-to-user-namespace"
 brew "tmux"
+brew "yq"
 brew "zsh-syntax-highlighting"
 
 cask "font-source-code-pro-for-powerline"

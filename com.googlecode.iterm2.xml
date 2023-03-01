@@ -451,12 +451,14 @@
 		<key>TB Is Shown</key>
 		<integer>1</integer>
 	</dict>
+	<key>NSWindow Frame NSColorPanel</key>
+	<string>0 81 224 278 0 0 1728 1079 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>510 531 445 77 0 0 1680 1028 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
-	<string>760 713 400 129 0 0 1920 1080 </string>
+	<string>2488 725 400 135 1728 37 1920 1055 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>650 515 620 392 -1680 30 1680 1050 </string>
+	<string>2378 534 620 392 1728 37 1920 1055 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>269 139 606 456 0 0 1680 1028 </string>
 	<key>NSWindow Frame SharedPreferences</key>
@@ -464,7 +466,7 @@
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>820 180 592 584 0 0 1680 1050 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1680 30 1680 1050 -1680 30 1680 1050 </string>
+	<string>1728 37 1920 1055 1728 37 1920 1055 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>682 259 570 452 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_2B419ADA-EAD6-494D-B16B-2D57CE5EFB22</key>
@@ -606,12 +608,16 @@
 			</dict>
 			<key>Ansi 8 Color</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.098313517868518829</real>
+				<real>0.80072015523910522</real>
+				<key>Color Space</key>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.11400297284126282</real>
+				<real>0.80072027444839478</real>
 				<key>Red Component</key>
-				<real>0.11279432475566864</real>
+				<real>0.80072015523910522</real>
 			</dict>
 			<key>Ansi 9 Color</key>
 			<dict>
@@ -1079,7 +1085,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>NotoMono 14</string>
+			<string>Iosevka-Comfy-Wide-Fixed-Extended 14</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Open Toolbelt</key>
@@ -1774,7 +1780,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>NotoMono 14</string>
+			<string>Iosevka-Comfy-Wide-Fixed-Extended 14</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Open Toolbelt</key>
@@ -1874,6 +1880,7 @@
 		<string>3.4.0beta3</string>
 		<string>3.3.11beta1</string>
 		<string>3.3.7beta3</string>
+		<string>3.4.19</string>
 		<string>3.3.5beta2</string>
 		<string>3.3.10beta2</string>
 		<string>3.3.3beta1</string>
@@ -1909,19 +1916,20 @@
 		<string>3.3.12beta2</string>
 		<string>3.4.0beta7</string>
 		<string>3.3.8beta4</string>
+		<string>3.5.0beta10</string>
 		<string>3.3.10beta4</string>
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Noto Mono</string>
-		<string>Noto Sans</string>
+		<string>Iosevka Comfy Wide Fixed</string>
+		<string>Menlo</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1680, 1050}}</string>
+		<string>{{1728, 37}, {1920, 1080}}</string>
 		<key>topLeft</key>
-		<string>{233, 847}</string>
+		<string>{2226, 823}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -1932,13 +1940,13 @@
 	<key>NoSyncInstallationId</key>
 	<string>FDB4CD67-C2E0-44D7-BC6F-CC2CC7A47188</string>
 	<key>NoSyncLastOSVersion</key>
-	<string>Version 10.15.7 (Build 19H524)</string>
+	<string>Version 13.0.1 (Build 22A400)</string>
 	<key>NoSyncLastSystemPythonVersionRequirement</key>
 	<string>1.17</string>
 	<key>NoSyncLastTipTime</key>
 	<real>509593632.63584602</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>167</integer>
+	<integer>170</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>627706637.98799396</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -2014,6 +2022,22 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>showingAlternateScreen</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>homeDirectory</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>jobName</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2031,6 +2055,14 @@
 				<true/>
 				<key>name</key>
 				<string>tab.tmuxWindowTitle</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>uname</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2070,7 +2102,23 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>mouseInfo</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>path</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>shell</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2196,6 +2244,38 @@
 			</dict>
 			<dict>
 				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>tmuxWindowPaneIndex</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>logFilename</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>effective_root_pid</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>sshIntegrationLevel</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
 				<false/>
 				<key>name</key>
 				<string>tab</string>
@@ -2270,6 +2350,14 @@
 				<key>isTerminal</key>
 				<true/>
 				<key>name</key>
+				<string>applicationKeypad</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
 				<string>jobPid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
@@ -2330,6 +2418,14 @@
 				<true/>
 				<key>name</key>
 				<string>currentTab.currentSession.termid</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.mouseInfo</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2474,6 +2570,14 @@
 				<true/>
 				<key>name</key>
 				<string>titleOverrideFormat</string>
+				<key>nonterminalContext</key>
+				<integer>0</integer>
+			</dict>
+			<dict>
+				<key>isTerminal</key>
+				<true/>
+				<key>name</key>
+				<string>currentTab.currentSession.effective_root_pid</string>
 				<key>nonterminalContext</key>
 				<integer>0</integer>
 			</dict>
@@ -2730,6 +2834,8 @@
 		<string>0015</string>
 		<string>0016</string>
 	</array>
+	<key>NoSyncWindowRestoresWorkspaceAtLaunch</key>
+	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
 	<key>OpenNoWindowsAtStartup</key>
@@ -2751,11 +2857,11 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2021-05-01T05:58:25Z</date>
+	<date>2023-03-01T20:12:13Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
-	<integer>3665879541</integer>
+	<integer>2490040268</integer>
 	<key>SUUpdateRelaunchingMarker</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -2799,7 +2905,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.4.5beta3</string>
+	<string>3.5.0beta10</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>

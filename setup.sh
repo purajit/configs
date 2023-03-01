@@ -54,14 +54,19 @@ mkdir -p ~/.ipython/profile_default/
 overwrite_with_symlink $CONFIG_HOME/ipython_config.py ~/.ipython/profile_default/ipython_config.py
 
 # iterm
+rm ~/Library/Preferences/com.googlecode.iterm2.plist
 cp $CONFIG_HOME/com.googlecode.iterm2.xml $CONFIG_HOME/com.googlecode.iterm2.plist
 sed -i '' "s/{}/$USER/g" $CONFIG_HOME/com.googlecode.iterm2.plist
 plutil -convert binary1 com.googlecode.iterm2.plist
-overwrite_with_symlink $CONFIG_HOME/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
-# Alacritty
-mkdir -p ~/.hammerspoon ~/.config
-overwrite_with_symlink $CONFIG_HOME/hammerspoon-init.lua ~/.hammerspoon/init.lua
-overwrite_with_symlink $CONFIG_HOME/alacritty.yml ~/.config/alacritty.yml
+# iterm overwrites symlink'd configs
+cp $CONFIG_HOME/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+
+# # Alacritty
+# Not using it for two main issues - can't use cmd-as-meta, and can't easily remove from cmd-tab
+# when hidden. If that can be figured out, this would be neat.
+# mkdir -p ~/.hammerspoon ~/.config
+# overwrite_with_symlink $CONFIG_HOME/hammerspoon-init.lua ~/.hammerspoon/init.lua
+# overwrite_with_symlink $CONFIG_HOME/alacritty.yml ~/.config/alacritty.yml
 
 # others
 mkdir -p ~/.terraform.d/plugin-cache
