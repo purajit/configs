@@ -1,3 +1,12 @@
+font:
+  normal:
+    family: Iosevka Comfy Wide Fixed
+  bold:
+    family: Iosevka Comfy Wide Fixed
+  italic:
+    family: Iosevka Comfy Wide Fixed
+  size: 14
+
 window:
   # Window dimensions (changes require restart)
   #
@@ -37,6 +46,3 @@ window:
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background and no title bar buttons
   decorations: none
-  
-key_bindings:
-  - { key: Return,          mods: Command,                    action: ToggleSimpleFullscreen }

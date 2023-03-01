@@ -15,10 +15,14 @@ function overwrite_with_symlink {
 brew bundle --file=$CONFIG_HOME/Brewfile
 
 # repos used
-rm -rf ~/code/venv_manager ~/code/oh-my-zsh ~/code/spacemacs
+rm -rf ~/code/venv_manager ~/code/oh-my-zsh ~/code/spacemacs ~/code/iosevka-comfy
 git clone https://github.com/purajit/venv_manager.git ~/code/venv_manager
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/code/oh-my-zsh
 git clone https://github.com/syl20bnr/spacemacs.git ~/code/spacemacs
+git clone https://github.com/protesilaos/iosevka-comfy.git ~/code/iosevka-comfy
+
+# iosevka fonts
+cp ~/code/iosevka-comfy/*/ttf/*.ttf /Library/Fonts/
 
 # bash
 overwrite_with_symlink $CONFIG_HOME/bash/_bashrc ~/.bashrc
