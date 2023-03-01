@@ -37,7 +37,8 @@ overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
 
 # emacs
 rm ~/.emacs.d
-overwrite_with_symlink $CONFIG_HOME/_emacs ~/.emacs
+overwrite_with_symlink $CONFIG_HOME/emacs/_emacs ~/.emacs
+overwrite_with_symlink $CONFIG_HOME/emacs/_spacemacs ~/.spacemacs
 overwrite_with_symlink ~/code/spacemacs ~/.emacs.d
 
 # git
