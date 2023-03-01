@@ -1,0 +1,6 @@
+# prevent virtualenv from fucking your prompt
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+if [[ "$(arch)" == "i386" ]]; then
+    source ~/.dyld_library_path
+fi

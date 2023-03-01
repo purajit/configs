@@ -10,28 +10,29 @@ function overwrite_with_symlink {
     ln -Fs $1 $2
 }
 
-git submodule update --recursive --init
+# bash
+overwrite_with_symlink $CONFIG_HOME/bash/_bashrc ~/.bashrc
+overwrite_with_symlink $CONFIG_HOME/bash/_bash_aliases ~/.bash_aliases
+
+# oh-my-zsh
+git clone https://github.com/robbyrussell/oh-my-zsh.git ~/code/oh-my-zsh
+overwrite_with_symlink ~/code/oh-my-zsh ~/.oh-my-zsh
+overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh_custom ~/.zshcustom
 
 # zsh
-sh $CONFIG_HOME/zsh/setup.sh
+git clone https://github.com/purajit/venv_manager.git ~/code/venv_manager
+overwrite_with_symlink ~/code/venv_manager ~/.zshcustom/plugins/venv_manager
 touch $CONFIG_HOME/zsh/_zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshwork ~/.zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zprofile ~/.zprofile
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
 
-# oh-my-zsh
-overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh ~/.oh-my-zsh
-overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh_custom ~/.zshcustom
-
-# bash
-overwrite_with_symlink $CONFIG_HOME/bash/_bashrc ~/.bashrc
-overwrite_with_symlink $CONFIG_HOME/bash/_bash_aliases ~/.bash_aliases
-
 # emacs
-sh $CONFIG_HOME/emacs/setup.sh
-overwrite_with_symlink $CONFIG_HOME/emacs/_emacs ~/.emacs
-overwrite_with_symlink $CONFIG_HOME/emacs/prelude ~/.emacs.d
+rm -rf ~/.emacs.d ~/code/spacemacs
+git clone https://github.com/syl20bnr/spacemacs.git ~/code/spacemacs
+overwrite_with_symlink $CONFIG_HOME/_emacs ~/.emacs
+overwrite_with_symlink ~/code/spacemacs ~/.emacs.d
 
 # git
 overwrite_with_symlink $CONFIG_HOME/_gitconfig ~/.gitconfig
@@ -48,22 +49,17 @@ plutil -convert binary1 com.googlecode.iterm2.plist
 overwrite_with_symlink $CONFIG_HOME/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
 
 # others
-mkdir -p ~/.terraform.d/plugin-cache
+mkdir -p ~/.terraform.d/plugin-cache ~/.hammerspoon ~/.config
 overwrite_with_symlink $CONFIG_HOME/_terraformrc ~/.terraformrc
 overwrite_with_symlink $CONFIG_HOME/_tmux.conf ~/.tmux.conf
 overwrite_with_symlink $CONFIG_HOME/ssh_config ~/.ssh/config
-
+overwrite_with_symlink $CONFIG_HOME/hammerspoon-init.lua ~/.hammerspoon/init.lua
+overwrite_with_symlink $CONFIG_HOME/alacritty.yml ~/.config/alacritty.yml
 sudo launchctl load -w /System/Library/LaunchDaemons/com.apple.locate.plist
 
 # brew
-if [[ "$(arch)" == "i386" ]]; then
-    homebrew_dir=/opt/homebrew-x86_64
-else
-    homebrew_dir=/opt/homebrew
-fi
-sudo mkdir -p $homebrew_dir && sudo chown -R $(whoami):admin $homebrew_dir && curl -L https://github.com/Homebrew/brew/tarball/master | tar xz --strip 1 -C $homebrew_dir
-brew tap homebrew/cask-fonts
-cat brew_packages.txt | xargs brew install
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew bundle --file=$CONFIG_HOME/Brewfile
 
 # set screenshots directory
 defaults write com.apple.screencapture location ~/Documents/Screenshots
