@@ -3,7 +3,7 @@ local spaces = require "hs.spaces"
 local screen = require "hs.screen"
 
 -- Switch alacritty
-hs.hotkey.bind({'shift','ctrl'}, 'space', function ()
+hs.hotkey.bind({'ctrl', 'shift'}, 'space', function ()
   local APP_NAME = 'Alacritty'
   function moveWindow(alacritty, space)
     -- move to main space
