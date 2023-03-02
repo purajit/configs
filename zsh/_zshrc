@@ -40,17 +40,14 @@ ZSH_THEME="kardanplus"
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # HIST_STAMPS="mm/dd/yyyy"
 
-if [[ "$(arch)" == "i386" ]]; then
-    path+=('/opt/homebrew-x86_64/bin')
-    export LIBRARY_PATH="$LIBRARY_PATH:/opt/homebrew-x86_64/lib"
-fi
-
 # Would you like to use another custom folder than $ZSH/custom?
 ZSH_CUSTOM=~/.zshcustom/
 
 unalias run-help
 autoload run-help
 HELPDIR=/usr/share/zsh/"${ZSH_VERSION}"/help
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 export ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets regexp)
 typeset -A ZSH_HIGHLIGHT_REGEXP

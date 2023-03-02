@@ -1,5 +1,0 @@
-if [[ "$(arch)" == "i386" ]]; then
-    eval "$(/opt/homebrew-x86_64/bin/brew shellenv)"
-else
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
