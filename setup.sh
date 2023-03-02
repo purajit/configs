@@ -10,10 +10,6 @@ function overwrite_with_symlink {
     ln -Fs $1 $2
 }
 
-# brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew bundle --file=$CONFIG_HOME/Brewfile
-
 # repos used
 rm -rf ~/code/venv_manager ~/code/oh-my-zsh ~/code/spacemacs ~/code/iosevka-comfy
 git clone https://github.com/purajit/venv_manager.git ~/code/venv_manager
@@ -38,6 +34,10 @@ overwrite_with_symlink ~/code/venv_manager ~/.zshcustom/plugins/venv_manager
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshwork ~/.zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
+
+# brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew bundle --file=$CONFIG_HOME/Brewfile
 
 # emacs
 rm ~/.emacs.d
