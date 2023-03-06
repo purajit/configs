@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>AI Prompt</key>
+	<string>You are going to translate a natural language description to a series of commands for the \(shell) shell.
+Here is some information about the environment: \(uname)
+Respond with one or more commands. Do not include any explanation or additional text besides the commands.Request: \(ai.prompt)
+</string>
 	<key>AboutToPasteTabsWithCancel</key>
 	<true/>
 	<key>AboutToPasteTabsWithCancel_selection</key>
@@ -245,6 +250,8 @@
 	</dict>
 	<key>Default Bookmark Guid</key>
 	<string>2B419ADA-EAD6-494D-B16B-2D57CE5EFB22</string>
+	<key>DetectPasswordInput</key>
+	<false/>
 	<key>DimBackgroundWindows</key>
 	<false/>
 	<key>DimInactiveSplitPanes</key>
@@ -452,7 +459,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
-	<string>0 81 224 278 0 0 1728 1079 </string>
+	<string>0 81 224 278 0 0 1920 1055 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>510 531 445 77 0 0 1680 1028 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -464,9 +471,9 @@
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>777 583 918 381 0 0 1680 1028 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
-	<string>820 180 592 584 0 0 1680 1050 </string>
+	<string>856 191 592 584 0 0 1920 1055 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>1728 37 1920 1055 1728 37 1920 1055 </string>
+	<string>0 -37 1920 1092 0 0 1920 1055 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>682 259 570 452 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_2B419ADA-EAD6-494D-B16B-2D57CE5EFB22</key>
@@ -1927,9 +1934,9 @@
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{1728, 37}, {1920, 1080}}</string>
+		<string>{{0, 0}, {1920, 1080}}</string>
 		<key>topLeft</key>
-		<string>{2226, 823}</string>
+		<string>{498, 786}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -1946,7 +1953,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>509593632.63584602</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>170</integer>
+	<integer>181</integer>
 	<key>NoSyncNextAnnoyanceTime</key>
 	<real>627706637.98799396</real>
 	<key>NoSyncOnboardingWindowHasBeenShown</key>
@@ -2838,6 +2845,8 @@
 	<false/>
 	<key>OpenArrangementAtStartup</key>
 	<false/>
+	<key>OpenBookmark</key>
+	<false/>
 	<key>OpenNoWindowsAtStartup</key>
 	<true/>
 	<key>OpenTmuxWindowsIn</key>
@@ -2857,7 +2866,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2023-03-01T20:12:13Z</date>
+	<date>2023-03-06T20:58:00Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
@@ -2887,7 +2896,7 @@
 	<key>TabViewType</key>
 	<integer>1</integer>
 	<key>UKCrashReporterLastCrashReportDate</key>
-	<real>1614563328</real>
+	<real>1678142080</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>

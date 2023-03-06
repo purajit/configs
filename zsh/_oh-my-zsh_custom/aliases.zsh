@@ -21,8 +21,12 @@ alias rgrep='grep -r'
 alias grepc='grep --color=always'
 
 ## INDEX
-alias updatedb='sudo /usr/libexec/locate.updatedb'
 alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
+updatedb() {
+    cd /
+    sudo /usr/libexec/locate.updatedb
+    cd -
+}
 
 ## EMACS
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'

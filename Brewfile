@@ -1,8 +1,10 @@
 tap "homebrew/cask-fonts"
 
 brew "aspell"
+brew "colima"
 brew "coreutils"
 brew "derailed/k9s/k9s"
+brew "docker"
 brew "fzf"
 brew "gh"
 brew "graphviz"
