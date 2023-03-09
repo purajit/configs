@@ -1,7 +1,6 @@
 # HISTORY AND PS
 alias h='history -i'
 alias hg='history -i | grep'
-alias ps='ps aux'
 alias psg='ps aux | grep'
 
 # FILE SYSTEM
@@ -13,9 +12,7 @@ alias mv='mv -i'
 
 alias 'which'='which -a'
 alias ls='ls -G'
-alias lsa='ls -lah'
 alias la='ls -la'
-alias lt='ls -ltr'
 
 alias rgrep='grep -r'
 alias grepc='grep --color=always'
@@ -29,6 +26,7 @@ updatedb() {
 }
 
 ## EMACS
+export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t"
 alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 alias start_emacs='emacs --daemon'
 alias kill_emacs='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -e "(kill-emacs)"'
@@ -38,7 +36,7 @@ emacsopen() {
 }
 
 alias e=emacsopen
-alias et='export TERM=xterm-256color && /Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
+alias et='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
 
 # k8s
 function kp {
@@ -82,6 +80,7 @@ alias gitsw='git checkout -'
 alias gtu='gt bs'
 alias gtud='gt bs -d'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
+alias git-undo-amend='git reset --soft HEAD@{1}'
 
 function gitr {
     if command -v gt &> /dev/null; then

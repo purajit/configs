@@ -19,6 +19,7 @@ git clone https://github.com/protesilaos/iosevka-comfy.git ~/code/iosevka-comfy
 
 # iosevka fonts
 cp ~/code/iosevka-comfy/*/ttf/*.ttf /Library/Fonts/
+cp $CONFIG_HOME/fonts/*.ttf /Library/Fonts/
 
 # bash
 overwrite_with_symlink $CONFIG_HOME/bash/_bashrc ~/.bashrc
@@ -41,9 +42,12 @@ brew bundle --file=$CONFIG_HOME/Brewfile
 
 # emacs
 rm ~/.emacs.d
-overwrite_with_symlink $CONFIG_HOME/emacs/_emacs ~/.emacs
+rm ~/.emacs
 overwrite_with_symlink $CONFIG_HOME/emacs/_spacemacs ~/.spacemacs
 overwrite_with_symlink ~/code/spacemacs ~/.emacs.d
+# run emacs server on startup
+overwrite_with_symlink $CONFIG_HOME/emacs/launchd ~/Library/LaunchAgents/gnu.emacs.daemon.plist
+launchctl load -w ~/Library/LaunchAgents/gnu.emacs.daemon.plist
 
 # git
 overwrite_with_symlink $CONFIG_HOME/_gitconfig ~/.gitconfig

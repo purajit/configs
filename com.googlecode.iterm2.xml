@@ -459,7 +459,7 @@ Respond with one or more commands. Do not include any explanation or additional 
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
-	<string>0 81 224 278 0 0 1920 1055 </string>
+	<string>0 81 224 278 0 0 1728 1079 </string>
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>510 531 445 77 0 0 1680 1028 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -471,9 +471,9 @@ Respond with one or more commands. Do not include any explanation or additional 
 	<key>NSWindow Frame SharedPreferences</key>
 	<string>777 583 918 381 0 0 1680 1028 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
-	<string>856 191 592 584 0 0 1920 1055 </string>
+	<string>856 191 592 584 0 0 1728 1079 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 -37 1920 1092 0 0 1920 1055 </string>
+	<string>0 0 1728 1079 0 0 1728 1079 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>682 259 570 452 0 0 1680 1028 </string>
 	<key>NeverWarnAboutShortLivedSessions_2B419ADA-EAD6-494D-B16B-2D57CE5EFB22</key>
@@ -485,6 +485,8 @@ Respond with one or more commands. Do not include any explanation or additional 
 		<dict>
 			<key>ASCII Anti Aliased</key>
 			<true/>
+			<key>ASCII Ligatures</key>
+			<false/>
 			<key>Ambiguous Double Width</key>
 			<false/>
 			<key>Ansi 0 Color</key>
@@ -1092,7 +1094,7 @@ Respond with one or more commands. Do not include any explanation or additional 
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Iosevka-Comfy-Wide-Fixed-Extended 14</string>
+			<string>Lekton-Regular 16</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Open Toolbelt</key>
@@ -1928,15 +1930,14 @@ Respond with one or more commands. Do not include any explanation or additional 
 	</array>
 	<key>NoSyncBFPRecents</key>
 	<array>
-		<string>Iosevka Comfy Wide Fixed</string>
-		<string>Menlo</string>
+		<string>Lekton</string>
 	</array>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
-		<string>{{0, 0}, {1920, 1080}}</string>
+		<string>{{0, 0}, {1728, 1117}}</string>
 		<key>topLeft</key>
-		<string>{498, 786}</string>
+		<string>{402, 799}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -2866,7 +2867,7 @@ Respond with one or more commands. Do not include any explanation or additional 
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2023-03-06T20:58:00Z</date>
+	<date>2023-03-08T20:58:01Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SUUpdateGroupIdentifier</key>
