@@ -115,8 +115,10 @@ function gitb {
         fi
         gt bc --name $branchname ${@:3}
     else
-        trunk="$(git remote show origin | sed -n '/HEAD branch/s/.*: //p')"
-        git checkout -b $branchname $frombranch ${@:2}
+        if [[ "$frombranch" == "." ]]; then
+            frombranch=$(git rev-parse --abbrev-ref HEAD)
+        fi
+        git switch -c $branchname $frombranch ${@:3}
     fi
 }
 
