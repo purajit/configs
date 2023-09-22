@@ -26,17 +26,16 @@ updatedb() {
 }
 
 ## EMACS
-export EDITOR="/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t"
-alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
-alias start_emacs='emacs --daemon'
-alias kill_emacs='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -e "(kill-emacs)"'
+export EDITOR="emacsclient -t"
 
-emacsopen() {
-    /Applications/Emacs.app/Contents/MacOS/bin/emacsclient $1 -c &
+alias start_emacs='emacs --daemon'
+alias kill_emacs='emacsclient -e "(kill-emacs)"'
+
+e() {
+    emacsclient $1 -c &
 }
 
-alias e=emacsopen
-alias et='/Applications/Emacs.app/Contents/MacOS/bin/emacsclient -t'
+alias et='emacsclient -t'
 
 # k8s
 function kp {
