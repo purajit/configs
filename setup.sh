@@ -10,11 +10,14 @@ function overwrite_with_symlink {
     ln -Fs $1 $2
 }
 
+# brew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+brew bundle --file=$CONFIG_HOME/Brewfile
+
 # repos used
-rm -rf ~/code/venv_manager ~/code/oh-my-zsh ~/code/spacemacs ~/code/iosevka-comfy
+rm -rf ~/code/venv_manager ~/code/oh-my-zsh ~/code/iosevka-comfy
 git clone https://github.com/purajit/venv_manager.git ~/code/venv_manager
 git clone https://github.com/robbyrussell/oh-my-zsh.git ~/code/oh-my-zsh
-git clone https://github.com/syl20bnr/spacemacs.git ~/code/spacemacs
 git clone https://github.com/protesilaos/iosevka-comfy.git ~/code/iosevka-comfy
 
 # iosevka fonts
@@ -37,15 +40,14 @@ overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshwork ~/.zshwork
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshenv ~/.zshenv
 
-# brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew bundle --file=$CONFIG_HOME/Brewfile
-
 # emacs
-rm ~/.emacs.d
 rm ~/.emacs
-overwrite_with_symlink $CONFIG_HOME/emacs/_spacemacs ~/.spacemacs
-overwrite_with_symlink ~/code/spacemacs ~/.emacs.d
+rm ~/.emacs.d
+# install Doomemacs
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+# setup custom configuration
+overwrite_with_symlink $CONFIG_HOME/emacs/_doom.d ~/.doom.d
 # run emacs server on startup
 overwrite_with_symlink $CONFIG_HOME/emacs/launchd ~/Library/LaunchAgents/gnu.emacs.daemon.plist
 launchctl load -w ~/Library/LaunchAgents/gnu.emacs.daemon.plist
