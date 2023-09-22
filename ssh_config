@@ -1,1 +1,6 @@
-Include /Users/purajit/.colima/ssh_config
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+
+Host *
+    Include ~/code/color/config/ssh/*
