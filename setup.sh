@@ -31,6 +31,7 @@ overwrite_with_symlink $CONFIG_HOME/zsh/_oh-my-zsh_custom ~/.zshcustom
 
 # zsh
 touch $CONFIG_HOME/zsh/_zshwork
+mkdir -p ~/.zshcustom/plugins
 overwrite_with_symlink ~/code/venv_manager ~/.zshcustom/plugins/venv_manager
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshrc ~/.zshrc
 overwrite_with_symlink $CONFIG_HOME/zsh/_zshwork ~/.zshwork

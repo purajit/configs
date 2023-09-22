@@ -82,8 +82,14 @@ alias gtud='gt bs -d'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 alias git-undo-amend='git reset --soft HEAD@{1}'
 
+function gitallrepobranches() {
+    for f in ~/code/*; do
+        echo $f && cd $f && gitb && echo
+    done
+}
+
 function gitsummary() {
-    find ~/code -name .git -maxdepth 2 -execdir bash -c 'echo -en "\033[1;31m"repo: "\033[1;34m"; basename "`git rev-parse --show-toplevel`"; git branch && git status -s' \;    
+    find ~/code -name .git -maxdepth 2 -execdir bash -c 'echo -en "\033[1;31m"repo: "\033[1;34m"; basename "`git rev-parse --show-toplevel`"; git branch && git status -s' \;
 }
 
 function gitr {
