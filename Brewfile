@@ -8,7 +8,7 @@ brew "colima"
 brew "coreutils"
 brew "derailed/k9s/k9s"
 brew "docker"
-brew "emacs-plus@30" --with-native-comp
+brew "emacs-plus@30 --with-native-comp"
 brew "fd"
 brew "ffmpeg"
 brew "fuse-t"
