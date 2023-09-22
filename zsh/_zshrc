@@ -63,5 +63,4 @@ SHOW_AWS_PROMPT=false
 plugins=(aws colored-man-pages docker pip terraform venv_manager)
 
 source $ZSH/oh-my-zsh.sh
-
 source ~/.zshwork

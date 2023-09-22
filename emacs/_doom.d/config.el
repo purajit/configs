@@ -91,26 +91,11 @@
 ;; (add-hook 'java-mode-hook (lambda ()
 ;;                             (setq c-basic-offset 2)))
 
-;; use spaces only. no tabs
-;; and don't use tabs for indentation
-;; (customize-set-variable 'indent-tabs-mode nil)
-;; (setq-default indent-tabs-mode nil)
-;; (add-hook 'python-mode-hook
-;;           (lambda ()
-;;             (setq tab-width 4)
-;;             (setq python-indent-offset 4)
-;;             (setq python-indent-level 4)
-;;             (setq-default indent-tabs-mode nil)
-;;             (setq indent-tabs-mode nil)
-;;             (let ((ptw (if (boundp 'me-my-python-tab-width) me-my-python-tab-width 4)))
-;;               (progn (setq tab-width ptw)
-;;                      (set-variable 'py-indent-offset ptw)
-;;                      (setq python-indent ptw)))))
+(require 'indent-guide)
+(add-hook 'python-mode-hook 'indent-guide-mode)
+(add-hook 'ruby-mode-hook 'indent-guide-mode)
+(add-hook 'yaml-mode-hook 'indent-guide-mode)
 
-;; (require 'indent-guide)
-;; (add-hook 'python-mode-hook 'indent-guide-mode)
-;; (add-hook 'ruby-mode-hook 'indent-guide-mode)
-
-;; (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
+(add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 
 ;; (flycheck-add-next-checker 'python-flake8 'python-pylint)

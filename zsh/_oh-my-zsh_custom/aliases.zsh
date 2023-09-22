@@ -27,15 +27,12 @@ updatedb() {
 
 ## EMACS
 export EDITOR="emacsclient -t"
-
-alias start_emacs='emacs --daemon'
-alias kill_emacs='emacsclient -e "(kill-emacs)"'
-
 e() {
     emacsclient $1 -c &
 }
-
 alias et='emacsclient -t'
+alias start_emacs='emacs --daemon'
+alias kill_emacs='emacsclient -e "(kill-emacs)"'
 
 # k8s
 function kp {
@@ -76,8 +73,8 @@ alias gits='git status'
 alias gitsh='git show | cat'
 alias gitshf='git show --name-only | cat'
 alias gitsw='git checkout -'
-alias gtu='gt bs'
-alias gtud='gt bs -d'
+alias gtu='gt submit'
+alias gtud='gt submit -d'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 alias git-undo-amend='git reset --soft HEAD@{1}'
 
@@ -93,7 +90,7 @@ function gitsummary() {
 
 function gitr {
     if command -v gt &> /dev/null; then
-        gt repo sync
+        gt sync
     else
         trunk=$(get_trunk)
         git fetch origin && git rebase origin/$trunk
@@ -116,9 +113,9 @@ function gitb {
 
     if command -v gt &> /dev/null; then
         if [[ "$frombranch" != "." && "$frombranch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
-            gt bco $frombranch
+            gt checkout $frombranch
         fi
-        gt bc --name $branchname ${@:3}
+        gt create --name $branchname ${@:3}
     else
         if [[ "$frombranch" == "." ]]; then
             frombranch=$(git rev-parse --abbrev-ref HEAD)
