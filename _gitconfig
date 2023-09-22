@@ -11,3 +11,9 @@
 	email = malalur2@illinois.edu
 [commit]
 	gpgsign = false
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
