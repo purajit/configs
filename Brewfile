@@ -46,7 +46,8 @@ cask "telegram"
 
 mas "Enpass", id: 732710998
 mas "Parcel", id: 639968404
-mas "Paste", id: 967805235
+
+# mas "Paste", id: 967805235  # removed in favor of Maccy
 
 # Casks that aren't always needed
 # cask "ableton-live-suite"  # only on primary computer
