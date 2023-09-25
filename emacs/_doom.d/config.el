@@ -35,7 +35,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+;; (setq display-line-numbers-type 'nil)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
@@ -74,28 +74,40 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
-;; key bindings
+;; cmd as meta
 (setq ns-command-modifier 'meta)
 (setq ns-option-modifier 'hyper) ; sets the Option key as Hyper
 (setq ns-function-modifier 'super) ; sets the Option key as Super
 (setq mac-command-modifier 'meta) ; sets the Command key as Meta
 (setq mac-option-modifier 'hyper) ; sets the Option key as Hyper
 
+;; key bindings
 (global-unset-key (kbd "<magnify-up>"))
 (global-unset-key (kbd "<magnify-down>"))
-(global-set-key "\M-g" 'goto-line)
+(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-c d") '+lookup/definition)
+(global-set-key (kbd "C-o") 'better-jumper-jump-backward)
+;; C-i inputs a TAB, so there's no way to distinguish universally (input-decode-map) would work in
+;; GUI, but not terminal)
+;; (global-set-key (kbd "C-i") 'better-jumper-jump-forward)
 
-;; JavaScript
-;; (setq js-indent-level 2)
-;; (setq-default js2-basic-offset 2)
-;; (add-hook 'java-mode-hook (lambda ()
-;;                             (setq c-basic-offset 2)))
+;; doomemacs allows inserting tabs. we hate that.
+(setq tab-always-indent t)
 
-(require 'indent-guide)
-(add-hook 'python-mode-hook 'indent-guide-mode)
-(add-hook 'ruby-mode-hook 'indent-guide-mode)
-(add-hook 'yaml-mode-hook 'indent-guide-mode)
-
+;; run terraform fmt on save
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 
+;; JavaScript (but also JSON)
+(setq js-indent-level 2)
+(setq-default js2-basic-offset 2)
+
+;; the default indent-region behavior of json-mode is truly gross
+(add-hook 'json-mode-hook (lambda ()
+                            (set (make-local-variable 'indent-line-function) 'js-indent-line)
+                            (set (make-local-variable 'indent-region-function) 'json-mode-beautify)))
+
 ;; (flycheck-add-next-checker 'python-flake8 'python-pylint)
+
+(setq highlight-indent-guides-responsive 'top)
+(setq highlight-indent-guides-auto-character-face-perc '75)
+(setq highlight-indent-guides-auto-top-character-face-perc '300)
