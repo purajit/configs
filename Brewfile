@@ -1,7 +1,11 @@
+tap "homebrew/bundle"
+tap "homebrew/cask-fonts"
 tap "homebrew/cask-versions"
 
 tap "d12frosted/emacs-plus"
-tap "macos-fuse-t/homebrew-cask"
+tap "derailed/k9s"
+tap "macos-fuse-t/cask"
+tap "mas-cli/tap"
 
 brew "aspell"
 brew "colima"

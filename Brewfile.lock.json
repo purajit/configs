@@ -2,7 +2,7 @@
   "entries": {
     "tap": {
       "homebrew/cask-fonts": {
-        "revision": "0fd9b1a7ac4b8b9b0250602af159f36bb7ebcec0"
+        "revision": "6e69d926449a59537a5bcdf1aa5b503e8b92060a"
       },
       "homebrew/cask-versions": {
         "revision": "6fe5d86d314dff9e45d529e9ec436b2b41c693aa"
@@ -12,6 +12,15 @@
       },
       "macos-fuse-t/cask": {
         "revision": "70c6007b7a5e1929115ad13517ce5ac5fd73640e"
+      },
+      "homebrew/bundle": {
+        "revision": "94906ca5e163030827764cae2c87602c54aef047"
+      },
+      "derailed/k9s": {
+        "revision": "0d8531ad9c56eb7e080a8b7035d9ff18d1804828"
+      },
+      "mas-cli/tap": {
+        "revision": "727f5ae53ac1c97728667921ccd17d89ae062507"
       }
     },
     "brew": {
