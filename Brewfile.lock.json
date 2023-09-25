@@ -1310,6 +1310,12 @@
         "options": {
           "full_name": "telegram"
         }
+      },
+      "maccy": {
+        "version": "0.26.5",
+        "options": {
+          "full_name": "maccy"
+        }
       }
     },
     "mas": {
