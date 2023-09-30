@@ -28,7 +28,7 @@ updatedb() {
 ## EMACS
 export EDITOR="emacsclient -t"
 e() {
-    emacsclient $1 -c &
+    ( emacsclient $1 -c & )
 }
 alias et='emacsclient -t'
 alias start_emacs='emacs --daemon'
