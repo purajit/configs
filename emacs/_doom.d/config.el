@@ -85,6 +85,7 @@
 (global-unset-key (kbd "<magnify-up>"))
 (global-unset-key (kbd "<magnify-down>"))
 (global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-x b") 'consult-buffer)
 (global-set-key (kbd "C-c d") '+lookup/definition)
 (global-set-key (kbd "C-o") 'better-jumper-jump-backward)
 ;; C-i inputs a TAB, so there's no way to distinguish universally (input-decode-map) would work in
@@ -115,3 +116,5 @@
 (vertico-reverse-mode)
 
 (add-hook! 'window-setup-hook (x-focus-frame nil))
+
+(setq git-commit-summary-max-length '120)
