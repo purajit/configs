@@ -95,6 +95,9 @@
 ;; doomemacs allows inserting tabs. we hate that.
 (setq tab-always-indent t)
 
+;; run ruff on save
+(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+
 ;; run terraform fmt on save
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 
@@ -107,8 +110,6 @@
                             (set (make-local-variable 'indent-line-function) 'js-indent-line)
                             (set (make-local-variable 'indent-region-function) 'json-mode-beautify)))
 
-;; (flycheck-add-next-checker 'python-flake8 'python-pylint)
-
 (setq highlight-indent-guides-responsive 'top)
 (setq highlight-indent-guides-auto-character-face-perc '75)
 (setq highlight-indent-guides-auto-top-character-face-perc '300)
@@ -117,4 +118,4 @@
 
 (add-hook! 'window-setup-hook (x-focus-frame nil))
 
-(setq git-commit-summary-max-length '120)
+(setq git-commit-summary-max-length 120)
