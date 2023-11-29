@@ -79,9 +79,24 @@ alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ign
 alias git-undo-amend='git reset --soft HEAD@{1}'
 
 function gitallrepobranches() {
-    for f in ~/code/*; do
-        echo $f && cd $f && gitb && echo
+    local _pwd="$PWD"
+    for repo in ~/code/*; do
+        if [ -d "$repo" ] && [ -d "$repo/.git" ]; then
+            cd "$repo"
+            if [ -n "$(git status --porcelain)" ]; then
+                echo "$repo !!"
+            else
+                echo $repo
+            fi
+            gitb_output="$(gitb)"
+            if [ $(echo "$gitb_output" | grep -v "^[\* ] main$" | grep -v "^[\* ] master$" | wc -l) -le 1  ]; then
+                echo
+                continue
+            fi
+            echo "$gitb_output" && echo
+        fi
     done
+    cd "$_pwd"
 }
 
 function gitsummary() {
