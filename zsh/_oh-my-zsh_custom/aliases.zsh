@@ -89,7 +89,7 @@ function gitallrepobranches() {
                 echo $repo
             fi
             gitb_output="$(gitb)"
-            if [ $(echo "$gitb_output" | grep -v "^[\* ] main$" | grep -v "^[\* ] master$" | wc -l) -le 1  ]; then
+            if [ $(echo "$gitb_output" | grep -v "^[\* ] main$" | grep -v "^[\* ] master$" | wc -l) -lt 1  ]; then
                 echo
                 continue
             fi
