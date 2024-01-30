@@ -68,7 +68,8 @@ function get_trunk {
     git remote show origin | sed -n '/HEAD branch/s/.*: //p'
 }
 
-alias gita='git commit -a --amend --no-edit'
+alias gita='git commit -am update'
+alias gitamend='git commit -a --amend --no-edit'
 alias gits='git status'
 alias gitsh='git show | cat'
 alias gitshf='git show --name-only | cat'
