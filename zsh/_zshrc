@@ -64,3 +64,34 @@ plugins=(aws colored-man-pages docker pip terraform venv_manager)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.zshwork
+if [[ "$(arch)" == "arm64" ]]; then
+  export ASDF_PYTHON_PATCHES_DIRECTORY=$COLOR_ROOT/asdf_python_arm_patches
+fi
+
+# asdf initialization added by build/platform.requirements.sh,
+# running make from the color repo at bc7cd803827956915f0ec13a5fd0c1df8f6894f1
+# 
+for asdfpath in '/usr/local' '/opt/homebrew' ; do
+    if [ -x "${asdfpath}/bin/brew" ] && [ -x "${asdfpath}/bin/asdf" ]; then
+        asdf_prefix="$(${asdfpath}/bin/brew --prefix asdf)"
+
+        [ -e "${asdf_prefix}/libexec/asdf.sh" ] && . "${asdf_prefix}/libexec/asdf.sh"
+
+        # See if we have the bash completion too, if we're using bash
+        # shellcheck disable=SC1091
+        [[ "$SHELL" =~ bash ]] && . "${asdf_prefix}/etc/bash_completion.d/asdf.bash"
+
+        # If you are using zsh see https://docs.brew.sh/Shell-Completion#configuring-completions-in-zsh
+        # or uncomment the following line. (we don't as running compinit is
+        # expensive)
+        # [[ "$SHELL" =~ zsh ]] && FPATH="${asdf_prefix}/share/zsh/site-functions:${FPATH}" && autoload -Uz compinit && compinit
+
+        unset asdf_prefix asdfpath
+        break
+    fi
+done
+
+if [ -z "${ASDF_DIR}" ]; then
+    echo "Failed to load ASDF in your shell startup."
+    echo "Please ask on slack in #new-dev-setup"
+fi
