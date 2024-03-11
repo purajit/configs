@@ -4,7 +4,7 @@ tap "homebrew/cask-versions"
 
 tap "d12frosted/emacs-plus"
 tap "derailed/k9s"
-# tap "macos-fuse-t/cask"
+tap "macos-fuse-t/cask"
 tap "mas-cli/tap"
 
 brew "aspell"
@@ -17,6 +17,7 @@ brew "fd"
 brew "ffmpeg"
 brew "fzf"
 brew "gh"
+brew "gnupg"
 brew "go"
 brew "graphviz"
 brew "imagemagick"
@@ -32,29 +33,28 @@ brew "yq"
 brew "zsh-syntax-highlighting"
 
 cask "android-platform-tools"
-# cask "cryptomator"
-# cask "discord"
-# cask "figma"
+cask "cryptomator"
+cask "discord"
+cask "figma"
 cask "firefox-nightly"
-# cask "fuse-t"
+cask "fuse-t"
 cask "google-drive"
 cask "iterm2"
+cask "keepassxc"
 cask "logi-options-plus"
 cask "maccy"
-# cask "notion"
+cask "notion"
 cask "rectangle"
-# cask "signal"
-# cask "steam"
-# cask "telegram"
+cask "signal"
+cask "steam"
+cask "telegram"
 
-# mas "Paste", id: 967805235  # removed in favor of Maccy
-# mas "Enpass", id: 732710998
-# mas "Parcel", id: 639968404
+mas "Parcel", id: 639968404
 
 # Casks that aren't always needed
 # cask "ableton-live-suite"  # only on primary computer
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "hammerspoon"  # only with Alacritty
 cask "jiggler"
-# cask "mactex"
-# cask "wireshark"
+cask "mactex"
+cask "wireshark"

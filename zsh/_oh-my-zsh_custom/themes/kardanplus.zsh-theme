@@ -9,7 +9,7 @@ function get_aws_profile {
         echo ""
         return
     fi
-    echo "%{$fg[yellow]%}$AWS_PROFILE + %{$reset_color%}"
+    echo "%{$fg[yellow]%}$AWS_PROFILE ꧂   %{$reset_color%}"
 }
 
 function get_k8s_context {
@@ -20,7 +20,7 @@ function get_k8s_context {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
-    echo "%{$fg[blue]%}$k8s_context + %{$reset_color%}"
+    echo "%{$fg[blue]%}$k8s_context ꧂   %{$reset_color%}"
 }
 
 function print_symlink {
@@ -32,8 +32,8 @@ function print_symlink {
 }
 
 PROMPT='
-%{$fg[yellow]%}[$(date +"%H:%M:%S %Z")] $(get_aws_profile)$(get_k8s_context)%{$fg[green]%}%~$(print_symlink) $(git_prompt_info)
-%{$fg[yellow]%}$(get_python_venv)%{$fg_bold[red]%}λ $(whoami) %{$fg_bold[red]%}➜%{$reset_color%}  '
+%{$fg[yellow]%}「$(date +"%H:%M:%S %Z")」$(get_aws_profile)$(get_k8s_context)%{$fg[green]%}%~$(print_symlink) $(git_prompt_info)
+%{$fg[yellow]%}$(get_python_venv)%{$fg_bold[red]%} λ $(whoami) %{$fg_bold[red]%}➜%{$reset_color%}  '
 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="("

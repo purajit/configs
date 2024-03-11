@@ -9,9 +9,7 @@
 [user]
 	name = purajit
 	email = purajit.malalur@color.com
-	signingkey = 13DC2F3A6BB35DAE
 [commit]
-	gpgsign = true
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential

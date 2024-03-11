@@ -2,21 +2,6 @@ export PATH=$HOME/.emacs.d/bin:$PATH
 # prevent virtualenv from fucking your prompt
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if [[ "$(arch)" == "i386" ]]; then
-    source ~/.dyld_library_path
-fi
-if [[ "$(arch)" == "arm64" ]]; then
-  source "$HOME/.arm_dyld_library_path"
-fi
-if [[ "$(arch)" == "i386" ]]; then
-  if [ -e '/usr/local/bin/brew' ]; then
-    eval "$(/usr/local/bin/brew shellenv)"
-   else
-     echo "Running on Intel, but Intel/Rosetta Homebrew is lacking!"
-   fi
-else
-  [ -e '/opt/homebrew/bin/brew' ] && eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
 if [[ -f "$HOME/.cargo/env" ]]; then
   . "$HOME/.cargo/env"
 fi
