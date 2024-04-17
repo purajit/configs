@@ -74,8 +74,8 @@ alias gits='git status'
 alias gitsh='git show | cat'
 alias gitshf='git show --name-only | cat'
 alias gitsw='git checkout -'
-alias gtu='gt submit'
-alias gtud='gt submit -d'
+alias gtu='gh pr create'
+alias gtud='gh pr create --draft'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 alias git-undo-amend='git reset --soft HEAD@{1}'
 
@@ -105,11 +105,10 @@ function gitsummary() {
 }
 
 function gitr {
-    if command -v gt &> /dev/null; then
-        gt sync
-    else
-        trunk=$(get_trunk)
-        git fetch origin && git rebase origin/$trunk
+    trunk="$(get_trunk)"
+    git checkout "$trunk"; git pull origin "$trunk"; git checkout -;
+    if command -v gst &> /dev/null; then
+        gst sync
     fi
 }
 
@@ -119,24 +118,21 @@ function gitb {
         return 0
     fi
 
-    datestring=$(date +"%Y%m%d")
-    branchname="$datestring-$1"
+    datestring="$(date +"%Y%m%d")"
+    new_branch_name="$datestring-$1"
 
-    frombranch="$2"
-    if [ -z "$frombranch" ]; then
-        frombranch=$(get_trunk)
+    from_branch="$2"
+    if [ -z "$from_branch" ]; then
+        from_branch="$(get_trunk)"
     fi
 
-    if command -v gt &> /dev/null; then
-        if [[ "$frombranch" != "." && "$frombranch" != "$(git rev-parse --abbrev-ref HEAD)" ]]; then
-            gt checkout $frombranch
-        fi
-        gt create --name $branchname ${@:3}
+    if command -v gst &> /dev/null; then
+        gst b "$new_branch_name" "$from_branch"
     else
-        if [[ "$frombranch" == "." ]]; then
-            frombranch=$(git rev-parse --abbrev-ref HEAD)
+        if [[ "$from_branch" == "." ]]; then
+            from_branch="$(git rev-parse --abbrev-ref HEAD)"
         fi
-        git switch -c $branchname $frombranch ${@:3}
+        git switch -c "$new_branch_name" "$from_branch" "${@:3}"
     fi
 }
 
