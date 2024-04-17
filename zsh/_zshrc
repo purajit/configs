@@ -60,7 +60,7 @@ source $(brew --prefix)/Cellar/zsh-syntax-highlighting/0.8.0/share/zsh-syntax-hi
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 SHOW_AWS_PROMPT=false
-plugins=(aws colored-man-pages docker pip terraform venv_manager)
+plugins=(asdf aws colored-man-pages docker pip terraform venv_manager)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.zshwork
