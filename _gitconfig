@@ -8,7 +8,6 @@
 	hide-dirty = 1
 [user]
 	name = purajit
-	email = purajit.malalur@color.com
 [commit]
 [credential "https://github.com"]
 	helper = 
