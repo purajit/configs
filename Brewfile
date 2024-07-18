@@ -27,34 +27,22 @@ brew "pdsh"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "shellcheck"
-brew "terraform"
 brew "tmux"
 brew "yq"
 brew "zsh-syntax-highlighting"
 
 cask "android-platform-tools"
-<<<<<<< Updated upstream
 cask "cryptomator"
 cask "discord"
 cask "figma"
-cask "firefox-nightly"
+cask "firefox@nightly"
 cask "fuse-t"
 cask "google-drive"
-cask "iterm2"
-cask "keepassxc"
-=======
-# cask "cryptomator"
-# cask "discord"
-# cask "figma"
-cask "firefox@nightly"
-# cask "fuse-t"
-cask "google-drive"
 cask "iterm2@beta"
-# cask "keepassxc"
->>>>>>> Stashed changes
+cask "keepassxc"
 cask "logi-options-plus"
 cask "maccy"
-cask "notion"
+# cask "notion"
 cask "rectangle"
 cask "signal"
 cask "steam"
@@ -66,11 +54,7 @@ mas "Parcel", id: 639968404
 # cask "ableton-live-suite"  # only on primary computer
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "hammerspoon"  # only with Alacritty
-cask "jiggler"
-<<<<<<< Updated upstream
-cask "mactex"
-cask "wireshark"
-=======
+# cask "jiggler"
 # cask "mactex"
+# brew "terraform"  # prefer asdf
 # cask "wireshark"
->>>>>>> Stashed changes
