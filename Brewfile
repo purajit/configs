@@ -12,7 +12,7 @@ brew "colima"
 brew "coreutils"
 brew "derailed/k9s/k9s"
 brew "docker"
-brew "emacs-plus@30", args: ["with-native-comp"]
+brew "emacs-plus@29", args: ["with-native-comp"]
 brew "fd"
 brew "ffmpeg"
 brew "fzf"
@@ -33,6 +33,7 @@ brew "yq"
 brew "zsh-syntax-highlighting"
 
 cask "android-platform-tools"
+<<<<<<< Updated upstream
 cask "cryptomator"
 cask "discord"
 cask "figma"
@@ -41,6 +42,16 @@ cask "fuse-t"
 cask "google-drive"
 cask "iterm2"
 cask "keepassxc"
+=======
+# cask "cryptomator"
+# cask "discord"
+# cask "figma"
+cask "firefox@nightly"
+# cask "fuse-t"
+cask "google-drive"
+cask "iterm2@beta"
+# cask "keepassxc"
+>>>>>>> Stashed changes
 cask "logi-options-plus"
 cask "maccy"
 cask "notion"
@@ -56,5 +67,10 @@ mas "Parcel", id: 639968404
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "hammerspoon"  # only with Alacritty
 cask "jiggler"
+<<<<<<< Updated upstream
 cask "mactex"
 cask "wireshark"
+=======
+# cask "mactex"
+# cask "wireshark"
+>>>>>>> Stashed changes
