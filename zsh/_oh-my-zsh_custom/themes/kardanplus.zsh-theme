@@ -33,7 +33,7 @@ function print_symlink {
 
 PROMPT='
 %{$fg[yellow]%}「$(date +"%H:%M:%S %Z")」$(get_aws_profile)$(get_k8s_context)%{$fg[green]%}%~$(print_symlink) $(git_prompt_info)
-%{$fg[yellow]%}$(get_python_venv)%{$fg_bold[red]%} λ $(whoami) %{$fg_bold[red]%}➜%{$reset_color%}  '
+%{$fg[yellow]%}$(echo "$VIRTUAL_ENV_PROMPT" | perl -ne "s/(..*)/ (\1)/g; print")%{$fg_bold[red]%} λ $(whoami) %{$fg_bold[red]%}➜%{$reset_color%}  '
 
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}✗%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_PREFIX="("
