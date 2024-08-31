@@ -114,6 +114,7 @@
 (setq highlight-indent-guides-auto-character-face-perc '75)
 (setq highlight-indent-guides-auto-top-character-face-perc '300)
 
+(setq flycheck-emacs-lisp-load-path 'inherit)
 (vertico-reverse-mode)
 
 (add-hook! 'window-setup-hook (x-focus-frame nil))
