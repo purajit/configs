@@ -33,15 +33,6 @@ function install_brewfile_formulae {
     brew doctor
 }
 
-function setup_fonts {
-    echo "Setting up fonts ..."
-    if [[ "$1" == "true" ]]; then
-        clone_repo "https://github.com/protesilaos/iosevka-comfy.git"
-    fi
-    cp $HOME/code/iosevka-comfy/*/ttf/*.ttf "/Library/Fonts/"
-    cp $CONFIG_HOME/fonts/*.ttf "/Library/Fonts/"
-}
-
 function setup_bash_zsh {
     echo "Setting up bash, oh-my-zsh, zsh ..."
 
@@ -63,6 +54,8 @@ function setup_bash_zsh {
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshrc" "$HOME/.zshrc"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshwork" "$HOME/.zshwork"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshenv" "$HOME/.zshenv"
+
+    source ~/.zshrc
 }
 
 function setup_emacs {
@@ -71,13 +64,10 @@ function setup_emacs {
         rm -f "$HOME/.emacs"
         # install Doomemacs
         clone_repo "https://github.com/hlissner/doom-emacs"
-        overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.emacs.d"
-        "$HOME/.emacs.d/bin/doom" install
-        # doom install creates this folder, remove it
-        rm -rf "$HOME/.doom.d"
+        overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
+        doom install
     fi
 
-    overwrite_with_symlink "$CONFIG_HOME/emacs/_doom.d" "$HOME/.doom.d"
     doom sync
 
     # run emacs server on startup
@@ -146,6 +136,12 @@ function setup_utils {
     fi
 }
 
+function setup_dot_config {
+    echo "Setting up various ~/.config/ ..."
+    overwrite_with_symlink "$CONFIG_HOME/wtfutil-config.yml" "$HOME/.config/wtf/config.yml"
+    overwrite_with_symlink "$CONFIG_HOME/gh-dash-config.yml" "$HOME/.config/gh-dash/config.yml"
+}
+
 if [[ "$1" == "fresh" ]]; then
     echo "Setting up from fresh!"
     is_fresh=true
@@ -154,17 +150,22 @@ else
     is_fresh=false
 fi
 
-install_brew $is_fresh
-install_brewfile_formulae $is_fresh
-setup_bash_zsh $is_fresh
-# setup_alacritty $is_fresh  # Not using Alacritty due to lack of cmd-as-meta and cmd-tab removal
-setup_iterm $is_fresh
-setup_emacs $is_fresh
-setup_git $is_fresh
-setup_fonts $is_fresh
-setup_ipython $is_fresh
-setup_screenshots_dir $is_fresh
-setup_terraform $is_fresh
-setup_tmux $is_fresh
-setup_ssh $is_fresh
-setup_utils $is_fresh
+# first, a package manager
+install_brew "$is_fresh"
+install_brewfile_formulae "$is_fresh"
+
+# then, the shell, terminal, editor
+setup_bash_zsh "$is_fresh"
+# setup_alacritty "$is_fresh"  # Not using Alacritty due to lack of cmd-as-meta
+setup_iterm "$is_fresh"
+setup_emacs "$is_fresh"
+
+# the rest
+setup_dot_config "$is_fresh"
+setup_git "$is_fresh"
+setup_ipython "$is_fresh"
+setup_screenshots_dir "$is_fresh"
+setup_ssh "$is_fresh"
+setup_terraform "$is_fresh"
+setup_tmux "$is_fresh"
+setup_utils "$is_fresh"
