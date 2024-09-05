@@ -13,7 +13,6 @@ brew "docker"
 brew "emacs-plus@29", args: ["with-native-comp"]
 brew "fd"
 brew "ffmpeg"
-brew "font-mononoki-nerd-font"
 brew "fzf"
 brew "gh"
 brew "gnupg"
@@ -36,7 +35,12 @@ cask "cryptomator"
 cask "discord"
 cask "figma"
 cask "firefox@nightly"
+<<<<<<< Updated upstream
 cask "fuse-t"
+=======
+cask "font-mononoki-nerd-font"
+# cask "fuse-t"
+>>>>>>> Stashed changes
 cask "google-drive"
 cask "iterm2@beta"
 cask "keepassxc"
