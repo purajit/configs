@@ -1,0 +1,71 @@
+prSections:
+- title: PRs
+  filters: is:open author:@me draft:false sort:updated-desc
+  type: null
+- title: Draft PRs
+  filters: is:open author:@me draft:true sort:updated-desc
+  type: null
+- title: Approved PRs
+  filters: is:open author:@me review:approved sort:updated-desc
+  type: null
+- title: Needs MY Review
+  filters: is:open user-review-requested:@me sort:updated-desc
+  type: null
+- title: Needs My Teams' Review
+  filters: is:open review-requested:@me sort:updated-desc
+  type: null
+issuesSections:
+- title: My Issues
+  filters: is:open author:@me
+- title: Assigned
+  filters: is:open assignee:@me
+- title: Involved
+  filters: is:open involves:@me -author:@me
+defaults:
+  preview:
+    open: true
+    width: 50
+  prsLimit: 30
+  issuesLimit: 20
+  view: prs
+  layout:
+    prs:
+      updatedAt:
+        width: 5
+      repo:
+        width: 20
+      author:
+        width: 15
+      assignees:
+        width: 20
+        hidden: true
+      base:
+        width: 15
+        hidden: true
+      lines:
+        width: 15
+    issues:
+      updatedAt:
+        width: 5
+      repo:
+        width: 15
+      creator:
+        width: 10
+      assignees:
+        width: 20
+        hidden: true
+  refetchIntervalMinutes: 30
+keybindings:
+  universal: []
+  issues: []
+  prs: []
+repoPaths: {}
+theme:
+  ui:
+    sectionsShowCount: true
+    table:
+      showSeparator: true
+      compact: false
+pager:
+  diff: ""
+confirmQuit: true
