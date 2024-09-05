@@ -35,30 +35,25 @@ cask "cryptomator"
 cask "discord"
 cask "figma"
 cask "firefox@nightly"
-<<<<<<< Updated upstream
-cask "fuse-t"
-=======
 cask "font-mononoki-nerd-font"
-# cask "fuse-t"
->>>>>>> Stashed changes
+cask "fuse-t"
 cask "google-drive"
 cask "iterm2@beta"
 cask "keepassxc"
 cask "logi-options-plus"
 cask "maccy"
-# cask "notion"
 cask "rectangle"
 cask "signal"
 cask "steam"
-cask "telegram"
 
 mas "Parcel", id: 639968404
 
-# Casks that aren't always needed
+# Formulae that aren't always needed
 # cask "ableton-live-suite"  # only on primary computer
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "hammerspoon"  # only with Alacritty
 # cask "jiggler"
 # cask "mactex"
+# cask "telegram"
 # brew "terraform"  # prefer asdf
 # cask "wireshark"
