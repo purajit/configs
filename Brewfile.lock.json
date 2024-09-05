@@ -1327,6 +1327,21 @@
         "options": {
           "full_name": "font-mononoki-nerd-font"
         }
+      },
+      "alacritty": {
+        "version": "0.13.2",
+        "options": {
+          "args": {
+            "no-quarantine": true
+          },
+          "full_name": "alacritty"
+        }
+      },
+      "hammerspoon": {
+        "version": "1.0.0",
+        "options": {
+          "full_name": "hammerspoon"
+        }
       }
     },
     "mas": {
