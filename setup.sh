@@ -54,8 +54,6 @@ function setup_bash_zsh {
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshrc" "$HOME/.zshrc"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshwork" "$HOME/.zshwork"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshenv" "$HOME/.zshenv"
-
-    source ~/.zshrc
 }
 
 function setup_emacs {
@@ -65,10 +63,10 @@ function setup_emacs {
         # install Doomemacs
         clone_repo "https://github.com/hlissner/doom-emacs"
         overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
-        doom install
+        "$HOME/.config/emacs/bin/doom" install
     fi
 
-    doom sync
+    "$HOME/.config/emacs/bin/doom" sync
 
     # run emacs server on startup
     overwrite_with_symlink "$CONFIG_HOME/emacs/launchd" "$HOME/Library/LaunchAgents/gnu.emacs.daemon.plist"
@@ -169,3 +167,5 @@ setup_ssh "$is_fresh"
 setup_terraform "$is_fresh"
 setup_tmux "$is_fresh"
 setup_utils "$is_fresh"
+
+echo "All done!"
