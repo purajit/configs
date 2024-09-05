@@ -30,16 +30,17 @@ brew "wtfutil"
 brew "yq"
 brew "zsh-syntax-highlighting"
 
-cask "android-platform-tools"
-cask "cryptomator"
-cask "discord"
-cask "figma"
+cask "alacritty", args: {"no-quarantine": true}
+# cask "android-platform-tools"
+# cask "cryptomator"
+# cask "discord"
+# cask "figma"
 cask "firefox@nightly"
 cask "font-mononoki-nerd-font"
 cask "fuse-t"
 cask "google-drive"
-cask "iterm2@beta"
-cask "keepassxc"
+# cask "iterm2@beta"
+# cask "keepassxc"
 cask "logi-options-plus"
 cask "maccy"
 cask "rectangle"
@@ -51,7 +52,6 @@ mas "Parcel", id: 639968404
 # Formulae that aren't always needed
 # cask "ableton-live-suite"  # only on primary computer
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
-# cask "hammerspoon"  # only with Alacritty
 # cask "jiggler"
 # cask "mactex"
 # cask "telegram"

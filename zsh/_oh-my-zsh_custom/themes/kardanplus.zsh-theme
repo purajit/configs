@@ -9,7 +9,7 @@ function get_aws_profile {
         echo ""
         return
     fi
-    echo "%{$fg[yellow]%}$AWS_PROFILE ꧂   %{$reset_color%}"
+    echo "%{$fg[yellow]%}$AWS_PROFILE | %{$reset_color%}"
 }
 
 function get_k8s_context {
@@ -20,7 +20,7 @@ function get_k8s_context {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
-    echo "%{$fg[blue]%}$k8s_context ꧂   %{$reset_color%}"
+    echo "%{$fg[blue]%}$k8s_context | %{$reset_color%}"
 }
 
 function print_symlink {

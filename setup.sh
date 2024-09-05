@@ -106,9 +106,7 @@ function setup_screenshots_dir {
 
 function setup_alacritty {
     echo "Setting up Alacritty ..."
-    mkdir -p "$HOME/.hammerspoon" "$HOME/.config"
-    overwrite_with_symlink "$CONFIG_HOME/hammerspoon-init.lua" "$HOME/.hammerspoon/init.lua"
-    overwrite_with_symlink "$CONFIG_HOME/alacritty.yml" "$HOME/.config/alacritty.yml"
+    overwrite_with_symlink "$CONFIG_HOME/alacritty.toml" "$HOME/.config/alacritty.toml"
 }
 
 function setup_terraform {
@@ -154,7 +152,7 @@ install_brewfile_formulae "$is_fresh"
 
 # then, the shell, terminal, editor
 setup_bash_zsh "$is_fresh"
-# setup_alacritty "$is_fresh"  # Not using Alacritty due to lack of cmd-as-meta
+setup_alacritty "$is_fresh"  # Not using Alacritty due to lack of cmd-as-meta
 setup_iterm "$is_fresh"
 setup_emacs "$is_fresh"
 

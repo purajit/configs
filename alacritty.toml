@@ -1,0 +1,78 @@
+[env]
+term = "xterm-256color"
+
+[shell]
+program = "/bin/zsh"
+args = [
+  "-l",
+  "-c",
+  "/opt/homebrew/bin/tmux attach"
+]
+
+[font]
+size = 16
+
+[font.bold]
+family = "Mononoki Nerd Font"
+
+[font.italic]
+family = "Mononoki Nerd Font"
+
+[font.normal]
+family = "Mononoki Nerd Font"
+
+[window]
+option_as_alt = "Both"
+
+[window.dimensions]
+columns = 200
+lines = 50
+
+[window.position]
+x = 0
+y = 0
+
+[colors.primary]
+background = '#261C1C'
+foreground = '#FEFFFF'
+
+[colors.cursor]
+text = '#1E1E2E'
+cursor = '#D9D9D9'
+
+[colors.selection]
+text = '#FEFEFE'
+background = '#A56A29'
+
+[colors.normal]
+black = '#5C6370'
+red = '#CA4238'
+green = '#8CB27B'
+yellow = '#DED685'
+blue = '#85C2D6'
+magenta = '#7B72C2'
+cyan = '#CF5A78'
+white = '#FEFEFE'
+
+[colors.bright]
+black = '#5C6370'
+red = '#CA4238'
+green = '#8CB27B'
+yellow = '#DED685'
+blue = '#85C2D6'
+magenta = '#7B72C2'
+cyan = '#CF5A78'
+white = '#FEFEFE'
+
+[colors.dim]
+black = '#262621'
+red = '#CB4D39'
+green = '#BBD756'
+yellow = '#DED685'
+blue = '#85C2D6'
+magenta = '#7B72C2'
+cyan = '#CF5A78'
+white = '#FEFEFE'
+
+# badge ea4024
+# links 255ab4
