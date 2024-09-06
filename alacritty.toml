@@ -5,16 +5,17 @@ term = "xterm-256color"
 size = 16
 
 [font.bold]
-family = "Mononoki Nerd Font"
+family = "Mononoki Nerd Font Propo"
 
 [font.italic]
-family = "Mononoki Nerd Font"
+family = "Mononoki Nerd Font Propo"
 
 [font.normal]
-family = "Mononoki Nerd Font"
+family = "Mononoki Nerd Font Propo"
 
 [window]
 option_as_alt = "Both"
+startup_mode = "Fullscreen"
 
 [window.dimensions]
 columns = 200
@@ -24,47 +25,34 @@ lines = 50
 x = 0
 y = 0
 
+# colors come from the "Aura" themex
 [colors.primary]
-background = '#261C1C'
-foreground = '#FEFFFF'
+background = "#15141b"
+foreground = "#edecee"
 
 [colors.cursor]
-text = '#1E1E2E'
-cursor = '#D9D9D9'
+cursor = "#a277ff"
 
 [colors.selection]
-text = '#FEFEFE'
-background = '#A56A29'
+text = "CellForeground"
+background = "#29263c"
 
 [colors.normal]
-black = '#261C1C'
-red = '#CA4238'
-green = '#8CB27B'
-yellow = '#DED685'
-blue = '#85C2D6'
-magenta = '#7B72C2'
-cyan = '#CF5A78'
-white = '#FEFEFE'
+black = "#110f18"
+red = "#ff6767"
+green = "#61ffca"
+yellow = "#ffca85"
+blue = "#a277ff"
+magenta = "#a277ff"
+cyan = "#61ffca"
+white = "#edecee"
 
 [colors.bright]
-black = '#5C6370'
-red = '#CA4238'
-green = '#8CB27B'
-yellow = '#DED685'
-blue = '#85C2D6'
-magenta = '#7B72C2'
-cyan = '#CF5A78'
-white = '#FEFEFE'
-
-[colors.dim]
-black = '#262621'
-red = '#CB4D39'
-green = '#BBD756'
-yellow = '#DED685'
-blue = '#85C2D6'
-magenta = '#7B72C2'
-cyan = '#CF5A78'
-white = '#FEFEFE'
-
-# badge ea4024
-# links 255ab4
+black = "#4d4d4d"
+red = "#ff6767"
+green = "#61ffca"
+yellow = "#ffca85"
+blue = "#a277ff"
+magenta = "#a277ff"
+cyan = "#61ffca"
+white = "#edecee"

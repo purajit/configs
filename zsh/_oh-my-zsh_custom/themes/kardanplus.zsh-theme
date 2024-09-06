@@ -4,15 +4,14 @@ function get_host {
     echo '@'`hostname`''
 }
 
-function get_aws_profile {
+function get_aws_profile_prompt {
     if [[ "$AWS_PROFILE" == "" ]]; then
-        echo ""
         return
     fi
-    echo "%{$fg[yellow]%}$AWS_PROFILE | %{$reset_color%}"
+    echo "%{$fg[yellow]%}  $(echo "$AWS_PROFILE" | cut -d- -f2-) %{$reset_color%}"
 }
 
-function get_k8s_context {
+function get_k8s_context_prompt {
     if [[ ! -f ~/.kube/config ]]; then
         return
     fi
@@ -20,21 +19,17 @@ function get_k8s_context {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
-    echo "%{$fg[blue]%}$k8s_context | %{$reset_color%}"
+    echo "%{$fg[blue]%}󱃾 $(echo "$k8s_context" | cut -d- -f1)%{$reset_color%}"
 }
 
-function print_symlink {
-    local wd="$(pwd)"
-    local linkdir="$(readlink -n $wd)";
-    if readlink -n $wd >/dev/null; then
-        echo " -> $linkdir";
-    fi
+function get_venv_prompt {
+    echo "$VIRTUAL_ENV_PROMPT" | perl -ne 's/(..*)/%F{#336c9d} \1/g; print'
+}
+
+function get_git_prompt {
+    echo "$(git_current_branch | cut -d- -f2- | perl -ne 's/(..*)/ %F{#3fb951}\1/g; print')"
 }
 
 PROMPT='
-%{$fg[yellow]%}「$(date +"%H:%M:%S %Z")」$(get_aws_profile)$(get_k8s_context)%{$fg[green]%}%~$(print_symlink) $(git_prompt_info)
-%{$fg[yellow]%}$(echo "$VIRTUAL_ENV_PROMPT" | perl -ne "s/(..*)/ (\1)/g; print")%{$fg_bold[red]%} λ $(whoami) %{$fg_bold[red]%}➜%{$reset_color%}  '
-
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[yellow]%}✗%{$reset_color%}"
-ZSH_THEME_GIT_PROMPT_PREFIX="("
-ZSH_THEME_GIT_PROMPT_SUFFIX=")"
+%F{#ffaf00}$(date +"%H:%M:%S %Z")  '
+RPROMPT='%~ $(get_venv_prompt)$(get_git_prompt)$(get_aws_profile_prompt)$(get_k8s_context_prompt)'
