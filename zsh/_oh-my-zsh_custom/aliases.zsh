@@ -76,6 +76,7 @@ alias gitshf='git show --name-only | cat'
 alias gitsw='git checkout -'
 alias gtu='gh pr create'
 alias gtud='gh pr create --draft'
+alias gitmc='git commit --no-verify --no-edit'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 alias git-undo-amend='git reset --soft HEAD@{1}'
 
