@@ -39,6 +39,21 @@ wtf:
       showEndTime: false
       timezone: "America/Los_Angeles"
       withLocation: true
+    todo:
+      checkedIcon: "X"
+      colors:
+        checked: gray
+        highlight:
+          fore: "black"
+          back: "orange"
+      enabled: true
+      filename: "todo.yml"
+      position:
+        top: 0
+        left: 2
+        height: 4
+        width: 2
+      refreshInterval: 1h
     jira:
       colors:
         rows:
@@ -57,49 +72,3 @@ wtf:
       refreshInterval: 15m
       username: "EMAIL"
       verifyServerCertificate: true
-    todo:
-      checkedIcon: "X"
-      colors:
-        checked: gray
-        highlight:
-          fore: "black"
-          back: "orange"
-      enabled: true
-      filename: "todo.yml"
-      position:
-        top: 0
-        left: 2
-        height: 2
-        width: 2
-      refreshInterval: 1h
-    prettyweather:
-      enabled: true
-      city: "San Francisco"
-      position:
-        top: 2
-        left: 2
-        height: 2
-        width: 1
-      refreshInterval: 30m
-      unit: "i"
-      view: 0
-      language: "en"
-    ipinfo:
-      colors:
-        name: "lightblue"
-        value: "white"
-      enabled: true
-      position:
-        top: 2
-        left: 3
-        height: 1
-        width: 1
-      refreshInterval: 1h
-    power:
-      enabled: true
-      position:
-        top: 3
-        left: 3
-        height: 1
-        width: 1
-      refreshInterval: 15
