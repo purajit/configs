@@ -1,14 +1,6 @@
 [env]
 term = "xterm-256color"
 
-[shell]
-program = "/bin/zsh"
-args = [
-  "-l",
-  "-c",
-  "/opt/homebrew/bin/tmux attach"
-]
-
 [font]
 size = 16
 
@@ -45,7 +37,7 @@ text = '#FEFEFE'
 background = '#A56A29'
 
 [colors.normal]
-black = '#5C6370'
+black = '#261C1C'
 red = '#CA4238'
 green = '#8CB27B'
 yellow = '#DED685'
