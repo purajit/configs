@@ -19,9 +19,8 @@ HELPDIR="/usr/share/zsh/${ZSH_VERSION}/help"
 # activate venv_manager, and prevent venvs from modifying prompt
 source "$HOME/code/venv_manager/venv_manager.plugin.zsh"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-precmd() {
-  venv_manager_switch_venv
-}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd venv_manager_switch_venv
 
 # completions, and case-insensitive at that
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
