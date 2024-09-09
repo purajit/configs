@@ -23,17 +23,18 @@ precmd() {
   venv_manager_switch_venv
 }
 
+# completions, and case-insensitive at that
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+autoload -U compinit; compinit
+autoload -U +X bashcompinit && bashcompinit
+eval "$(fzf --zsh)"
+complete -C "$(which aws_completer)" aws
+
 # tools and hooks - atuin, direnv, asdf, vivid colors for ls
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 source "$(brew --prefix asdf)/libexec/asdf.sh"
 export LS_COLORS="$(vivid generate lava)"
-
-# completions
-autoload -U compinit; compinit
-autoload -U +X bashcompinit && bashcompinit
-eval "$(fzf --zsh)"
-complete -C "$(which aws_completer)" aws
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then

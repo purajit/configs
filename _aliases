@@ -75,9 +75,7 @@ function gitsummary() {
 function gitr {
     trunk="$(get_trunk)"
     git checkout "$trunk"; git pull origin "$trunk"; git checkout -;
-    if command -v gst &> /dev/null; then
-        gst sync
-    fi
+    command -v gst &> /dev/null && gst sync
 }
 
 function gitb {
