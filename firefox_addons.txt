@@ -1,4 +1,2 @@
 Dark Reader https://addons.mozilla.org/en-US/firefox/addon/darkreader/
-FoxyLink https://addons.mozilla.org/en-US/firefox/addon/foxylink/
-Tabliss https://addons.mozilla.org/en-US/firefox/addon/tabliss/
 Multi-Account Containers https://addons.mozilla.org/en-US/firefox/addon/multi-account-containers/
