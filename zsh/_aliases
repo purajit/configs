@@ -1,66 +1,33 @@
-# HISTORY AND PS
-alias h='history -i'
-alias hg='history -i | grep'
-alias psg='ps aux | grep'
-
 # FILE SYSTEM
-alias pu='pushd'
-alias po='popd'
-
 alias cp='cp -i'
 alias mv='mv -i'
+alias ls='gls --color=auto'
 
-alias 'which'='which -a'
-alias ls='ls -G'
-alias la='ls -la'
-
-alias rgrep='grep -r'
-alias grepc='grep --color=always'
-
-## INDEX
 alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
+
 updatedb() {
-    cd /
-    sudo /usr/libexec/locate.updatedb
-    cd -
+    ( cd / && sudo /usr/libexec/locate.updatedb )
 }
 
 ## EMACS
+alias start_emacs='emacs --daemon'
+alias kill_emacs='emacsclient -e "(kill-emacs)"'
 export EDITOR="emacsclient -t"
 e() {
     ( emacsclient $1 -c & )
 }
 alias et='emacsclient -t'
-alias start_emacs='emacs --daemon'
-alias kill_emacs='emacsclient -e "(kill-emacs)"'
-
-# k8s
-function kp {
-    kubectl exec -it $(kubectl get pods -n $1 --no-headers -o custom-columns=":metadata.name" | head -1) -n $1 -- bash
-}
 
 # swap two files/folders
 swap() {
-    local TIMESTAMP=$(date "+%s")
-    mv "$1" "$1.$TIMESTAMP"
+    local timestamp=$(date "+%s")
+    mv "$1" "$1.$timestamp"
     mv "$2" "$1"
-    mv "$1.$TIMESTAMP" "$2"
-}
-
-# get parent folder of virtualenv location
-function get_python_venv {
-    if [[ -n "$VIRTUAL_ENV" ]] ; then
-        echo "($(basename -- "$(dirname -- "$VIRTUAL_ENV")")) "
-    fi
+    mv "$1.$timestamp" "$2"
 }
 
 function sush {
     ssh -At $1 sudo su
-}
-
-## Tool-specific
-function ap {
-    export AWS_PROFILE=$1
 }
 
 ## GIT HELPERS
@@ -137,6 +104,17 @@ function gitb {
     fi
 }
 
+## KUBERNETES
+alias k='kubectl'
+
+## TERRAFORM
+alias tf='terraform'
+alias tfa='terraform apply'
+alias tfc='terraform console'
+alias tfi='terraform init'
+alias tfim='terraform import'
+alias tfp='terraform plan'
+
 ## VIDEO GAME HELPERS
 function factorio_upload {
     cp "~/Library/Application Support/factorio/saves/$1.zip"  "/Volumes/GoogleDrive/My Drive/Personal/factorio-saves/"
@@ -149,4 +127,23 @@ function dont_starve_upload {
 
 function fix_itb {
     sed -i 'bkp' 's/\["iUndoTurn"\] = 0/["iUndoTurn"] = 1/g' ~/Library/Application\ Support/IntoTheBreach/profile_Alpha/saveData.lua
+}
+
+function man() {
+    env \
+        LESS_TERMCAP_mb=$(tput bold; tput setaf 1) \
+        LESS_TERMCAP_md=$(tput bold; tput setaf 208) \
+        LESS_TERMCAP_me=$(tput sgr0) \
+        LESS_TERMCAP_so=$(tput bold; tput setaf black; tput setab 3) \
+        LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
+        LESS_TERMCAP_us=$(tput smul; tput dim; tput setaf 7) \
+        LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
+        LESS_TERMCAP_mr=$(tput rev) \
+        LESS_TERMCAP_mh=$(tput dim) \
+        LESS_TERMCAP_ZN=$(tput ssubm) \
+        LESS_TERMCAP_ZV=$(tput rsubm) \
+        LESS_TERMCAP_ZO=$(tput ssupm) \
+        LESS_TERMCAP_ZW=$(tput rsupm) \
+        PAGER="less -s -M +Gg" \
+        man "$@"
 }

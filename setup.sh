@@ -33,27 +33,22 @@ function install_brewfile_formulae {
     brew doctor
 }
 
-function setup_bash_zsh {
-    echo "Setting up bash, oh-my-zsh, zsh ..."
+function setup_shell {
+    echo "Setting up the shell ..."
 
-    # bash
-    overwrite_with_symlink "$CONFIG_HOME/bash/_bashrc" "$HOME/.bashrc"
-    overwrite_with_symlink "$CONFIG_HOME/bash/_bash_aliases" "$HOME/.bash_aliases"
+    # common shell configs
+    overwrite_with_symlink "$CONFIG_HOME/zsh/_aliases" "$HOME/.aliases"
 
-    # oh-my-zsh
+    # tools
     if [[ "$1" == "true" ]]; then
-        clone_repo "https://github.com/robbyrussell/oh-my-zsh.git"
         clone_repo "https://github.com/purajit/venv_manager.git"
     fi
-    overwrite_with_symlink "$HOME/code/oh-my-zsh" "$HOME/.oh-my-zsh"
-    overwrite_with_symlink "$CONFIG_HOME/zsh/_oh-my-zsh_custom" "$HOME/.zshcustom"
+    overwrite_with_symlink "$CONFIG_HOME/atuin-config.toml" "$HOME/.config/atuin/config.toml"
 
     # zsh
-    mkdir -p "$HOME/.zshcustom/plugins"
-    overwrite_with_symlink "$HOME/code/venv_manager" "$HOME/.zshcustom/plugins/venv_manager"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshrc" "$HOME/.zshrc"
     overwrite_with_symlink "$CONFIG_HOME/zsh/_zshwork" "$HOME/.zshwork"
-    overwrite_with_symlink "$CONFIG_HOME/zsh/_zshenv" "$HOME/.zshenv"
+
 }
 
 function setup_emacs {
@@ -151,9 +146,9 @@ install_brew "$is_fresh"
 install_brewfile_formulae "$is_fresh"
 
 # then, the shell, terminal, editor
-setup_bash_zsh "$is_fresh"
-setup_alacritty "$is_fresh"  # Not using Alacritty due to lack of cmd-as-meta
-setup_iterm "$is_fresh"
+setup_shell "$is_fresh"
+setup_alacritty "$is_fresh"
+# setup_iterm "$is_fresh"
 setup_emacs "$is_fresh"
 
 # the rest
