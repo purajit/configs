@@ -21,9 +21,7 @@ function clone_repo {
 # individual setup steps
 function install_brew {
     echo "Setting up Homebrew ..."
-    if [[ "$1" == "true" ]]; then
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    fi
+    command -v brew &> /dev/null || /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 }
 
 function install_brewfile_formulae {
@@ -52,14 +50,13 @@ function setup_shell {
 
 function setup_emacs {
     echo "Setting up Emacs ..."
+    rm -f "$HOME/.emacs" "$HOME/.emacs.d"
     if [[ "$1" == "true" ]]; then
-        rm -f "$HOME/.emacs"
-        # install Doomemacs
         clone_repo "https://github.com/hlissner/doom-emacs"
-        overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
-        "$HOME/.config/emacs/bin/doom" install
     fi
 
+    "$HOME/.config/emacs/bin/doom" install
+    overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
     "$HOME/.config/emacs/bin/doom" sync
 
     # run emacs server on startup
