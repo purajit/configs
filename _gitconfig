@@ -4,8 +4,6 @@
 [pager]
 	branch = false
 
-[oh-my-zsh]
-	hide-dirty = 1
 [user]
 	name = purajit
 [commit]
