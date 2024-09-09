@@ -37,7 +37,8 @@ function setup_shell {
     echo "Setting up the shell ..."
 
     # common shell configs
-    overwrite_with_symlink "$CONFIG_HOME/zsh/_aliases" "$HOME/.aliases"
+    overwrite_with_symlink "$CONFIG_HOME/_aliases" "$HOME/.aliases"
+    overwrite_with_symlink "$CONFIG_HOME/_work" "$HOME/.work"
 
     # tools
     if [[ "$1" == "true" ]]; then
@@ -46,9 +47,7 @@ function setup_shell {
     overwrite_with_symlink "$CONFIG_HOME/atuin-config.toml" "$HOME/.config/atuin/config.toml"
 
     # zsh
-    overwrite_with_symlink "$CONFIG_HOME/zsh/_zshrc" "$HOME/.zshrc"
-    overwrite_with_symlink "$CONFIG_HOME/zsh/_zshwork" "$HOME/.zshwork"
-
+    overwrite_with_symlink "$CONFIG_HOME/_zshrc" "$HOME/.zshrc"
 }
 
 function setup_emacs {
