@@ -41,7 +41,7 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 source "$HOME/.aliases"
-source "$HOME/.zshwork"
+source "$HOME/.work"
 
 # zsh prompts
 function get_aws_profile_prompt {
