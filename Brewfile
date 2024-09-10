@@ -42,6 +42,7 @@ cask "firefox@nightly"
 cask "font-mononoki-nerd-font"
 cask "fuse-t"
 cask "google-drive"
+cask "hammerspoon"  # for alacritty drop-down
 # cask "iterm2@beta"
 # cask "keepassxc"
 cask "logi-options-plus"

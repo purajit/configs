@@ -96,8 +96,10 @@ function setup_screenshots_dir {
 }
 
 function setup_alacritty {
-    echo "Setting up Alacritty ..."
+    echo "Setting up Alacritty as a global terminal..."
     overwrite_with_symlink "$CONFIG_HOME/alacritty.toml" "$HOME/.config/alacritty.toml"
+    mkdir -p "$HOME/.hammerspoon/"
+    overwrite_with_symlink "$CONFIG_HOME/hammerspoon.lua" "$HOME/.hammerspoon/init.lua"
 }
 
 function setup_terraform {
