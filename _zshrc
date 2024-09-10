@@ -54,6 +54,7 @@ function get_aws_profile_prompt {
     if [[ "$AWS_PROFILE" == "" ]]; then
         return
     fi
+    # the cut is to get the suffix without the "namespace"/company name, to help shorten display
     echo " | %F{yellow} $(echo "$AWS_PROFILE" | cut -d- -f2-)%F{reset}"
 }
 
@@ -65,6 +66,7 @@ function get_k8s_context_prompt {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
+    # the cut is to just get the environment, so we can shorten the display
     echo " | %F{blue}󱃾 $(echo "$k8s_context" | cut -d- -f1)%F{reset}"
 }
 
@@ -72,17 +74,16 @@ function get_venv_prompt {
     echo "$VIRTUAL_ENV_PROMPT" | perl -ne "s/(..*)/ | %F{#336c9d} \1%F{reset}/g; print"
 }
 
-function git_current_branch() {
+
+function get_git_prompt {
   local ref
-  ref=$(git symbolic-ref --quiet HEAD 2> /dev/null)
+  ref="$(git symbolic-ref --quiet HEAD 2> /dev/null)"
   if [[ $? != 0 ]]; then
     return
   fi
-  echo "${ref#refs/heads/}"
-}
-
-function get_git_prompt {
-    echo "$(git_current_branch | cut -d- -f2- | perl -ne "s/(..*)/ | %F{#3fb951} \1%F{reset}/g; print")"
+  # TODO: make this more generic. Right now, the `cut` is to help shorten the branch name since
+  # I automatically add the datetime as prefix
+  echo "${ref#refs/heads/}" | cut -d- -f2- | perl -ne "s/(..*)/ | %F{#3fb951} \1%F{reset}/g; print"
 }
 
 setopt PROMPT_SUBST
