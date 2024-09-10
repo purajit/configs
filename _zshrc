@@ -65,7 +65,7 @@ function get_k8s_context_prompt {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
-    echo " | %F{blue}󱃾 $(echo "$k8s_context" | cut -d- -f1)"
+    echo " | %F{blue}󱃾 $(echo "$k8s_context" | cut -d- -f1)%F{reset}"
 }
 
 function get_venv_prompt {
@@ -88,4 +88,4 @@ function get_git_prompt {
 setopt PROMPT_SUBST
 PROMPT='
 %F{#3fb951}%D{%H:%M:%S %Z}  '
-RPROMPT='%F{#ffaf00}%~%F{reset}$(get_git_prompt)$(get_venv_prompt)$(get_aws_profile_prompt)$(get_k8s_context_prompt)'
+RPROMPT='%F{#ffaf00}%~%F{reset}$(get_git_prompt)$(get_venv_prompt)$(get_aws_profile_prompt)$(get_k8s_context_prompt)%F{reset}'
