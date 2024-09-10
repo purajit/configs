@@ -15,7 +15,8 @@ family = "Mononoki Nerd Font Propo"
 
 [window]
 option_as_alt = "Both"
-startup_mode = "Fullscreen"
+startup_mode = "Maximized"
+decorations = "None"
 
 [window.dimensions]
 columns = 200
