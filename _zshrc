@@ -23,10 +23,16 @@ autoload -Uz add-zsh-hook
 add-zsh-hook chpwd venv_manager_switch_venv
 
 # completions, and case-insensitive at that
+autoload -U compinit
+# https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2767420
+if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+   compinit;
+else
+  compinit -C;
+fi;
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-autoload -U compinit; compinit
-autoload -U +X bashcompinit && bashcompinit
 eval "$(fzf --zsh)"
+autoload -U +X bashcompinit && bashcompinit  # for `complete`
 complete -C "$(which aws_completer)" aws
 
 # tools and hooks - atuin, direnv, asdf, vivid colors for ls
@@ -69,16 +75,14 @@ function get_venv_prompt {
 function git_current_branch() {
   local ref
   ref=$(git symbolic-ref --quiet HEAD 2> /dev/null)
-  local ret=$?
-  if [[ $ret != 0 ]]; then
-    [[ $ret == 128 ]] && return  # no git repo.
-    ref=$(__git_prompt_git rev-parse --short HEAD 2> /dev/null) || return
+  if [[ $? != 0 ]]; then
+    return
   fi
-  echo ${ref#refs/heads/}
+  echo "${ref#refs/heads/}"
 }
 
 function get_git_prompt {
-    echo "$(git_current_branch | cut -d- -f2- | perl -ne "s/(..*)/ | %F{#3fb951}\1%F{reset}/g; print")"
+    echo "$(git_current_branch | cut -d- -f2- | perl -ne "s/(..*)/ | %F{#3fb951} \1%F{reset}/g; print")"
 }
 
 setopt PROMPT_SUBST

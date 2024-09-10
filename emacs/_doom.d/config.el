@@ -37,6 +37,8 @@
 
 (setq git-commit-summary-max-length 120)
 
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
 (setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
 (setq doom-theme 'doom-molokai)
 
