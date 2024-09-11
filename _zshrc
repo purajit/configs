@@ -1,3 +1,4 @@
+#!/bin/zsh -f
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$PATH"
 
@@ -30,8 +31,10 @@ if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
 else
   compinit -C;
 fi;
+
+# case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-eval "$(fzf --zsh)"
+
 autoload -U +X bashcompinit && bashcompinit  # for `complete`
 complete -C "$(which aws_completer)" aws
 
@@ -47,7 +50,7 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 source "$HOME/.aliases"
-source "$HOME/.work"
+[[ -f "$HOME/.zshlocal" ]] && source "$HOME/.zshlocal"
 
 # zsh prompts
 function get_aws_profile_prompt {

@@ -2,6 +2,14 @@
 CONFIG_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "$CONFIG_HOME"
 
+if [[ "$1" == "fresh" ]]; then
+    echo "Setting up from fresh! Will overwrite existing repos when needed"
+    IS_FRESH=true
+else
+    echo "Not a fresh run"
+    IS_FRESH=false
+fi
+
 # helpers
 function overwrite_with_symlink {
     if [[ -L "$2" ]] && [[ "$(readlink "$2")" == "$1" ]]; then
@@ -14,8 +22,9 @@ function overwrite_with_symlink {
 function clone_repo {
     repo="$1"
     folder="$(echo "$repo" | rev | cut -d/ -f1 | rev | cut -d. -f1)"
-    rm -rf "$HOME/code/$folder"
-    git clone "$repo" "$HOME/code/$folder"
+    [[ "$IS_FRESH" == "true" ]] \
+        && rm -rf "$HOME/code/$folder" \
+        && git clone "$repo" "$HOME/code/$folder"
 }
 
 # individual setup steps
@@ -36,12 +45,11 @@ function setup_shell {
 
     # common shell configs
     overwrite_with_symlink "$CONFIG_HOME/_aliases" "$HOME/.aliases"
-    overwrite_with_symlink "$CONFIG_HOME/_work" "$HOME/.work"
+    touch "$CONFIG_HOME/_zshlocal"
+    overwrite_with_symlink "$CONFIG_HOME/_zshlocal" "$HOME/.zshlocal"
 
     # tools
-    if [[ "$1" == "true" ]]; then
-        clone_repo "https://github.com/purajit/venv_manager.git"
-    fi
+    clone_repo "https://github.com/purajit/venv_manager.git"
     overwrite_with_symlink "$CONFIG_HOME/atuin-config.toml" "$HOME/.config/atuin/config.toml"
 
     # zsh
@@ -51,9 +59,7 @@ function setup_shell {
 function setup_emacs {
     echo "Setting up Emacs ..."
     rm -f "$HOME/.emacs" "$HOME/.emacs.d"
-    if [[ "$1" == "true" ]]; then
-        clone_repo "https://github.com/hlissner/doom-emacs"
-    fi
+    clone_repo "https://github.com/hlissner/doom-emacs"
 
     "$HOME/.config/emacs/bin/doom" install
     overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
@@ -139,34 +145,26 @@ function setup_defaults {
     defaults write org.p0deje.Maccy clipboardCheckInterval 2
 }
 
-if [[ "$1" == "fresh" ]]; then
-    echo "Setting up from fresh!"
-    is_fresh=true
-else
-    echo "Not a fresh run"
-    is_fresh=false
-fi
-
 # first, a package manager
-install_brew "$is_fresh"
-install_brewfile_formulae "$is_fresh"
+install_brew
+install_brewfile_formulae
 
 # then, the shell, terminal, editor
-setup_shell "$is_fresh"
-setup_alacritty "$is_fresh"
-# setup_iterm "$is_fresh"
-setup_emacs "$is_fresh"
-setup_hammerspoon "$is_fresh"
+setup_shell
+setup_alacritty
+# setup_iterm
+setup_emacs
+setup_hammerspoon
 
 # the rest
-setup_dot_config "$is_fresh"
-setup_git "$is_fresh"
-setup_ipython "$is_fresh"
-setup_screenshots_dir "$is_fresh"
-setup_ssh "$is_fresh"
-setup_terraform "$is_fresh"
-setup_tmux "$is_fresh"
-setup_utils "$is_fresh"
-setup_defaults "$is_fresh"
+setup_dot_config
+setup_git
+setup_ipython
+setup_screenshots_dir
+setup_ssh
+setup_terraform
+setup_tmux
+setup_utils
+setup_defaults
 
 echo "All done!"
