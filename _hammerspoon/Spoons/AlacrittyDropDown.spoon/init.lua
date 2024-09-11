@@ -34,17 +34,23 @@ function obj:bindHotkey(mods, key)
       -- has to be grabbed at runtime to get the running application
       local alacritty = hs.application.get(self.alacritty_bundle_id)
       if alacritty == nil then
-        print("Launch it")
         alacritty = hs.application.launchOrFocusByBundleID(self.alacritty_bundle_id)
         return
-      end
-      if alacritty:isFrontmost() then
+      elseif alacritty:isFrontmost() then
         alacritty:hide()
         return
       end
       local activeSpace = hs.spaces.activeSpaceOnScreen()
       local activeScreen = hs.mouse.getCurrentScreen()
       self:_moveWindow(alacritty, activeSpace, activeScreen)
+  end)
+
+  -- Hide alacritty if not in focus
+  hs.window.filter.default:subscribe(hs.window.filter.windowFocused, function(window, appName)
+    local alacritty = hs.application.get(self.alacritty_bundle_id)
+    if alacritty ~= nil then
+      alacritty:hide()
+    end
   end)
 end
 
