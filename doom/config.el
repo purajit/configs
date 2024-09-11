@@ -1,46 +1,75 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Place your private configuration here! Remember, you do not need to run 'doom
-;; sync' after modifying this file!
-
+;;;;;; KEYS
+;; option-as-meta, command-as-hyper
 (setq ns-command-modifier 'hyper)
 (setq mac-command-modifier 'hyper)
 (setq ns-option-modifier 'meta)
 (setq mac-option-modifier 'meta)
 (setq ns-function-modifier 'super)
-
+;; sensible defaults aka muscle memory
+(global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "C-c SPC") 'avy-goto-char-timer)
+(global-set-key (kbd "C-c C-g") 'magit-status)
 (global-unset-key (kbd "<magnify-up>"))
 (global-unset-key (kbd "<magnify-down>"))
-(global-set-key (kbd "M-g") 'goto-line)
+
+(setq org-directory "~/Documents/org/")
+
+;; use consult's buffer explorer and override default
 (global-set-key (kbd "C-x b") 'consult-buffer)
-(global-set-key (kbd "C-c d") '+lookup/definition)
-(global-set-key (kbd "C-o") 'better-jumper-jump-backward)
-
+(vertico-reverse-mode)
+(setq display-line-numbers-type t)
 (setq tab-always-indent t)
+(setq confirm-kill-emacs nil)
 
+;;;;;; CODING MODES
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
-
 (setq js-indent-level 2)
 (setq-default js2-basic-offset 2)
-
-(add-hook 'json-mode-hook (lambda ()
-                            (set (make-local-variable 'indent-line-function) 'js-indent-line)
-                            (set (make-local-variable 'indent-region-function) 'json-mode-beautify)))
-
+(add-hook
+ 'json-mode-hook
+ (lambda ()
+   (set (make-local-variable 'indent-line-function) 'js-indent-line)
+   (set (make-local-variable 'indent-region-function) 'json-mode-beautify)))
 (setq highlight-indent-guides-responsive 'top)
 (setq highlight-indent-guides-auto-character-face-perc '75)
 (setq highlight-indent-guides-auto-top-character-face-perc '300)
 
-;; (setq flycheck-emacs-lisp-load-path 'inherit)
-(vertico-reverse-mode)
-
-(setq git-commit-summary-max-length 120)
-
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+(after! git-commit
+  ;; 72 is the GitHub limit
+  (setq git-commit-summary-max-length 72))
 
 (setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
 (setq doom-theme 'doom-molokai)
+;; same as Alacritty
+(custom-set-faces
+  '(default ((t (:background "#15141b")))))
+(custom-set-faces
+  '(solaire-default-face ((t (:background "#15141b")))))
+
+(after! doom-modeline
+  (setq doom-modeline-height 25)
+  (setq doom-modeline-bar-width 3)
+
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-major-mode-icon t)
+  (setq doom-modeline-major-mode-color-icon t)
+  (setq doom-modeline-buffer-state-icon t)
+  (setq doom-modeline-buffer-modification-icon t)
+
+  (setq doom-modeline-buffer-encoding t)
+  (setq doom-modeline-env-version t)
+  (setq doom-modeline-indent-info nil)
+  (setq doom-modeline-minor-modes nil)
+  (setq doom-modeline-percent-position nil)
+
+  (setq doom-modeline-vcs-max-length 30)
+  ; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
+  (defun doom-modeline-vcs-name ()
+    "Display the vcs name."
+    (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
@@ -74,12 +103,9 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type t)
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/Documents/org/")
-
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
 ;; `after!' block, otherwise Doom's defaults may override your settings. E.g.

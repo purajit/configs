@@ -2,7 +2,7 @@
 term = "xterm-256color"
 
 [font]
-size = 17
+size = 16
 
 [font.bold]
 family = "Mononoki Nerd Font Propo"
