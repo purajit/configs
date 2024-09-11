@@ -96,10 +96,14 @@ function setup_screenshots_dir {
 }
 
 function setup_alacritty {
-    echo "Setting up Alacritty as a global terminal..."
+    echo "Setting up Alacritty ..."
     overwrite_with_symlink "$CONFIG_HOME/alacritty.toml" "$HOME/.config/alacritty.toml"
-    mkdir -p "$HOME/.hammerspoon/"
-    overwrite_with_symlink "$CONFIG_HOME/hammerspoon.lua" "$HOME/.hammerspoon/init.lua"
+}
+
+function setup_hammerspoon {
+    echo "Setting up Hammerspoon ..."
+    rm -rf "$HOME/.hammerspoon"
+    overwrite_with_symlink "$CONFIG_HOME/_hammerspoon" "$HOME/.hammerspoon"
 }
 
 function setup_terraform {
@@ -148,6 +152,7 @@ setup_shell "$is_fresh"
 setup_alacritty "$is_fresh"
 # setup_iterm "$is_fresh"
 setup_emacs "$is_fresh"
+setup_hammerspoon "$is_fresh"
 
 # the rest
 setup_dot_config "$is_fresh"

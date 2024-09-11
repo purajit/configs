@@ -47,7 +47,7 @@ cask "hammerspoon"  # for alacritty drop-down
 # cask "keepassxc"
 cask "logi-options-plus"
 cask "maccy"
-cask "rectangle"
+# cask "rectangle"  # replaced with Hammerspoon
 cask "signal"
 cask "steam"
 
