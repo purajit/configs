@@ -52,6 +52,8 @@ fi
 source "$HOME/.aliases"
 [[ -f "$HOME/.zshlocal" ]] && source "$HOME/.zshlocal"
 
+export COLIMA_SAVE_CONFIG=0
+
 # zsh prompts
 function get_aws_profile_prompt {
     if [[ "$AWS_PROFILE" == "" ]]; then
