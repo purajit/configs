@@ -9,7 +9,6 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
 
-(package! ace-jump-mode)
 (package! ruff-format)
 
 ;; To install a package directly from a remote git repo, you must specify a
