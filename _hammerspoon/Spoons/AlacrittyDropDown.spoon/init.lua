@@ -10,7 +10,7 @@ obj.author = "purajit"
 obj.homepage = "https://gist.github.com/truebit/31396bb2f48c75285d724c9e9e037bcd"
 obj.license = ""
 
-obj.alacritty_bundle_id = 'org.alacritty'
+obj.alacritty_bundle_id = "org.alacritty"
 
 -- move Alacritty to active space
 function obj:_moveWindow(alacritty, activeSpace, activeScreen)

@@ -7,7 +7,7 @@ alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\
 wifi_or_ethernet() {
     [[ "$(route -n get 0.0.0.0 | grep '^ *interface: ' | rev | cut -d' ' -f1 | rev)" != "en7" ]] \
         && echo "Ethernet" \
-        || echo "Wi-Fi"
+        || echo "WiFi"
 }
 
 updatedb() {

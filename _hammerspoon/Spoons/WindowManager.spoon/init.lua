@@ -29,9 +29,9 @@ function obj:_nextStep(dim, movingToFarSide, cb)
     local screen = win:screen()
     local cell = hs.grid.get(win, screen)
 
-    local axis = dim == 'w' and 'x' or 'y'
-    local oppositeAxis = axis == 'x' and 'y' or 'x'
-    local oppositeDim = dim == 'w' and 'h' or 'w'
+    local axis = dim == "w" and "x" or "y"
+    local oppositeAxis = axis == "x" and "y" or "x"
+    local oppositeDim = dim == "w" and "h" or "w"
 
     local movingFromNearToFarSide = movingToFarSide and cell[axis] == 0
     local movingFromFarToNearSide = (not movingToFarSide) and cell[axis] + cell[dim] == self.grid
@@ -66,19 +66,19 @@ function obj:bindHotkeys(mapping)
   print("Bind hotkeys for Window Manager")
 
   hs.hotkey.bind(self.windowManagerKey, mapping.left, function ()
-    self:_nextStep('w', false)
+    self:_nextStep("w", false)
   end)
 
   hs.hotkey.bind(self.windowManagerKey, mapping.right, function ()
-    self:_nextStep('w', true)
+    self:_nextStep("w", true)
   end)
 
   hs.hotkey.bind(self.windowManagerKey, mapping.up, function ()
-    self:_nextStep('h', false)
+    self:_nextStep("h", false)
   end)
 
   hs.hotkey.bind(self.windowManagerKey, mapping.down, function ()
-    self:_nextStep('h', true)
+    self:_nextStep("h", true)
   end)
 
   hs.hotkey.bind(self.windowManagerKey, mapping.fullscreen, function ()
@@ -89,7 +89,7 @@ end
 
 function obj:init()
   print("Initializing Window Manager")
-  hs.grid.setGrid(self.grid .. 'x' .. obj.grid)
+  hs.grid.setGrid(self.grid .. "x" .. obj.grid)
   hs.grid.MARGINX = 0
   hs.grid.MARGINY = 0
 end
