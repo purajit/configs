@@ -135,6 +135,10 @@ function setup_dot_config {
     overwrite_with_symlink "$CONFIG_HOME/gh-dash-config.yml" "$HOME/.config/gh-dash/config.yml"
 }
 
+function setup_defaults {
+    defaults write org.p0deje.Maccy clipboardCheckInterval 2
+}
+
 if [[ "$1" == "fresh" ]]; then
     echo "Setting up from fresh!"
     is_fresh=true
@@ -163,5 +167,6 @@ setup_ssh "$is_fresh"
 setup_terraform "$is_fresh"
 setup_tmux "$is_fresh"
 setup_utils "$is_fresh"
+setup_defaults "$is_fresh"
 
 echo "All done!"
