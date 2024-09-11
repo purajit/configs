@@ -63,10 +63,11 @@ function setup_emacs {
 
     "$HOME/.config/emacs/bin/doom" install
     overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
+    overwrite_with_symlink "$CONFIG_HOME/doom" "$HOME/.config/doom"
     "$HOME/.config/emacs/bin/doom" sync
 
     # run emacs server on startup
-    overwrite_with_symlink "$CONFIG_HOME/emacs/launchd" "$HOME/Library/LaunchAgents/gnu.emacs.daemon.plist"
+    overwrite_with_symlink "$CONFIG_HOME/emacs_launchd" "$HOME/Library/LaunchAgents/gnu.emacs.daemon.plist"
     if ! launchctl list gnu.emacs.daemon 1>/dev/null; then
         launchctl load -w "$HOME/Library/LaunchAgents/gnu.emacs.daemon.plist"
     fi
