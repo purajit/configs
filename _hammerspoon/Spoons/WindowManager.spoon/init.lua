@@ -1,6 +1,4 @@
---- Inspired by https://github.com/miromannino/miro-windows-manager
-
-local obj={}
+local obj = {}
 obj.__index = obj
 
 -- Metadata
@@ -11,7 +9,7 @@ obj.homepage = ""
 obj.license = ""
 
 -- number of cells to divide the screen into, in both directions
--- 6 is chosen as the default since it can divide as halfs and thirds
+-- 6 is chosen as the default since it can divide into halfs and thirds
 obj.grid = 6
 
 --- the number of cells windows are allowed to occupy
@@ -84,7 +82,6 @@ function obj:bindHotkeys(mapping)
   hs.hotkey.bind(self.windowManagerKey, mapping.fullscreen, function ()
     self:_goFullscreen()
   end)
-
 end
 
 function obj:init()

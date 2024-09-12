@@ -6,6 +6,12 @@ if [ "$TMUX" = "" ]; then
   tmux new-session -A -s main
 fi
 
+# word-splitting characters, notably leaving out -_^.
+WORDCHARS=' :*?[]~=&;!#$%(){}<>/'
+autoload -Uz select-word-style
+select-word-style normal
+zstyle ':zle:*' word-style unspecified
+
 # zsh syntax highlighting; make -/-- options dimmer
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets regexp)
 typeset -A ZSH_HIGHLIGHT_REGEXP
@@ -38,11 +44,12 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 autoload -U +X bashcompinit && bashcompinit  # for `complete`
 complete -C "$(which aws_completer)" aws
 
-# tools and hooks - atuin, direnv, asdf, vivid colors for ls
+# tools and hooks - atuin, direnv, asdf, ls colors
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 source "$(brew --prefix asdf)/libexec/asdf.sh"
-export LS_COLORS="$(vivid generate lava)"
+# requires gnu ls
+export LS_COLORS='ow=36:di=34:fi=32:ex=31:ln=35:'
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
