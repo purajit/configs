@@ -1,6 +1,6 @@
 #!/bin/zsh -f
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$PATH"
+
+source "$HOME/.zprofile"
 
 if [ "$TMUX" = "" ]; then
   tmux new-session -A -s main
@@ -51,15 +51,8 @@ source "$(brew --prefix asdf)/libexec/asdf.sh"
 # requires gnu ls
 export LS_COLORS='ow=36:di=34:fi=32:ex=31:ln=35:'
 
-# rust
-if [[ -f "$HOME/.cargo/env" ]]; then
-  . "$HOME/.cargo/env"
-fi
-
 source "$HOME/.aliases"
 [[ -f "$HOME/.zshlocal" ]] && source "$HOME/.zshlocal"
-
-export COLIMA_SAVE_CONFIG=0
 
 # zsh prompts
 function get_aws_profile_prompt {
