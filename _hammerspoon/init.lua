@@ -8,8 +8,10 @@ hs.console.consoleCommandColor { white = 1 }
 hs.console.consoleResultColor(hs.drawing.color.asRGB { hex = "#8ec07c" })
 
 -- set up hammerspoon automations
-hs.loadSpoon("AlacrittyDropDown")
-spoon.AlacrittyDropDown:bindHotkey({"control", "shift"}, "space")
+hs.loadSpoon("ApplicationDropDown")
+spoon.ApplicationDropDown.application_bundle_id = "org.alacritty"
+spoon.ApplicationDropDown.application_window_title = "Alacritty"
+spoon.ApplicationDropDown:bindHotkey({"control", "shift"}, "space")
 
 hs.loadSpoon("WindowManager")
 hs.window.animationDuration = 0

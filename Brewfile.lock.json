@@ -8,10 +8,10 @@
         "revision": "057d1202c4ac9d4059909260af8d13e20fbf8cab"
       },
       "d12frosted/emacs-plus": {
-        "revision": "323d86b2685a2420341e648bbc6c7b7c02029fa9"
+        "revision": "c6e5ad1b96570fbe3487d0ed94b5275b02b0b768"
       },
       "macos-fuse-t/cask": {
-        "revision": "ffeb9c00d26693d2437651d964dc408cfc190b00"
+        "revision": "2193e332ef378d078ceba47526b6c4ae243855e3"
       },
       "homebrew/bundle": {
         "revision": "acfb8210d4366ff63fa23d6a7a8ddbacd0234532"
@@ -274,6 +274,11 @@
           "rebuild": 0,
           "root_url": "https://ghcr.io/v2/homebrew/core",
           "files": {
+            "arm64_sequoia": {
+              "cellar": "/opt/homebrew/Cellar",
+              "url": "https://ghcr.io/v2/homebrew/core/pdsh/blobs/sha256:4f305e8c05c690c64f73c73e4a845f21d4bbafe7d0e15e96fb4c5e2833f455c9",
+              "sha256": "4f305e8c05c690c64f73c73e4a845f21d4bbafe7d0e15e96fb4c5e2833f455c9"
+            },
             "arm64_sonoma": {
               "cellar": "/opt/homebrew/Cellar",
               "url": "https://ghcr.io/v2/homebrew/core/pdsh/blobs/sha256:e00a802e4fbdbbe512b3222a15da104ff75a5f35beb28fed5a6239f9b4cf0476",
@@ -1479,7 +1484,7 @@
         }
       },
       "fuse-t": {
-        "version": "1.0.35",
+        "version": "1.0.40",
         "options": {
           "full_name": "fuse-t"
         }
@@ -1545,7 +1550,7 @@
         }
       },
       "signal": {
-        "version": "7.1.1",
+        "version": "7.23.0",
         "options": {
           "full_name": "signal"
         }
@@ -1627,7 +1632,7 @@
       },
       "Parcel": {
         "id": "639968404",
-        "version": "7.10"
+        "version": "7.11"
       },
       "Paste": {
         "id": "967805235",
@@ -1646,12 +1651,12 @@
         "macOS": "13.4.1"
       },
       "sonoma": {
-        "HOMEBREW_VERSION": "4.3.20-77-g0fb4d51",
+        "HOMEBREW_VERSION": "4.3.20",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
         "CLT": "15.3.0.0.1.1708646388",
         "Xcode": "15.4",
-        "macOS": "14.5"
+        "macOS": "14.4.1"
       }
     }
   }
