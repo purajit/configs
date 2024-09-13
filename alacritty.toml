@@ -53,7 +53,7 @@ decorations = "None"
 
 # Colors come from chrisduerr's config
 [colors.primary]
-foreground = "#cccccc"  # was originally aaaaaa, too dull
+foreground = "#aaaaaa"
 background = "#181818"
 
 [colors.normal]
