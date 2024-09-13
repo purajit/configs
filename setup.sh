@@ -64,6 +64,7 @@ function setup_shell {
     overwrite_with_symlink "$CONFIG_HOME/atuin-config.toml" "$HOME/.config/atuin/config.toml"
 
     # ls colors via vivid + trapd00r
+    overwrite_with_symlink "$CONFIG_HOME/_lscolors" "$HOME/.lscolors"
     mkdir -p "$HOME/.config/vivid/themes"
     overwrite_with_symlink "$CONFIG_HOME/vivid_trapd00r.yml" "$HOME/.config/vivid/themes/trapd00r.yml"
 
