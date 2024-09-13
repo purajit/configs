@@ -9,9 +9,10 @@ RESET='\033[0m'
 printf "Beginning configuration setup\n"
 printf -- "- Using ${PURPLE}${CONFIG_HOME}${RESET}\n"
 if [[ "$RECLONE" == "1" ]]; then
-    printf "- ${RED}Will overwrite existing repos when needed${RESET}\n"
+    printf -- "- ${RED}Will overwrite existing repos when needed${RESET}\n"
 fi
 printf "\n"
+
 # helpers
 function overwrite_with_symlink {
     # set -x
@@ -46,9 +47,6 @@ function setup_brew {
         printf "│ ${YELLOW} ${RESET} Installing Homebrew\n"
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     fi
-}
-
-function setup_brewfile {
     brew update
     brew bundle --file="$CONFIG_HOME/Brewfile"
     brew doctor
@@ -61,9 +59,13 @@ function setup_shell {
     printf "│ ${GREEN}${RESET} $CONFIG_HOME/_zshlocal ready\n"
     overwrite_with_symlink "$CONFIG_HOME/_zshlocal" "$HOME/.zshlocal"
 
-    # tools
+    # shell tools
     clone_repo "https://github.com/purajit/venv_manager.git"
     overwrite_with_symlink "$CONFIG_HOME/atuin-config.toml" "$HOME/.config/atuin/config.toml"
+
+    # ls colors via vivid + trapd00r
+    mkdir -p "$HOME/.config/vivid/themes"
+    overwrite_with_symlink "$CONFIG_HOME/vivid_trapd00r.yml" "$HOME/.config/vivid/themes/trapd00r.yml"
 
     # zsh
     overwrite_with_symlink "$CONFIG_HOME/_zshrc" "$HOME/.zshrc"
@@ -157,7 +159,6 @@ function setup_defaults {
 ALL_MODULES=(
     # first, a package manager
     "brew"
-    "brewfile"
     # then, the shell, terminal, editor
     "shell"
     "alacritty"
@@ -182,9 +183,6 @@ for module in "${modules[@]}"; do
     if [ "$module" = "brew" ]; then
         printf "${YELLOW}${RESET}\n"
         setup_brew
-    elif [ "$module" = "brewfile" ]; then
-        printf "${YELLOW}  ${RESET}\n"
-        setup_brewfile
     elif [ "$module" = "shell" ]; then
         printf "${YELLOW}  ${RESET}\n"
         setup_shell

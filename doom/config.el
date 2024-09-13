@@ -45,9 +45,9 @@
 (setq doom-theme 'doom-molokai)
 ;; same as Alacritty
 (custom-set-faces
-  '(default ((t (:background "#15141b")))))
+  '(default ((t (:background "#181818")))))
 (custom-set-faces
-  '(solaire-default-face ((t (:background "#15141b")))))
+  '(solaire-default-face ((t (:background "#181818")))))
 
 (after! doom-modeline
   (setq doom-modeline-height 25)
@@ -72,6 +72,11 @@
     (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
 
 (select-frame-set-input-focus (selected-frame))
+(setq menu-bar-mode nil)
+(global-anzu-mode +1)
+(anzu-mode +1)
+(global-set-key [remap query-replace] 'anzu-query-replace)
+(global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
 
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets. It is optional.
