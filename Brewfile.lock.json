@@ -230,6 +230,11 @@
           "rebuild": 0,
           "root_url": "https://ghcr.io/v2/homebrew/core",
           "files": {
+            "arm64_sequoia": {
+              "cellar": "/opt/homebrew/Cellar",
+              "url": "https://ghcr.io/v2/homebrew/core/graphviz/blobs/sha256:9ccd668bdff612a554d3c7e44c599f143e640479a98d1b03ef63c205d05f648b",
+              "sha256": "9ccd668bdff612a554d3c7e44c599f143e640479a98d1b03ef63c205d05f648b"
+            },
             "arm64_sonoma": {
               "cellar": "/opt/homebrew/Cellar",
               "url": "https://ghcr.io/v2/homebrew/core/graphviz/blobs/sha256:dd45b9ea58f4baa6813c807ea0416f302faa5e1069f8a8143044d5bd89a3aa83",
@@ -695,6 +700,11 @@
           "rebuild": 0,
           "root_url": "https://ghcr.io/v2/homebrew/core",
           "files": {
+            "arm64_sequoia": {
+              "cellar": "/opt/homebrew/Cellar",
+              "url": "https://ghcr.io/v2/homebrew/core/ffmpeg/blobs/sha256:2faaab4e6eea2c77509ac0ff80b9d491b1cfffdaf33eb218541b9c31a10cde32",
+              "sha256": "2faaab4e6eea2c77509ac0ff80b9d491b1cfffdaf33eb218541b9c31a10cde32"
+            },
             "arm64_sonoma": {
               "cellar": "/opt/homebrew/Cellar",
               "url": "https://ghcr.io/v2/homebrew/core/ffmpeg/blobs/sha256:12453b675bcd28141bd0d477b74632ce63978ce479b12b608d73c8e64715c71a",
@@ -1209,8 +1219,7 @@
         "options": {
           "args": [
             "with-native-comp"
-          ],
-          "restart_service": true
+          ]
         }
       },
       "wtfutil": {
@@ -1657,12 +1666,12 @@
         "macOS": "13.4.1"
       },
       "sonoma": {
-        "HOMEBREW_VERSION": "4.3.21",
+        "HOMEBREW_VERSION": "4.3.21-4-gfd7f2bb",
         "HOMEBREW_PREFIX": "/opt/homebrew",
         "Homebrew/homebrew-core": "api",
         "CLT": "15.3.0.0.1.1708646388",
         "Xcode": "15.4",
-        "macOS": "14.4.1"
+        "macOS": "14.5"
       }
     }
   }
