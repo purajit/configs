@@ -152,6 +152,11 @@ function setup_defaults {
 function setup_misc {
     printf "%s󱁢 m 󰅟  i    s  󰹑    c    🦀%s\n" "${YELLOW}" "${RESET}"
 
+    if brew list rust &>/dev/null; then
+        brew uninstall rust
+        printf "│ %s%s Uninstalled Brew-maintained rust toolchain (in favor of rustup)\n" "${GREEN}" "${RESET}"
+    fi
+
     if command -v cargo &>/dev/null; then
         printf "│ %s%s Rust 🦀 toolchain already installed\n" "${GREEN}" "${RESET}"
     else
