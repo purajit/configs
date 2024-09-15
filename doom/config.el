@@ -4,6 +4,7 @@
 (setq user-full-name "purajit")
 ;; (setq user-mail-address "")
 
+
 ;;;;;; KEYS
 ;; option-as-meta, command-as-hyper
 (setq ns-command-modifier 'hyper)
@@ -56,15 +57,15 @@
 (setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
 (setq doom-theme 'doom-tomorrow-night)
 (custom-set-faces
-  '(default ((t (:background "#181818")))))
-(custom-set-faces
-  '(solaire-default-face ((t (:background "#181818")))))
+ '(default ((t (:background "#181818"))))
+ '(solaire-default-face ((t (:background "#181818")))))
 ;; bring GUI window opened from terminal to focus
 (select-frame-set-input-focus (selected-frame))
 (setq default-frame-alist '((left . 0) (width . 120) (fullscreen . fullheight)))
 ;; Prevents some cases of Emacs flickering.
 (add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
 ;; line numbers are a _massive_ hit to performance
 (setq display-line-numbers-type nil)
 ;; to get search result counts in modeline
@@ -88,7 +89,7 @@
   (setq doom-modeline-percent-position nil)
 
   (setq doom-modeline-vcs-max-length 30)
-  ; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
+  ;; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
   (defun doom-modeline-vcs-name ()
     "Display the vcs name."
     (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
