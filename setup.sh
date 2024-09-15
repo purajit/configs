@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-CONFIG_HOME="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CONFIG_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RED=$'\033[0;31m'
 GREEN=$'\033[0;32m'
 YELLOW=$'\033[0;33m'
@@ -54,7 +54,7 @@ function setup_init {
 
 function setup_brew {
     printf "%s  Brew, bundles%s\n" "${YELLOW}" "${RESET}"
-    if command -v brew &> /dev/null; then
+    if command -v brew &>/dev/null; then
         printf "│ %s%s Homebrew already installed\n" "${GREEN}" "${RESET}"
     else
         printf "│ %s %s Installing Homebrew\n" "${YELLOW}" "${RESET}"
@@ -150,7 +150,19 @@ function setup_defaults {
 }
 
 function setup_misc {
-    printf "%s󱁢 m 󰅟  i    s  󰹑    c   %s\n" "${YELLOW}" "${RESET}"
+    printf "%s󱁢 m 󰅟  i    s  󰹑    c    🦀%s\n" "${YELLOW}" "${RESET}"
+
+    if brew list rust &>/dev/null; then
+        brew uninstall rust
+        printf "│ %s%s Uninstalled Brew-maintained rust toolchain (in favor of rustup)\n" "${GREEN}" "${RESET}"
+    fi
+
+    if command -v cargo &>/dev/null; then
+        printf "│ %s%s Rust 🦀 toolchain already installed\n" "${GREEN}" "${RESET}"
+    else
+        printf "│ %s %s Running rustup\n" "${YELLOW}" "${RESET}"
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+    fi
 
     mkdir -p "${HOME}/.ipython/profile_default/"
     overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"
@@ -169,7 +181,7 @@ ALL_MODULES=(
     "init"
     # first, a package manager
     "brew"
-    # then, the shell, terminal, editor
+    # then, the shell, terminal, editor, basic automation
     "shell"
     "automation"
     "emacs"

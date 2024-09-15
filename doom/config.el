@@ -25,9 +25,10 @@
 (global-set-key (kbd "C-x b") 'consult-buffer)
 (setq tab-always-indent t)
 
-
 ;;;;;; CODING MODES
 (setq doom-scratch-initial-major-mode 'text-mode)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(setq electric-indent-mode t)
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 (setq js-indent-level 2)

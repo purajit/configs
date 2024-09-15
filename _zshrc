@@ -50,10 +50,9 @@ zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 
 autoload -U +X bashcompinit && bashcompinit  # for `complete`
 complete -C "$(which aws_completer)" aws
 
-# tools and hooks - atuin, direnv, asdf, ls colors
+# tools and hooks - atuin, direnv, ls colors
 eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
-source "$(brew --prefix asdf)/libexec/asdf.sh"
 source ~/.lscolors
 
 source "$HOME/.aliases"
