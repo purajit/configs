@@ -55,9 +55,16 @@ function obj:_next_step(direction)
   local moving_from_far_to_near_side = (not moving_to_far_side) and cell[axis] + cell[dim] == self.grid
   local moving_to_opposite_side = moving_from_near_to_far_side or moving_from_far_to_near_side
 
-  -- use the starting size if we're moving to the opposite side or haven't adjusted it before, otherwise
-  -- cycle through the valid options
-  local next_size = moving_to_opposite_side and self.sizes[0] or (self.sizes[cell[dim]] or self.sizes[0])
+  -- shape the window the default size,
+  -- unless the current size already conforms to our grid AND
+  -- * we're moving to the opposite size (keep the same size)
+  -- * we're staying on the same side (go to the next step)
+  local next_size = self.sizes[0]
+  if self.sizes[cell[dim]] and moving_to_opposite_side then
+    next_size = cell[dim]
+  elseif self.sizes[cell[dim]] and not moving_to_opposite_side then
+    next_size = self.sizes[cell[dim]]
+  end
 
   cell[dim] = next_size
   cell[axis] = moving_to_far_side and (self.grid - next_size) or 0
