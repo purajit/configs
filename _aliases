@@ -10,7 +10,7 @@ alias homer='cd ~/code/random'
 alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
 
 updatedb() {
-    ( cd / && sudo /usr/libexec/locate.updatedb )
+    (cd / && sudo /usr/libexec/locate.updatedb)
 }
 
 ## EMACS
@@ -18,7 +18,7 @@ alias start_emacs='emacs --daemon'
 alias kill_emacs='emacsclient -e "(kill-emacs)"'
 export EDITOR="emacsclient -t"
 e() {
-    ( emacsclient $1 -c & )
+    (emacsclient $1 -c &)
 }
 alias et='emacsclient -t'
 
@@ -39,47 +39,30 @@ function get_trunk {
     git remote show origin | sed -n '/HEAD branch/s/.*: //p'
 }
 
-alias gita='git commit -am update'
-alias gitamend='git commit -a --amend --no-edit'
-alias gits='git status'
-alias gitsh='git show | cat'
-alias gitshf='git show --name-only | cat'
-alias gitsw='git checkout -'
-alias gtu='gh pr create'
-alias gtud='gh pr create --draft'
-alias gitmc='git commit --no-verify --no-edit'
+alias gtu='gh pr create --draft'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
-alias git-undo-amend='git reset --soft HEAD@{1}'
-
-function gitallrepobranches() {
-    local _pwd="$PWD"
-    for repo in ~/code/*; do
-        if [ -d "$repo" ] && [ -d "$repo/.git" ]; then
-            cd "$repo"
-            if [ -n "$(git status --porcelain)" ]; then
-                echo "$repo !!"
-            else
-                echo $repo
-            fi
-            gitb_output="$(gitb)"
-            if [ $(echo "$gitb_output" | grep -v "^[\* ] main$" | grep -v "^[\* ] master$" | wc -l) -lt 1  ]; then
-                echo
-                continue
-            fi
-            echo "$gitb_output" && echo
-        fi
-    done
-    cd "$_pwd"
-}
 
 function gitsummary() {
-    find ~/code -name .git -maxdepth 2 -execdir bash -c 'echo -en "\033[1;31m"repo: "\033[1;34m"; basename "`git rev-parse --show-toplevel`"; git branch && git status -s' \;
+    for dot_git in $(find ~/code -name .git -maxdepth 2 | sort); do
+        repo_root="$(dirname "${dot_git}")"
+        repo_name="$(basename "${repo_root}")"
+        printf "%srepo: %s%s%s" $'\033[1;31m' $'\033[1;34m' $'\033[0m' "${repo_name}"
+        branches="$(git -C "${repo_root}" branch | grep -v "^[\* ] main$" | grep -v "^[\* ] master$")"
+        if [ "$(echo -n "$branches" | wc -l)" -lt 1 ]; then
+            printf "\n\n"
+            continue
+        else
+            printf "\n%s\n\n" "$branches"
+        fi
+    done
 }
 
 function gitr {
     trunk="$(get_trunk)"
-    git checkout "$trunk"; git pull origin "$trunk"; git checkout -;
-    command -v gst &> /dev/null && gst sync
+    git checkout "$trunk"
+    git pull origin "$trunk"
+    git checkout -
+    gst sync
 }
 
 function gitb {
@@ -96,7 +79,7 @@ function gitb {
         from_branch="$(get_trunk)"
     fi
 
-    if command -v gst &> /dev/null; then
+    if command -v gst &>/dev/null; then
         gst b "$new_branch_name" "$from_branch"
     else
         if [[ "$from_branch" == "." ]]; then
@@ -119,7 +102,7 @@ alias tfp='terraform plan'
 
 ## VIDEO GAME HELPERS
 function factorio_upload {
-    cp "~/Library/Application Support/factorio/saves/$1.zip"  "/Volumes/GoogleDrive/My Drive/Personal/factorio-saves/"
+    cp "~/Library/Application Support/factorio/saves/$1.zip" "/Volumes/GoogleDrive/My Drive/Personal/factorio-saves/"
 }
 
 function dont_starve_upload {
@@ -133,13 +116,33 @@ function fix_itb {
 
 function man() {
     env \
-        LESS_TERMCAP_mb=$(tput bold; tput setaf 1) \
-        LESS_TERMCAP_md=$(tput bold; tput setaf 208) \
+        LESS_TERMCAP_mb=$(
+            tput bold
+            tput setaf 1
+        ) \
+        LESS_TERMCAP_md=$(
+            tput bold
+            tput setaf 208
+        ) \
         LESS_TERMCAP_me=$(tput sgr0) \
-        LESS_TERMCAP_so=$(tput bold; tput setaf black; tput setab 3) \
-        LESS_TERMCAP_se=$(tput rmso; tput sgr0) \
-        LESS_TERMCAP_us=$(tput smul; tput dim; tput setaf 7) \
-        LESS_TERMCAP_ue=$(tput rmul; tput sgr0) \
+        LESS_TERMCAP_so=$(
+            tput bold
+            tput setaf black
+            tput setab 3
+        ) \
+        LESS_TERMCAP_se=$(
+            tput rmso
+            tput sgr0
+        ) \
+        LESS_TERMCAP_us=$(
+            tput smul
+            tput dim
+            tput setaf 7
+        ) \
+        LESS_TERMCAP_ue=$(
+            tput rmul
+            tput sgr0
+        ) \
         LESS_TERMCAP_mr=$(tput rev) \
         LESS_TERMCAP_mh=$(tput dim) \
         LESS_TERMCAP_ZN=$(tput ssubm) \

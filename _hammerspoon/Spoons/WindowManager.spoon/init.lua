@@ -18,37 +18,57 @@ obj.grid = 6
 obj.sizes = {[0]=3, [3]=2, [2]=4, [4]=3}
 
 -- the modifier keys to trigger Window Manager
-obj.windowManagerKey = {"cmd", "alt"}
+obj.window_manager_key = {"cmd", "alt"}
 
-function obj:_nextStep(dim, movingToFarSide, cb)
-  if hs.window.focusedWindow() then
-    local win = hs.window.frontmostWindow()
-    local id = win:id()
-    local screen = win:screen()
-    local cell = hs.grid.get(win, screen)
+local direction_to_dimension = {
+  ["left"] = "w",
+  ["right"] = "w",
+  ["up"] = "h",
+  ["down"] = "h",
+}
 
-    local axis = dim == "w" and "x" or "y"
-    local oppositeAxis = axis == "x" and "y" or "x"
-    local oppositeDim = dim == "w" and "h" or "w"
+-- the "far" side is the side away from the (0,0) origin
+-- the origin is the top left of the screen
+-- for the horizontal x axis, "right" is the far side
+-- for the vertical y axis, "down" is the far side
+local direction_is_far_side = {
+  ["left"] = false,
+  ["right"] = true,
+  ["up"] = false,
+  ["down"] = true,
+}
 
-    local movingFromNearToFarSide = movingToFarSide and cell[axis] == 0
-    local movingFromFarToNearSide = (not movingToFarSide) and cell[axis] + cell[dim] == self.grid
-    local movingToOppositeSide = movingFromNearToFarSide or movingFromFarToNearSide
-
-    -- use the starting size if we're moving to the opposite side or haven't adjusted it before
-    local nextSize = movingToOppositeSide and self.sizes[0] or (self.sizes[cell[dim]] or self.sizes[0])
-
-    cell[dim] = nextSize
-    cell[axis] = movingToFarSide and (self.grid - nextSize) / 1.0 or 0
-    hs.grid.set(win, cell, screen)
+function obj:_next_step(direction)
+  if not hs.window.focusedWindow() then
+    return
   end
+
+  local dim = direction_to_dimension[direction]
+  local moving_to_far_side = direction_is_far_side[direction]
+  local axis = dim == "w" and "x" or "y"
+
+  local window = hs.window.frontmostWindow()
+  local screen = window:screen()
+  local cell = hs.grid.get(window, screen)
+
+  local moving_from_near_to_far_side = moving_to_far_side and cell[axis] == 0
+  local moving_from_far_to_near_side = (not moving_to_far_side) and cell[axis] + cell[dim] == self.grid
+  local moving_to_opposite_side = moving_from_near_to_far_side or moving_from_far_to_near_side
+
+  -- use the starting size if we're moving to the opposite side or haven't adjusted it before, otherwise
+  -- cycle through the valid options
+  local next_size = moving_to_opposite_side and self.sizes[0] or (self.sizes[cell[dim]] or self.sizes[0])
+
+  cell[dim] = next_size
+  cell[axis] = moving_to_far_side and (self.grid - next_size) or 0
+  hs.grid.set(window, cell, screen)
 end
 
-function obj:_goFullscreen()
-  if hs.window.focusedWindow() then
-    local win = hs.window.frontmostWindow()
-    hs.grid.maximizeWindow(win)
+function obj:_go_fullscreen()
+  if not hs.window.focusedWindow() then
+    return
   end
+  hs.grid.maximizeWindow(hs.window.frontmostWindow())
 end
 
 --- Example:
@@ -63,24 +83,24 @@ function obj:bindHotkeys(mapping)
   hs.inspect(mapping)
   print("Bind hotkeys for Window Manager")
 
-  hs.hotkey.bind(self.windowManagerKey, mapping.left, function ()
-    self:_nextStep("w", false)
+  hs.hotkey.bind(self.window_manager_key, mapping.left, function ()
+    self:_next_step("left")
   end)
 
-  hs.hotkey.bind(self.windowManagerKey, mapping.right, function ()
-    self:_nextStep("w", true)
+  hs.hotkey.bind(self.window_manager_key, mapping.right, function ()
+    self:_next_step("right")
   end)
 
-  hs.hotkey.bind(self.windowManagerKey, mapping.up, function ()
-    self:_nextStep("h", false)
+  hs.hotkey.bind(self.window_manager_key, mapping.up, function ()
+    self:_next_step("up")
   end)
 
-  hs.hotkey.bind(self.windowManagerKey, mapping.down, function ()
-    self:_nextStep("h", true)
+  hs.hotkey.bind(self.window_manager_key, mapping.down, function ()
+    self:_next_step("down")
   end)
 
-  hs.hotkey.bind(self.windowManagerKey, mapping.fullscreen, function ()
-    self:_goFullscreen()
+  hs.hotkey.bind(self.window_manager_key, mapping.fullscreen, function ()
+    self:_go_fullscreen()
   end)
 end
 

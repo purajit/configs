@@ -109,6 +109,11 @@ function setup_shell {
 
     # Alacritty
     overwrite_with_symlink "${CONFIG_HOME}/alacritty.toml" "${HOME}/.config/alacritty.toml"
+    # Replace icon
+    rm /Applications/Alacritty.app/Contents/Resources/alacritty.icns
+    cp "${CONFIG_HOME}/alacritty.icns" /Applications/Alacritty.app/Contents/Resources/alacritty.icns
+    touch /Applications/Alacritty.app
+    printf "│ %s%s Replaced Alacritty icon\n" "${GREEN}" "${RESET}"
 }
 
 function setup_automation {
@@ -146,7 +151,9 @@ function setup_defaults {
 
     # at the end
     killall SystemUIServer
-    printf "│ %s%s Restarted SystemUIServer so certain defaults go into effect\n" "${GREEN}" "${RESET}"
+    killall Finder
+    killall Dock
+    printf "│ %s%s Restarted UI elements so certain changes go into effect\n" "${GREEN}" "${RESET}"
 }
 
 function setup_misc {
