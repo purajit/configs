@@ -68,7 +68,19 @@ function obj:_next_step(direction)
 
   cell[dim] = next_size
   cell[axis] = moving_to_far_side and (self.grid - next_size) or 0
+
+  -- there's a system bug that causes enhanced interfaced to respond badly to resizing
+  -- see https://github.com/Hammerspoon/hammerspoon/issues/3224#issuecomment-1294359070
+  -- the workaround is to disable the enchanced-ness and reenable after resizing
+  local axApp = hs.axuielement.applicationElement(window:application())
+  local wasEnhanced = axApp.AXEnhancedUserInterface
+  if wasEnhanced then
+    axApp.AXEnhancedUserInterface = false
+  end
   hs.grid.set(window, cell, screen)
+  if wasEnhanced then
+    axApp.AXEnhancedUserInterface = true
+  end
 end
 
 function obj:_go_fullscreen()
