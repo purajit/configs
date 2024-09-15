@@ -22,3 +22,6 @@ spoon.WindowManager:bindHotkeys({
   up = "up",
   down = "down",
 })
+
+hs.loadSpoon("PopClick")
+spoon.PopClick:bindHotkey({"control", "command"}, "p")
