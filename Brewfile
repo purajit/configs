@@ -1,63 +1,79 @@
 tap "homebrew/bundle"
 
+# taps
 tap "d12frosted/emacs-plus"
 tap "derailed/k9s"
 tap "macos-fuse-t/cask"
 tap "mas-cli/tap"
+brew "mas"
 
-brew "aspell"
+# terminal/tmux/shell experience
+cask "alacritty", args: {"no-quarantine": true}
 brew "atuin"
-brew "colima"
 brew "coreutils"
-brew "derailed/k9s/k9s"
-brew "docker"
+cask "font-mononoki-nerd-font"
+brew "reattach-to-user-namespace"
+brew "tmux"
+brew "vivid"
+brew "zsh-syntax-highlighting"
+
+# essentials
 brew "emacs-plus@29", args: ["with-native-comp"]
 brew "fd"
-brew "ffmpeg"
+cask "firefox@nightly"
 brew "fzf"
-brew "gh"
 brew "gnupg"
+cask "hammerspoon"
+cask "logi-options-plus"
+cask "maccy"
+brew "ripgrep"
+brew "jq"
+brew "yq"
+
+# second-level essentials
+brew "colima"
+brew "derailed/k9s/k9s"
+brew "docker"
+brew "gh"
+cask "google-drive"
+brew "helm"
+brew "kubectl"
+
+# linters and code management
+brew "aspell"
 brew "go"
+brew "ruff"
+brew "rustup"
+brew "shellcheck"
+brew "shfmt"
+brew "uv"
+
+# random tools
+brew "ffmpeg"
 brew "graphviz"
 brew "imagemagick"
-brew "mas"
 brew "pandoc"
 brew "pdsh"
 brew "presenterm"
-brew "reattach-to-user-namespace"
-brew "ripgrep"
-brew "shellcheck"
-brew "tmux"
-brew "vivid"
 brew "wtfutil"
-brew "yq"
-brew "zsh-syntax-highlighting"
 
-cask "alacritty", args: {"no-quarantine": true}
-# cask "android-platform-tools"
-# cask "cryptomator"
-# cask "discord"
-# cask "figma"
-cask "firefox@nightly"
-cask "font-mononoki-nerd-font"
-cask "fuse-t"
-cask "google-drive"
-cask "hammerspoon"  # for alacritty drop-down
-# cask "iterm2@beta"
-# cask "keepassxc"
-cask "logi-options-plus"
-cask "maccy"
-# cask "rectangle"  # replaced with Hammerspoon
+# personal computer
+cask "android-platform-tools"
+cask "cryptomator"
+cask "discord"
+cask "fuse-t"  # for cryptomator
+cask "keepassxc"
 cask "signal"
 cask "steam"
+cask "wireshark"
 
+# mac app store install
 mas "Parcel", id: 639968404
 
-# Formulae that aren't always needed
-# cask "ableton-live-suite"  # only on primary computer
+# Just to note other formulae used in the past
+# cask "ableton-live-suite"  # only one install :c
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
+# cask "figma"
 # cask "jiggler"
 # cask "mactex"
 # cask "telegram"
-# brew "terraform"  # prefer asdf
-# cask "wireshark"
