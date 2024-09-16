@@ -55,10 +55,11 @@ eval "$(atuin init zsh)"
 eval "$(direnv hook zsh)"
 source ~/.lscolors
 
+# source other files
 source "$HOME/.aliases"
 [[ -f "$HOME/.zshlocal" ]] && source "$HOME/.zshlocal"
 
-# zsh prompts
+# rest of the file is theming zsh prompt
 function _get_aws_profile_prompt {
     if [[ "$AWS_PROFILE" == "" ]]; then
         return

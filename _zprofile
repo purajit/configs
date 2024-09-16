@@ -4,13 +4,6 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$PATH"
 export COLIMA_SAVE_CONFIG=0
 
-# for tmux
-wifi_or_ethernet() {
-    [[ "$(route -n get 0.0.0.0 | grep '^ *interface: ' | rev | cut -d' ' -f1 | rev)" != "en7" ]] \
-        && echo "Ethernet" \
-        || echo "WiFi"
-}
-
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
   . "$HOME/.cargo/env"
