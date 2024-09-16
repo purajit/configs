@@ -26,4 +26,11 @@ spoon.WindowManager:bindHotkeys({
 })
 
 hs.loadSpoon("PopClick")
+spoon.PopClick.actions = {
+  ["YouTube"] = {
+    -- might work with some adjustment, but right now it catches longer "S"s in videos
+    -- ["tss"] = "moveRight",
+    ["pop"] = "pressF",
+  }
+}
 spoon.PopClick:bindHotkey({"control", "command"}, "p")
