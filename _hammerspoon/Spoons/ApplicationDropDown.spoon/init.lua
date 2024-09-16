@@ -10,10 +10,12 @@ obj.license = ""
 
 obj.application_bundle_id = nil
 obj.application_window_title = nil
-obj.current_screen = nil
+obj.hide_when_unfocused = true
+obj.hide_only_when_maximized = true
+
 -- the last geometry used on each screen
 obj.screen_configs = {}
-obj.hide_when_unfocused = {}
+obj.current_screen = nil
 
 function obj:bindHotkey(mods, key)
   hs.hotkey.bind(mods, key, function ()
@@ -72,7 +74,10 @@ function obj:bindHotkey(mods, key)
   if self.hide_when_unfocused then
     hs.window.filter.new{self.application_window_title}:subscribe(
       hs.window.filter.windowUnfocused, function(window, appName)
-        hs.application.get(self.application_bundle_id):hide()
+        local is_maximized = window:screen():frame().w == window:frame().w and window:screen():frame().h == window:frame().h
+        if self.hide_only_when_maximized and is_maximized then
+          hs.application.get(self.application_bundle_id):hide()
+        end
     end)
   end
 end

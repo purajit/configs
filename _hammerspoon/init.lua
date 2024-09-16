@@ -11,6 +11,8 @@ hs.console.consoleResultColor(hs.drawing.color.asRGB { hex = "#8ec07c" })
 hs.loadSpoon("ApplicationDropDown")
 spoon.ApplicationDropDown.application_bundle_id = "org.alacritty"
 spoon.ApplicationDropDown.application_window_title = "Alacritty"
+spoon.ApplicationDropDown.hide_when_unfocused = true
+spoon.ApplicationDropDown.hide_only_when_maximized = true
 spoon.ApplicationDropDown:bindHotkey({"control", "shift"}, "space")
 
 hs.loadSpoon("WindowManager")

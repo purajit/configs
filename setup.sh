@@ -48,7 +48,7 @@ function clone_repo {
 # individual setup steps
 function setup_init {
     printf "%s... init ...%s\n" "${YELLOW}" "${RESET}"
-    mkdir -p "$HOME/.config/"
+    mkdir -p "${HOME}/.config/"
     printf "│ %s%s ~/.config present\n" "${GREEN}" "${RESET}"
 }
 
@@ -70,36 +70,37 @@ function setup_shell {
     printf "%s zsh, tmux, Alacritty%s\n" "${YELLOW}" "${RESET}"
 
     # common shell configs
-    overwrite_with_symlink "${CONFIG_HOME}/_aliases" "$HOME/.aliases"
+    overwrite_with_symlink "${CONFIG_HOME}/_aliases" "${HOME}/.aliases"
     touch "${CONFIG_HOME}/_zshlocal"
     printf "│ %s%s %s/_zshlocal ready\n" "${GREEN}" "${RESET}" "${CONFIG_HOME}"
-    overwrite_with_symlink "${CONFIG_HOME}/_zshlocal" "$HOME/.zshlocal"
+    overwrite_with_symlink "${CONFIG_HOME}/_zshlocal" "${HOME}/.zshlocal"
 
     # LSCOLORS via vivid + trapd00r
-    overwrite_with_symlink "${CONFIG_HOME}/_lscolors" "$HOME/.lscolors"
+    overwrite_with_symlink "${CONFIG_HOME}/_lscolors" "${HOME}/.lscolors"
     # TODO: use vivid instead https://github.com/trapd00r/LS_COLORS/issues/195
-    # mkdir -p "$HOME/.config/vivid/themes"
-    # overwrite_with_symlink "${CONFIG_HOME}/vivid_trapd00r.yml" "$HOME/.config/vivid/themes/trapd00r.yml"
+    # mkdir -p "${HOME}/.config/vivid/themes"
+    # overwrite_with_symlink "${CONFIG_HOME}/vivid_trapd00r.yml" "${HOME}/.config/vivid/themes/trapd00r.yml"
 
     # shell tools
     clone_repo "https://github.com/purajit/venv_manager.git"
-    overwrite_with_symlink "${CONFIG_HOME}/atuin-config.toml" "$HOME/.config/atuin/config.toml"
+    overwrite_with_symlink "${CONFIG_HOME}/atuin-config.toml" "${HOME}/.config/atuin/config.toml"
 
     # zsh
-    overwrite_with_symlink "${CONFIG_HOME}/_zshrc" "$HOME/.zshrc"
-    overwrite_with_symlink "${CONFIG_HOME}/_zprofile" "$HOME/.zprofile"
+    overwrite_with_symlink "${CONFIG_HOME}/_zshrc" "${HOME}/.zshrc"
+    overwrite_with_symlink "${CONFIG_HOME}/_zprofile" "${HOME}/.zprofile"
 
     # tmux
-    overwrite_with_symlink "${CONFIG_HOME}/_tmux.conf" "$HOME/.tmux.conf"
+    overwrite_with_symlink "${CONFIG_HOME}/_tmux.conf" "${HOME}/.tmux.conf"
 
     # tmux plugins
-    mkdir -p "$HOME/.tmux/plugins"
+    mkdir -p "${HOME}/.tmux/plugins"
+    overwrite_with_symlink "${CONFIG_HOME}/tmux-wifiorethernet" "${HOME}/.tmux/plugins/tmux-wifiorethernet"
     clone_repo "https://github.com/fcsonline/tmux-thumbs.git"
-    overwrite_with_symlink "$HOME/code/tmux-thumbs" "$HOME/.tmux/plugins/tmux-thumbs"
+    overwrite_with_symlink "${HOME}/code/tmux-thumbs" "${HOME}/.tmux/plugins/tmux-thumbs"
     clone_repo "https://github.com/tmux-plugins/tmux-cpu.git"
-    overwrite_with_symlink "$HOME/code/tmux-cpu" "$HOME/.tmux/plugins/tmux-cpu"
+    overwrite_with_symlink "${HOME}/code/tmux-cpu" "${HOME}/.tmux/plugins/tmux-cpu"
     clone_repo "https://github.com/purajit/tmux-battery.git"
-    overwrite_with_symlink "$HOME/code/tmux-battery" "$HOME/.tmux/plugins/tmux-battery"
+    overwrite_with_symlink "${HOME}/code/tmux-battery" "${HOME}/.tmux/plugins/tmux-battery"
     printf "│ %s%s Terraform plugins installed\n" "${GREEN}" "${RESET}"
 
     if [ -n "$TMUX" ]; then
@@ -124,13 +125,13 @@ function setup_automation {
 function setup_emacs {
     printf "%s  Emacs%s\n" "${YELLOW}" "${RESET}"
 
-    rm -f "$HOME/.emacs" "$HOME/.emacs.d"
+    rm -f "${HOME}/.emacs" "${HOME}/.emacs.d"
     DONT_PULL=1 clone_repo "https://github.com/hlissner/doom-emacs.git"
 
-    overwrite_with_symlink "$HOME/code/doom-emacs" "$HOME/.config/emacs"
-    "$HOME/.config/emacs/bin/doom" install
-    overwrite_with_symlink "${CONFIG_HOME}/doom" "$HOME/.config/doom"
-    "$HOME/.config/emacs/bin/doom" sync
+    overwrite_with_symlink "${HOME}/code/doom-emacs" "${HOME}/.config/emacs"
+    "${HOME}/.config/emacs/bin/doom" install
+    overwrite_with_symlink "${CONFIG_HOME}/doom" "${HOME}/.config/doom"
+    "${HOME}/.config/emacs/bin/doom" sync
     printf "│ %s%s Installed and sync'd doomemacs\n" "${GREEN}" "${RESET}"
 }
 
@@ -178,7 +179,7 @@ function setup_misc {
     mkdir -p "${HOME}/.config/wtf"
     overwrite_with_symlink "${CONFIG_HOME}/wtfutil-config.yml" "${HOME}/.config/wtf/config.yml"
     mkdir -p "${HOME}/.ssh"
-    overwrite_with_symlink "${CONFIG_HOME}/ssh_config" "$HOME/.ssh/config"
+    overwrite_with_symlink "${CONFIG_HOME}/ssh_config" "${HOME}/.ssh/config"
     overwrite_with_symlink "${CONFIG_HOME}/_terraformrc" "${HOME}/.terraformrc"
     mkdir -p "${HOME}/.terraform.d/plugin-cache"
     printf "│ %s%s Created Terraform global plugin cache\n" "${GREEN}" "${RESET}"
