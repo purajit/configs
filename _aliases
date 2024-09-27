@@ -10,7 +10,7 @@ alias homer='cd ~/code/random'
 alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
 
 updatedb() {
-    (cd / && sudo /usr/libexec/locate.updatedb)
+	(cd / && sudo /usr/libexec/locate.updatedb)
 }
 
 ## EMACS
@@ -18,75 +18,75 @@ alias start_emacs='emacs --daemon'
 alias kill_emacs='emacsclient -e "(kill-emacs)"'
 export EDITOR="emacsclient -t"
 e() {
-    (emacsclient $1 -c &)
+	(emacsclient $1 -c &)
 }
 alias et='emacsclient -t'
 
 # swap two files/folders
 swap() {
-    local timestamp=$(date "+%s")
-    mv "$1" "$1.$timestamp"
-    mv "$2" "$1"
-    mv "$1.$timestamp" "$2"
+	local timestamp=$(date "+%s")
+	mv "$1" "$1.$timestamp"
+	mv "$2" "$1"
+	mv "$1.$timestamp" "$2"
 }
 
 function sush {
-    ssh -At $1 sudo su
+	ssh -At $1 sudo su
 }
 
 ## GIT HELPERS
 function get_trunk {
-    git remote show origin | sed -n '/HEAD branch/s/.*: //p'
+	git remote show origin | sed -n '/HEAD branch/s/.*: //p'
 }
 
 alias gtu='gh pr create --draft'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 
 function gitsummary() {
-    for dot_git in $(find ~/code -name .git -maxdepth 2 | sort); do
-        repo_root="$(dirname "${dot_git}")"
-        repo_name="$(basename "${repo_root}")"
-        printf "%srepo: %s%s%s" $'\033[1;31m' $'\033[1;34m' $'\033[0m' "${repo_name}"
-        branches="$(git -C "${repo_root}" branch | grep -v "^[\* ] main$" | grep -v "^[\* ] master$")"
-        if [ "$(echo -n "$branches" | wc -l)" -lt 1 ]; then
-            printf "\n\n"
-            continue
-        else
-            printf "\n%s\n\n" "$branches"
-        fi
-    done
+	for dot_git in $(find ~/code -name .git -maxdepth 2 | sort); do
+		repo_root="$(dirname "${dot_git}")"
+		repo_name="$(basename "${repo_root}")"
+		printf "%srepo: %s%s%s" $'\033[1;31m' $'\033[1;34m' $'\033[0m' "${repo_name}"
+		branches="$(git -C "${repo_root}" branch | grep -v "^[\* ] main$" | grep -v "^[\* ] master$")"
+		if [ "$(echo -n "$branches" | wc -l)" -lt 1 ]; then
+			printf "\n\n"
+			continue
+		else
+			printf "\n%s\n\n" "$branches"
+		fi
+	done
 }
 
 function gitr {
-    trunk="$(get_trunk)"
-    git checkout "$trunk"
-    git pull origin "$trunk"
-    git checkout -
-    gst sync
+	trunk="$(get_trunk)"
+	git checkout "$trunk"
+	git pull origin "$trunk"
+	git checkout -
+	gst sync
 }
 
 function gitb {
-    if [ -z "$1" ]; then
-        git branch
-        return 0
-    fi
+	if [ -z "$1" ]; then
+		git branch
+		return 0
+	fi
 
-    datestring="$(date +"%Y%m%d")"
-    new_branch_name="$datestring-$1"
+	datestring="$(date +"%Y%m%d")"
+	new_branch_name="$datestring-$1"
 
-    from_branch="$2"
-    if [ -z "$from_branch" ]; then
-        from_branch="$(get_trunk)"
-    fi
+	from_branch="$2"
+	if [ -z "$from_branch" ]; then
+		from_branch="$(get_trunk)"
+	fi
 
-    if command -v gst &>/dev/null; then
-        gst b "$new_branch_name" "$from_branch"
-    else
-        if [[ "$from_branch" == "." ]]; then
-            from_branch="$(git rev-parse --abbrev-ref HEAD)"
-        fi
-        git switch -c "$new_branch_name" "$from_branch" "${@:3}"
-    fi
+	if command -v gst &>/dev/null; then
+		gst b "$new_branch_name" "$from_branch"
+	else
+		if [[ "$from_branch" == "." ]]; then
+			from_branch="$(git rev-parse --abbrev-ref HEAD)"
+		fi
+		git switch -c "$new_branch_name" "$from_branch" "${@:3}"
+	fi
 }
 
 ## KUBERNETES
@@ -102,53 +102,53 @@ alias tfp='terraform plan'
 
 ## VIDEO GAME HELPERS
 function factorio_upload {
-    cp "~/Library/Application Support/factorio/saves/$1.zip" "/Volumes/GoogleDrive/My Drive/Personal/factorio-saves/"
+	cp "~/Library/Application Support/factorio/saves/$1.zip" "/Volumes/GoogleDrive/My Drive/Personal/factorio-saves/"
 }
 
 function dont_starve_upload {
-    destination=$(date "+%Y-%m-%d")
-    cp -r "~/Library/Application Support/Steam/userdata/1021426716/219740/remote" "/Volumes/GoogleDrive/My Drive/Personal/dont-starve-saves/$destination"
+	destination=$(date "+%Y-%m-%d")
+	cp -r "~/Library/Application Support/Steam/userdata/1021426716/219740/remote" "/Volumes/GoogleDrive/My Drive/Personal/dont-starve-saves/$destination"
 }
 
 function fix_itb {
-    sed -i 'bkp' 's/\["iUndoTurn"\] = 0/["iUndoTurn"] = 1/g' ~/Library/Application\ Support/IntoTheBreach/profile_Alpha/saveData.lua
+	sed -i 'bkp' 's/\["iUndoTurn"\] = 0/["iUndoTurn"] = 1/g' ~/Library/Application\ Support/IntoTheBreach/profile_Alpha/saveData.lua
 }
 
 function man() {
-    env \
-        LESS_TERMCAP_mb=$(
-            tput bold
-            tput setaf 1
-        ) \
-        LESS_TERMCAP_md=$(
-            tput bold
-            tput setaf 208
-        ) \
-        LESS_TERMCAP_me=$(tput sgr0) \
-        LESS_TERMCAP_so=$(
-            tput bold
-            tput setaf black
-            tput setab 3
-        ) \
-        LESS_TERMCAP_se=$(
-            tput rmso
-            tput sgr0
-        ) \
-        LESS_TERMCAP_us=$(
-            tput smul
-            tput dim
-            tput setaf 7
-        ) \
-        LESS_TERMCAP_ue=$(
-            tput rmul
-            tput sgr0
-        ) \
-        LESS_TERMCAP_mr=$(tput rev) \
-        LESS_TERMCAP_mh=$(tput dim) \
-        LESS_TERMCAP_ZN=$(tput ssubm) \
-        LESS_TERMCAP_ZV=$(tput rsubm) \
-        LESS_TERMCAP_ZO=$(tput ssupm) \
-        LESS_TERMCAP_ZW=$(tput rsupm) \
-        PAGER="less -s -M +Gg" \
-        man "$@"
+	env \
+		LESS_TERMCAP_mb=$(
+			tput bold
+			tput setaf 1
+		) \
+		LESS_TERMCAP_md=$(
+			tput bold
+			tput setaf 208
+		) \
+		LESS_TERMCAP_me=$(tput sgr0) \
+		LESS_TERMCAP_so=$(
+			tput bold
+			tput setaf black
+			tput setab 3
+		) \
+		LESS_TERMCAP_se=$(
+			tput rmso
+			tput sgr0
+		) \
+		LESS_TERMCAP_us=$(
+			tput smul
+			tput dim
+			tput setaf 7
+		) \
+		LESS_TERMCAP_ue=$(
+			tput rmul
+			tput sgr0
+		) \
+		LESS_TERMCAP_mr=$(tput rev) \
+		LESS_TERMCAP_mh=$(tput dim) \
+		LESS_TERMCAP_ZN=$(tput ssubm) \
+		LESS_TERMCAP_ZV=$(tput rsubm) \
+		LESS_TERMCAP_ZO=$(tput ssupm) \
+		LESS_TERMCAP_ZW=$(tput rsupm) \
+		PAGER="less -s -M +Gg" \
+		man "$@"
 }
