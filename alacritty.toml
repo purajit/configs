@@ -1,3 +1,7 @@
+import = [
+    "~/.config/alacritty/active_theme.toml"
+]
+
 [env]
 term = "xterm-256color"
 
@@ -17,43 +21,6 @@ family = "Mononoki Nerd Font Propo"
 option_as_alt = "Both"
 startup_mode = "Maximized"
 decorations = "None"
-
-# Colors come from chrisduerr's config
-[colors.primary]
-foreground = "#aaaaaa"
-background = "#181818"
-
-[colors.normal]
-black =   "#181818"
-red =     "#ac4242"
-green =   "#90a959"
-yellow =  "#f4bf75"
-blue =    "#6a9fb5"
-magenta = "#aa759f"
-cyan =    "#75b5aa"
-white =   "#666666"
-
-[colors.bright]
-black =   "#282828"
-red =     "#752a2a"
-green =   "#5d742a"
-yellow =  "#754e2a"
-blue =    "#2a4e74"
-magenta = "#703664"
-cyan =    "#297366"
-white =   "#aaaaaa"
-
-[colors.search.matches]
-foreground = "#181818"
-background = "#ac4242"
-
-[colors.search.focused_match]
-foreground = "#181818"
-background = "#90a959"
-
-[colors.footer_bar]
-foreground = "#aaaaaa"
-background = "#181818"
 
 # # colors come from the "Aura" theme
 # [colors.primary]

@@ -54,21 +54,3 @@ wtf:
         height: 4
         width: 2
       refreshInterval: 1h
-    jira:
-      colors:
-        rows:
-          even: "lightblue"
-          odd: "white"
-      domain: "https://COMPANY.atlassian.net"
-      email: "EMAIL"
-      enabled: true
-      jql: "issuetype = Task AND status NOT IN (\"Closed\", \"Done\", \"Won't Do\")"
-      position:
-        top: 4
-        left: 0
-        height: 4
-        width: 4
-      project: ""
-      refreshInterval: 15m
-      username: "EMAIL"
-      verifyServerCertificate: true

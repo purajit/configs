@@ -8,23 +8,23 @@ alias terraform='AWS_PROFILE=... terraform'
 alias argocd='AWS_PROFILE=... argocd --kube-context ...'
 
 function ahelm {
-  application="$1"
-  argocd_gitops_root_dir="..."
-  cd "$argocd_gitops_root_dir"
-  helm template "$(yq .spec.source.path "$argocd_gitops_root_dir/applications/$application.yaml")" \
-    $(yq '.spec.source.helm.valueFiles[]' "$argocd_gitops_root_dir/applications/$application.yaml" | sed 's#\.\./\.\./##g' | xargs -I{} echo "--values" {} | tr '\n' ' ')
-  cd - > /dev/null
+	application="$1"
+	argocd_gitops_root_dir="..."
+	cd "$argocd_gitops_root_dir"
+	helm template "$(yq .spec.source.path "$argocd_gitops_root_dir/applications/$application.yaml")" \
+		$(yq '.spec.source.helm.valueFiles[]' "$argocd_gitops_root_dir/applications/$application.yaml" | sed 's#\.\./\.\./##g' | xargs -I{} echo "--values" {} | tr '\n' ' ')
+	cd - >/dev/null
 }
 
 function ahelmd {
-  application="$1"
-  argocd_gitops_root_dir="..."
-  cd "$argocd_gitops_root_dir"
-  helm template --debug "$(yq .spec.source.path "$argocd_gitops_root_dir/applications/$application.yaml")" \
-    $(yq '.spec.source.helm.valueFiles[]' "$argocd_gitops_root_dir/applications/$application.yaml" | sed 's#\.\./\.\./##g' | xargs -I{} echo "--values" {} | tr '\n' ' ')
-  cd - > /dev/null
+	application="$1"
+	argocd_gitops_root_dir="..."
+	cd "$argocd_gitops_root_dir"
+	helm template --debug "$(yq .spec.source.path "$argocd_gitops_root_dir/applications/$application.yaml")" \
+		$(yq '.spec.source.helm.valueFiles[]' "$argocd_gitops_root_dir/applications/$application.yaml" | sed 's#\.\./\.\./##g' | xargs -I{} echo "--values" {} | tr '\n' ' ')
+	cd - >/dev/null
 }
 
 export DOCKER_DEFAULT_PLATFORM=linux/amd64
-export PATH="...:$PATH"  # modify PATH as needed
-export WTF_JIRA_API_KEY="$(cat ~/.jira_token)"  # JIRA token for wtfutil
+export PATH="...:$PATH"                        # modify PATH as needed
+export WTF_JIRA_API_KEY="$(cat ~/.jira_token)" # JIRA token for wtfutil
