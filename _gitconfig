@@ -12,6 +12,7 @@
 	pushRemote = no_push
 [alias]
 	a = commit -am update
+	b = branch
 	amend = commit -a --amend --no-edit
 	mc = commit --no-verify --no-edit
 	s = status
