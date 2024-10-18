@@ -67,8 +67,8 @@ function gitr {
 
 function gitb {
 	if [ -z "$1" ]; then
-		git branch
-		return 0
+		echo "Missing branch name"
+		return 1
 	fi
 
 	datestring="$(date +"%Y%m%d")"

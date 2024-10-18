@@ -4,7 +4,6 @@
 (setq user-full-name "purajit")
 ;; (setq user-mail-address "")
 
-
 ;;;;;; KEYS
 ;; option-as-meta, command-as-hyper
 (setq ns-command-modifier 'hyper)
@@ -53,26 +52,46 @@
 
 
 ;;;;;; APPEARANCE
-(vertico-reverse-mode)
 ;; font, themes, coordinate background with terminal
-(setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
+;; treat doom-tomorrow-night/day as safe themes
+(custom-set-variables
+ '(custom-safe-themes
+   '("e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default)))
 (setq doom-theme 'doom-tomorrow-night)
 (custom-set-faces
  '(default ((t (:background "#181818"))))
  '(solaire-default-face ((t (:background "#181818")))))
+;; ;; light mode
+;; (setq doom-theme 'doom-tomorrow-day)
+;;;; follow system theme and switch
+;;;; having some issues getting it work well - hangs when the system theme is changed
+;; (setq auto-dark-allow-osascript t)
+;; (after! doom-ui
+;;   (setq! auto-dark-themes '((doom-tomorrow-night) (doom-tomorrow-day)))
+;;   (auto-dark-mode 1)
+;;   (global-hl-line-mode -1))
+(setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
 ;; bring GUI window opened from terminal to focus
 (select-frame-set-input-focus (selected-frame))
-(setq default-frame-alist '((left . 0) (width . 120) (fullscreen . fullheight)))
-;; Prevents some cases of Emacs flickering.
-(add-to-list 'default-frame-alist '(inhibit-double-buffering . t))
-(menu-bar-mode -1)
-(scroll-bar-mode -1)
+(setq
+ default-frame-alist
+ '(
+   (left . 0)
+   (width . 120)
+   (fullscreen . fullheight)
+   ;; Prevents some cases of Emacs flickering.
+   (inhibit-double-buffering . t)))
 ;; line numbers are a _massive_ hit to performance
 (setq display-line-numbers-type nil)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+(global-hl-line-mode -1)
+(vertico-reverse-mode)
 ;; to get search result counts in modeline
 (global-anzu-mode +1)
 (anzu-mode +1)
-;; the long-awaited modeline!
+;; modeline
 (after! doom-modeline
   (setq doom-modeline-height 25)
   (setq doom-modeline-bar-width 3)
@@ -92,7 +111,6 @@
   (setq doom-modeline-vcs-max-length 30)
   ;; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
   (defun doom-modeline-vcs-name ()
-    "Display the vcs name."
     (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
 
 
