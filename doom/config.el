@@ -111,9 +111,13 @@
   (setq doom-modeline-vcs-max-length 30)
   ;; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
   (defun doom-modeline-vcs-name ()
+    "Display the vcs name."
     (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
 
 
 ;;;;;; MISC
 (setq org-directory "~/Documents/org/")
 (setq confirm-kill-emacs nil)
+
+
+(setq show-paren-delay 0)
