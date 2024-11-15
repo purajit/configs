@@ -7,7 +7,7 @@ function _get_network_interface_icon {
 	icon_wifi=$(tmux show-option -gqv "@internet_icon_wifi")
 	icon_ethernet=$(tmux show-option -gqv "@internet_icon_ethernet")
 
-	if [[ "$ethernet_or_wifi" = "Ethernet" ]]; then
+	if [[ "$ethernet_or_wifi" = "Wi-Fi" ]]; then
 		echo "$icon_ethernet"
 	else
 		echo "$icon_wifi"

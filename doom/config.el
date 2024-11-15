@@ -57,11 +57,12 @@
 (custom-set-variables
  '(custom-safe-themes
    '("e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default)))
+;; dark mode
 (setq doom-theme 'doom-tomorrow-night)
 (custom-set-faces
  '(default ((t (:background "#181818"))))
  '(solaire-default-face ((t (:background "#181818")))))
-;; ;; light mode
+;; light mode
 ;; (setq doom-theme 'doom-tomorrow-day)
 ;;;; follow system theme and switch
 ;;;; having some issues getting it work well - hangs when the system theme is changed

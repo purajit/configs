@@ -18,8 +18,8 @@ else
     ln -sf "$HOME/.config/alacritty/light.toml" "$HOME/.config/alacritty/active_theme.toml"
 fi
 
-# word-splitting characters, notably leaving out -_^.
-WORDCHARS=' :*?[]~=&;!#$%(){}<>/'
+# word-splitting characters, notably leaving out -_^
+WORDCHARS=' :*?[]~=&;!#$%(){}<>/.'
 autoload -Uz select-word-style
 select-word-style normal
 zstyle ':zle:*' word-style unspecified
@@ -87,7 +87,7 @@ function _get_k8s_context_prompt {
 }
 
 function _get_venv_prompt {
-    echo "$VIRTUAL_ENV_PROMPT" | perl -ne "s/(..*)/ | %F{#336c9d} \1%F{reset}/g; print"
+    echo "$VIRTUAL_ENV_PROMPT" | perl -ne "s/\(?([a-zA-Z0-9][a-zA-Z0-9._-]*[a-zA-Z0-9])\)?( *)?/ | %F{#336c9d} \1%F{reset}/g; print"
 }
 
 function _get_git_prompt {
