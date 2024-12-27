@@ -120,6 +120,10 @@ function setup_shell {
 	cp "${CONFIG_HOME}/alacritty.icns" /Applications/Alacritty.app/Contents/Resources/alacritty.icns
 	touch /Applications/Alacritty.app
 	printf "│ %s%s Replaced Alacritty icon\n" "${GREEN}" "${RESET}"
+
+	# Ghostty
+	overwrite_with_symlink "${CONFIG_HOME}/ghostty" "${HOME}/.config/ghostty"
+	printf "│ %s%s Configured Ghostty\n" "${GREEN}" "${RESET}"
 }
 
 function setup_automation {

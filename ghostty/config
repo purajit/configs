@@ -1,0 +1,29 @@
+term = xterm-256color
+
+font-family = Mononoki Nerd Font Propo
+font-size = 16
+
+window-decoration = true
+window-save-state = never
+
+theme = light:deep-theme-light,dark:deep-theme-dark
+
+auto-update = check
+auto-update-channel = tip
+
+macos-titlebar-style = hidden
+window-theme = system
+
+
+
+
+macos-option-as-alt = true
+window-decoration = true
+macos-titlebar-style = hidden
+window-height = 50
+window-width = 160
+
+mouse-shift-capture = true
+copy-on-select = clipboard
+
+shell-integration = zsh
