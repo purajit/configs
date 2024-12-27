@@ -5,6 +5,7 @@
 	branch = false
 [user]
 	name = purajit
+	email = 7026198+purajit@users.noreply.github.com
 # hack to prevent accidentally pushing directly to trunk
 [branch "main"]
 	pushRemote = no_push
@@ -17,6 +18,11 @@
 	mc = commit --no-verify --no-edit
 	s = status
 	shf = show --name-only
+	append = town append
+	hack = town hack
+	park = town park
+	set-parent = town set-parent
+	sync = town sync
 [advice]
 	statusHints = false
 [credential "https://github.com"]
