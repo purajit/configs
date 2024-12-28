@@ -1,29 +1,29 @@
 term = xterm-256color
+auto-update = check
+auto-update-channel = tip
+
+# APPEARANCE
+macos-titlebar-style = hidden
+
+window-theme = system
+theme = light:deep-theme-light,dark:deep-theme-dark
+
+window-decoration = true
+window-save-state = never
+# large values which ghostty will clamp and result in a maximized window
+window-height = 500
+window-width = 1600
 
 font-family = Mononoki Nerd Font Propo
 font-size = 16
 
-window-decoration = true
-window-save-state = never
-
-theme = light:deep-theme-light,dark:deep-theme-dark
-
-auto-update = check
-auto-update-channel = tip
-
-macos-titlebar-style = hidden
-window-theme = system
-
-
-
-
-macos-option-as-alt = true
-window-decoration = true
-macos-titlebar-style = hidden
-window-height = 50
-window-width = 160
-
-mouse-shift-capture = true
+# BEHAVIOR
 copy-on-select = clipboard
-
+macos-option-as-alt = true
+mouse-shift-capture = true
 shell-integration = zsh
+
+# QUICK TERMINAL
+quick-terminal-animation-duration = 0
+# I prefer my Hammerspoon-controlled quick terminal instead
+# keybind = global:cmd+grave_accent=toggle_quick_terminal
