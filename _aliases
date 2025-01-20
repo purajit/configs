@@ -17,9 +17,10 @@ updatedb() {
 alias start_emacs='emacs --daemon'
 alias kill_emacs='emacsclient -e "(kill-emacs)"'
 export EDITOR="emacsclient -t"
-e() {
+egui() {
 	(emacsclient $1 -c &)
 }
+alias e='emacsclient -t'
 alias et='emacsclient -t'
 
 # swap two files/folders
