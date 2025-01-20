@@ -1,4 +1,4 @@
-term = xterm-256color
+# term = xterm-256color
 auto-update = check
 auto-update-channel = tip
 
@@ -8,11 +8,13 @@ macos-titlebar-style = hidden
 window-theme = system
 theme = light:deep-theme-light,dark:deep-theme-dark
 
-window-decoration = true
+window-decoration = false
 window-save-state = never
 # large values which ghostty will clamp and result in a maximized window
 window-height = 500
 window-width = 1600
+
+unfocused-split-opacity = 0.98
 
 font-family = Mononoki Nerd Font Propo
 font-size = 16
@@ -23,7 +25,19 @@ macos-option-as-alt = true
 mouse-shift-capture = true
 shell-integration = zsh
 
-# QUICK TERMINAL
+# QUICK TERMINAL - unused since I use my Hammerspoon controls
 quick-terminal-animation-duration = 0
-# I prefer my Hammerspoon-controlled quick terminal instead
 # keybind = global:cmd+grave_accent=toggle_quick_terminal
+
+## To make Ghostty behave tmux-like
+# sadly, ghostty doesn't fill all the niches of tmux
+# macos-titlebar-style = tabs
+# window-decoration = true
+# window-save-state = always
+# keybind = ctrl+t>3=new_split:right
+# keybind = ctrl+t>2=new_split:down
+# keybind = ctrl+t>o=goto_split:next
+# keybind = ctrl+t>0=close_surface
+# keybind = ctrl+t>f=new_tab
+# keybind = ctrl+t>n=next_tab
+# keybind = ctrl+t>p=previous_tab
