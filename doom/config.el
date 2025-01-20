@@ -14,12 +14,9 @@
 ;; sensible defaults aka muscle memory
 (global-set-key (kbd "M-g") 'goto-line)
 (global-set-key (kbd "C-c SPC") 'avy-goto-char-timer)
-(global-set-key (kbd "C-c C-g") 'magit-status)
 ;; to get replacement info in modeline
 (global-set-key [remap query-replace] 'anzu-query-replace)
 (global-set-key [remap query-replace-regexp] 'anzu-query-replace-regexp)
-(global-unset-key (kbd "<magnify-up>"))
-(global-unset-key (kbd "<magnify-down>"))
 ;; use consult's buffer explorer and override default
 (global-set-key (kbd "C-x b") 'consult-buffer)
 (setq tab-always-indent t)
@@ -27,8 +24,9 @@
 ;;;;;; CODING MODES
 (setq doom-scratch-initial-major-mode 'text-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
-(setq electric-indent-mode t)
+;;(setq electric-indent-mode t)
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+(add-hook 'sh-mode-hook 'shfmt-on-save-mode)
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 (setq js-indent-level 2)
 (setq-default js2-basic-offset 2)
@@ -43,13 +41,14 @@
 (after! git-commit
   ;; 72 is the GitHub limit
   (setq git-commit-summary-max-length 72))
+(after! magit (setq git-commit-summary-max-length 72))
 (after! lsp-mode
   (setq lsp-enable-symbol-highlighting nil
         ;; If an LSP server isn't present when I start a prog-mode buffer, you
         ;; don't need to tell me. I know. On some machines I don't care to have
         ;; a whole development environment for some ecosystems.
         lsp-enable-suggest-server-download nil))
-
+(setq show-paren-delay 0)
 
 ;;;;;; APPEARANCE
 ;; font, themes, coordinate background with terminal
@@ -115,10 +114,6 @@
     "Display the vcs name."
     (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
 
-
 ;;;;;; MISC
 (setq org-directory "~/Documents/org/")
 (setq confirm-kill-emacs nil)
-
-
-(setq show-paren-delay 0)

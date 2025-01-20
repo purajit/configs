@@ -12,11 +12,12 @@ if [ "$TMUX" = "" ]; then
   fi
 fi
 
-if [ "$SYSTEM_COLOR_THEME" = "Dark" ]; then
-    ln -sf "$HOME/.config/alacritty/dark.toml" "$HOME/.config/alacritty/active_theme.toml"
-else
-    ln -sf "$HOME/.config/alacritty/light.toml" "$HOME/.config/alacritty/active_theme.toml"
-fi
+# not needed with ghostty; check TERM?
+# if [ "$SYSTEM_COLOR_THEME" = "Dark" ]; then
+#     ln -sf "$HOME/.config/alacritty/dark.toml" "$HOME/.config/alacritty/active_theme.toml"
+# else
+#     ln -sf "$HOME/.config/alacritty/light.toml" "$HOME/.config/alacritty/active_theme.toml"
+# fi
 
 # word-splitting characters, notably leaving out -_^
 WORDCHARS=' :*?[]~=&;!#$%(){}<>/.'

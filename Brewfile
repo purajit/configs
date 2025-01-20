@@ -12,6 +12,7 @@ cask "alacritty", args: {"no-quarantine": true}
 brew "atuin"
 brew "coreutils"
 cask "font-mononoki-nerd-font"
+cask "ghostty@tip"
 brew "reattach-to-user-namespace"
 brew "tmux"
 brew "vivid"
@@ -41,6 +42,7 @@ brew "kubectl"
 
 # linters and code management
 brew "aspell"
+brew "editorconfig"
 brew "go"
 brew "ruff"
 brew "shellcheck"
