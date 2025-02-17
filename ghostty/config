@@ -3,6 +3,7 @@ auto-update = check
 auto-update-channel = tip
 
 # APPEARANCE
+macos-icon = chalkboard
 macos-titlebar-style = hidden
 
 window-theme = system
@@ -25,9 +26,14 @@ macos-option-as-alt = true
 mouse-shift-capture = true
 shell-integration = zsh
 
-# QUICK TERMINAL - unused since I use my Hammerspoon controls
+# QUICK TERMINAL
+initial-window = false
+macos-hidden = always
 quick-terminal-animation-duration = 0
-# keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-screen = mouse
+quick-terminal-autohide = false
+
+keybind = global:ctrl+shift+space=toggle_quick_terminal
 
 ## To make Ghostty behave tmux-like
 # sadly, ghostty doesn't fill all the niches of tmux
