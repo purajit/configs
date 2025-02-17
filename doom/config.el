@@ -22,10 +22,21 @@
 (setq tab-always-indent t)
 
 ;;;;;; CODING MODES
+(use-package treesit-auto
+  :demand t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+(setq treesit-load-name-override-list '((js "libtree-sitter-js" "tree_sitter_javascript")))
+
 (setq doom-scratch-initial-major-mode 'text-mode)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 (add-hook 'python-mode-hook 'ruff-format-on-save-mode)
+(add-hook 'python-ts-mode-hook 'ruff-format-on-save-mode)
 (add-hook 'sh-mode-hook 'shfmt-on-save-mode)
+(add-hook 'bash-ts-mode-hook 'shfmt-on-save-mode)
 (add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
 (setq js-indent-level 2)
 (setq-default js2-basic-offset 2)
@@ -67,7 +78,6 @@
       ;; 'doom-tomorrow-day
       )
 ;;;; follow system theme and switch
-;;;; having some issues getting it work well - hangs when the system theme is changed
 ;; (setq auto-dark-allow-osascript t)
 ;; (after! doom-ui
 ;;   (setq! auto-dark-themes '((doom-tomorrow-night) (doom-tomorrow-day)))
