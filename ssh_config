@@ -1,6 +1,4 @@
 Host *
   AddKeysToAgent yes
   UseKeychain yes
-
-Host *
-    Include ~/code/color/config/ssh/*
+  SetEnv TERM=xterm
