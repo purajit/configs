@@ -1,5 +1,5 @@
 # term = xterm-256color
-auto-update = check
+auto-update = off
 auto-update-channel = tip
 
 # APPEARANCE
