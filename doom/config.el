@@ -73,9 +73,9 @@
   '(solaire-default-face :background "#ffffff"))
 (setq doom-theme
       ;; dark mode
-      'doom-tomorrow-night
+      ;; 'doom-tomorrow-night
       ;; light mode
-      ;; 'doom-tomorrow-day
+      'doom-tomorrow-day
       )
 ;;;; follow system theme and switch
 ;; (setq auto-dark-allow-osascript t)
