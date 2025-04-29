@@ -33,3 +33,6 @@
 	helper = !/opt/homebrew/bin/gh auth git-credential
 [rerere]
 	enabled = true
+[push]
+	default = simple
+	autoSetupRemote = true
