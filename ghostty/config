@@ -9,6 +9,9 @@ macos-titlebar-style = hidden
 window-theme = system
 theme = light:deep-theme-light,dark:deep-theme-dark
 
+window-padding-x = 0,0
+window-padding-y = 0,0
+
 window-decoration = false
 window-save-state = never
 # large values which ghostty will clamp and result in a maximized window

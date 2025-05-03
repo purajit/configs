@@ -1,0 +1,29 @@
+k9s:
+  liveViewAutoRefresh: false    # periodic refresh of resource browser windows
+  screenDumpDir: /tmp/dumps
+  refreshRate: 2                # UI poll interval in seconds
+  apiServerTimeout: 120s        # overrides the default k8s API server requests timeout
+  maxConnRetry: 5
+  readOnly: false               # disables modification commands like delete/kill/edit
+  defaultView: ""
+  noExitOnCtrlC: false
+  ui:
+    enableMouse: false
+    headless: true
+    logoless: true              # hide the k9s logo
+    crumbsless: false
+    splashless: false
+    noIcons: false
+    reactive: false             # watch for disk artifacts changes and update the UI
+    skin: axual
+    defaultsToFullScreen: true  # defaults to fullscreen in certain views (yaml, helm history, describe, value_extender, details, logs)
+    useGVRTitleFormat: true     # show Group/Version/Resource vs just Resource
+  skipLatestRevCheck: true      # check for latest revision from GitHub tags
+  keepMissingClusters: false    # prevent k9s from cleaning up inactive cluster configs
+  logger:
+    tail: 200                   # number of lines to return
+    buffer: 1000                # maximum number of log lines to keep in display
+    sinceSeconds: -1            # how far back in the log timeline to go; -1 will tail
+    textWrap: true              # text wrapping of log lines
+    disableAutoscroll: false    # setting this to true prevents tailing
+    showTime: false             # include log timestamps

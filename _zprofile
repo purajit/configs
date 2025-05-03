@@ -3,6 +3,7 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$PATH"
 export COLIMA_SAVE_CONFIG=0
+export K9S_CONFIG_DIR="$HOME/.config/k9s"
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
