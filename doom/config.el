@@ -66,22 +66,22 @@
 (custom-set-variables
  '(custom-safe-themes
    '("e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default)))
+;; scratch and mini buffer use the same background as normal buffers
 (custom-theme-set-faces! 'doom-tomorrow-night
-  '(default :background "#181818")
-  '(solaire-default-face :background "#181818"))
+  '(solaire-default-face :background "#1d1f21"))
 (custom-theme-set-faces! 'doom-tomorrow-day
   '(solaire-default-face :background "#ffffff"))
-(setq doom-theme
-      ;; dark mode
-      ;; 'doom-tomorrow-night
-      ;; light mode
-      'doom-tomorrow-day
-      )
+;; (setq doom-theme
+;;       ;; dark mode
+;;       ;; 'doom-tomorrow-night
+;;       ;; light mode
+;;       ;; 'doom-tomorrow-day
+;;       )
 ;;;; follow system theme and switch
-;; (setq auto-dark-allow-osascript t)
-;; (after! doom-ui
-;;   (setq! auto-dark-themes '((doom-tomorrow-night) (doom-tomorrow-day)))
-;;   (auto-dark-mode 1))
+(setq auto-dark-allow-osascript t)
+(after! doom-ui
+  (setq! auto-dark-themes '((doom-tomorrow-night) (doom-tomorrow-day)))
+  (auto-dark-mode 1))
 (setq doom-font (font-spec :family "Mononoki Nerd Font" :size 14 :weight 'regular))
 ;; bring GUI window opened from terminal to focus
 (select-frame-set-input-focus (selected-frame))
@@ -93,6 +93,19 @@
    (fullscreen . fullheight)
    ;; Prevents some cases of Emacs flickering.
    (inhibit-double-buffering . t)))
+;; prettier window dividers in term
+(add-hook
+ 'window-configuration-change-hook
+ (lambda ()
+   (let ((display-table (or buffer-display-table standard-display-table)))
+     (set-display-table-slot display-table 5 ?│)
+     (set-window-display-table (selected-window) display-table))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(vertical-border ((t (:background "#1d1f21" :foreground "#0d0d0d")))))
 ;; line numbers are a _massive_ hit to performance
 (setq display-line-numbers-type nil)
 (menu-bar-mode -1)

@@ -19,7 +19,7 @@ brew "vivid"
 brew "zsh-syntax-highlighting"
 
 # essentials
-brew "emacs-plus@29", args: ["with-native-comp"]
+brew "emacs-plus@30"
 brew "fd"
 cask "firefox@nightly"
 brew "fzf"
