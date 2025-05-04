@@ -56,7 +56,6 @@ brew "imagemagick"
 brew "pandoc"
 brew "pdsh"
 brew "presenterm"
-brew "wtfutil"
 
 # personal computer
 cask "android-platform-tools"

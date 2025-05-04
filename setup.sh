@@ -186,8 +186,6 @@ function setup_misc {
 	overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"
 	mkdir -p "${HOME}/.config/gh-dash"
 	overwrite_with_symlink "${CONFIG_HOME}/gh-dash-config.yml" "${HOME}/.config/gh-dash/config.yml"
-	mkdir -p "${HOME}/.config/wtf"
-	overwrite_with_symlink "${CONFIG_HOME}/wtfutil-config.yml" "${HOME}/.config/wtf/config.yml"
 	mkdir -p "${HOME}/.ssh"
 	overwrite_with_symlink "${CONFIG_HOME}/ssh_config" "${HOME}/.ssh/config"
 	overwrite_with_symlink "${CONFIG_HOME}/_terraformrc" "${HOME}/.terraformrc"
