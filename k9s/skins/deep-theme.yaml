@@ -1,0 +1,99 @@
+# Somewhat based on Axual
+
+bgColor: &bgColor "#1d1f21"
+fgColor: &fgColor "#ffaf01"
+red: &red "#D7595F"
+cyan: &cyan "#47B0AB"
+grey: &grey "#A99688"
+light: &light "#F1EFE4"
+
+k9s:
+  body:
+    fgColor: *fgColor
+    bgColor: *bgColor
+    logoColor: orange
+
+  prompt:
+    fgColor: *fgColor
+    bgColor: *bgColor
+    suggestColor: *grey
+    border:
+      command: green
+      default: *cyan
+
+  # ClusterInfoView styles
+  info:
+    fgColor: *fgColor
+    sectionColor: *light
+
+  dialog:
+    fgColor: *fgColor
+    bgColor: *bgColor
+    buttonFgColor: *fgColor
+    buttonBgColor: *bgColor
+    buttonFocusFgColor: *bgColor
+    buttonFocusBgColor: *fgColor
+    labelFgColor: *fgColor
+    fieldFgColor: *light
+
+  frame:
+    border:
+      fgColor: *grey
+      focusColor: *grey
+
+    menu:
+      fgColor: *fgColor
+      keyColor: *fgColor
+      # Used for favorite namespaces
+      numKeyColor: *light
+
+    crumbs:
+      fgColor: *bgColor
+      bgColor: *bgColor
+      activeColor: *fgColor
+
+    # Resource status and update styles
+    status:
+      # Text display, highlight is same colors inverted
+      newColor: *fgColor
+      modifyColor: *bgColor
+      addColor: *bgColor
+      errorColor: *red
+      highlightColor: *fgColor
+      killColor: *red
+      completedColor: *grey
+
+    # Border title styles.
+    title:
+      fgColor: *fgColor
+      bgColor: *bgColor
+      highlightColor: *red
+      counterColor: *light
+      filterColor: "slategray"
+
+  views:
+    table:
+      fgColor: *bgColor
+      bgColor: *bgColor
+      cursorColor: *bgColor
+      header:
+        fgColor: *red
+        bgColor: *bgColor
+        sorterColor: "orange"
+
+    yaml:
+      keyColor: *fgColor
+      colonColor: *fgColor
+      valueColor: *cyan
+
+    logs:
+      fgColor: *fgColor
+      bgColor: *bgColor
+      indicator:
+        fgColor: *red
+        bgColor: *bgColor
+        toggleOnColor: *fgColor
+        toggleOffColor: *grey
+
+    # Pulses view
+    # charts: {}

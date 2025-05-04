@@ -68,8 +68,10 @@
    '("e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default)))
 ;; scratch and mini buffer use the same background as normal buffers
 (custom-theme-set-faces! 'doom-tomorrow-night
+  '(vertical-border :background "#1d1f21")
   '(solaire-default-face :background "#1d1f21"))
 (custom-theme-set-faces! 'doom-tomorrow-day
+  '(vertical-border :background "#ffffff")
   '(solaire-default-face :background "#ffffff"))
 ;; (setq doom-theme
 ;;       ;; dark mode
@@ -100,12 +102,8 @@
    (let ((display-table (or buffer-display-table standard-display-table)))
      (set-display-table-slot display-table 5 ?│)
      (set-window-display-table (selected-window) display-table))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(vertical-border ((t (:background "#1d1f21" :foreground "#0d0d0d")))))
+;; (custom-set-faces
+;;  '(vertical-border ((t (:background "#1d1f21" :foreground "#0d0d0d")))))
 ;; line numbers are a _massive_ hit to performance
 (setq display-line-numbers-type nil)
 (menu-bar-mode -1)
