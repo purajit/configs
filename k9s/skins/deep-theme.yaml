@@ -72,6 +72,11 @@ k9s:
       filterColor: "slategray"
 
   views:
+    picker:
+      mainColor: *fgColor
+      focusColor: *fgColor
+      shortcutColor: *red
+
     table:
       fgColor: *bgColor
       bgColor: *bgColor

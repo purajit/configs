@@ -21,7 +21,7 @@ brew "zsh-syntax-highlighting"
 # essentials
 brew "emacs-plus@30"
 brew "fd"
-cask "firefox@nightly"
+cask "librewolf"
 brew "fzf"
 brew "gnupg"
 cask "hammerspoon"
