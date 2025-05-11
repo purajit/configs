@@ -8,7 +8,6 @@ tap "mas-cli/tap"
 brew "mas"
 
 # terminal/tmux/shell experience
-cask "alacritty", args: {"no-quarantine": true}
 brew "atuin"
 brew "coreutils"
 cask "font-mononoki-nerd-font"
@@ -72,6 +71,7 @@ mas "Parcel", id: 639968404
 
 # Just to note other formulae used in the past
 # cask "ableton-live-suite"  # only one install :c
+# cask "alacritty", args: {"no-quarantine": true}
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "figma"
 # cask "jiggler"

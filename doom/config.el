@@ -53,11 +53,15 @@
   (setq git-commit-summary-max-length 72))
 (after! magit (setq git-commit-summary-max-length 72))
 (after! lsp-mode
-  (setq lsp-enable-symbol-highlighting nil
-        ;; If an LSP server isn't present when I start a prog-mode buffer, you
-        ;; don't need to tell me. I know. On some machines I don't care to have
-        ;; a whole development environment for some ecosystems.
-        lsp-enable-suggest-server-download nil))
+  (setq lsp-ui-sideline-enable nil)
+  ;; If an LSP server isn't present when I start a prog-mode buffer, you
+  ;; don't need to tell me. I know. On some machines I don't care to have
+  ;; a whole development environment for some ecosystems.
+  (setq lsp-enable-suggest-server-download nil)
+  (setq lsp-ui-sideline-enable nil)
+  (setq lsp-signature-auto-activate nil)
+  (setq lsp-signature-render-documentation nil)
+  )
 (setq show-paren-delay 0)
 
 ;;;;;; APPEARANCE
@@ -128,17 +132,13 @@
   (setq doom-modeline-buffer-state-icon t)
   (setq doom-modeline-buffer-modification-icon t)
 
-  (setq doom-modeline-buffer-encoding t)
+  (setq doom-modeline-buffer-encoding nil)
   (setq doom-modeline-env-version t)
   (setq doom-modeline-indent-info nil)
   (setq doom-modeline-minor-modes nil)
   (setq doom-modeline-percent-position nil)
 
-  (setq doom-modeline-vcs-max-length 30)
-  ;; doom-modeline has fixed this, but it's not yet upgraded in doom-emacs
-  (defun doom-modeline-vcs-name ()
-    "Display the vcs name."
-    (and vc-mode (cadr (split-string (string-trim vc-mode) "^[A-Z]+[-:]+")))))
+  (setq doom-modeline-vcs-max-length 30))
 
 ;;;;;; MISC
 (setq org-directory "~/Documents/org/")
