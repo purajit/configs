@@ -67,7 +67,7 @@ function setup_brew {
 }
 
 function setup_shell {
-	printf "%s zsh, tmux, Alacritty%s\n" "${YELLOW}" "${RESET}"
+	printf "%s zsh, tmux, terminals%s\n" "${YELLOW}" "${RESET}"
 
 	# common shell configs
 	overwrite_with_symlink "${CONFIG_HOME}/_aliases" "${HOME}/.aliases"
@@ -110,7 +110,7 @@ function setup_shell {
 
 	# Alacritty
 	overwrite_with_symlink "${CONFIG_HOME}/alacritty.toml" "${HOME}/.config/alacritty.toml"
-	# Alacritty dynamic theming
+	# Theming
 	mkdir -p "$HOME/.config/alacritty"
 	rm -rf "$HOME/.config/alacritty/active_theme.toml"
 	overwrite_with_symlink "${CONFIG_HOME}/alacritty_dark.toml" "$HOME/.config/alacritty/dark.toml"

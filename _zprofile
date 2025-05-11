@@ -7,7 +7,5 @@ export K9S_CONFIG_DIR="$HOME/.config/k9s"
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
-	. "$HOME/.cargo/env"
+    . "$HOME/.cargo/env"
 fi
-
-export SYSTEM_COLOR_THEME=$(defaults read -g AppleInterfaceStyle 2>/dev/null || echo "Light")
