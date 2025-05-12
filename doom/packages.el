@@ -9,11 +9,12 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;; (package! some-package)
 
+(package! apheleia)
 (package! auto-dark)
 (package! csv-mode)
 (package! flymake-shellcheck)
-(package! ruff-format)
-(package! shfmt)
+(package! lsp-mode)
+(package! lsp-pyright)
 (package! terraform-mode)
 (package! thrift)
 (package! treesit-auto)
