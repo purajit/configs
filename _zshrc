@@ -39,13 +39,18 @@ add-zsh-hook chpwd venv_manager_switch_venv
 autoload -U compinit
 # https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2767420
 if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-   compinit;
+  compinit;
 else
   compinit -C;
 fi;
 
 # case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# shift-tab goes backwards in completion menu
+bindkey '^[[Z' reverse-menu-complete
+
+# disable history completions so ! stops being a snowflake
+setopt no_bang_hist
 
 autoload -U +X bashcompinit && bashcompinit  # for `complete`
 complete -C "$(which aws_completer)" aws
