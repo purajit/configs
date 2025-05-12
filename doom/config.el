@@ -13,6 +13,8 @@
 (setq ns-function-modifier 'super)
 ;; sensible defaults aka muscle memory
 (global-set-key (kbd "M-g") 'goto-line)
+(global-set-key (kbd "M-.") 'lsp-find-definition)
+(global-set-key (kbd "M-,") 'pop-global-mark)
 (global-set-key (kbd "C-c SPC") 'avy-goto-char-timer)
 ;; to get replacement info in modeline
 (global-set-key [remap query-replace] 'anzu-query-replace)
@@ -20,6 +22,16 @@
 ;; use consult's buffer explorer and override default
 (global-set-key (kbd "C-x b") 'consult-buffer)
 (setq tab-always-indent t)
+
+;;;;;; Reformatting
+(add-hook! 'before-save-hook 'delete-trailing-whitespace)
+(apheleia-global-mode +1)
+(use-package apheleia
+  :config
+  (with-eval-after-load 'apheleia
+    ;; apheleia uses black by default
+    (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff-isort ruff)))
+  )
 
 ;;;;;; CODING MODES
 (use-package treesit-auto
@@ -30,14 +42,10 @@
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 (setq treesit-load-name-override-list '((js "libtree-sitter-js" "tree_sitter_javascript")))
-
 (setq doom-scratch-initial-major-mode 'text-mode)
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
-(add-hook 'python-mode-hook 'ruff-format-on-save-mode)
-(add-hook 'python-ts-mode-hook 'ruff-format-on-save-mode)
-(add-hook 'sh-mode-hook 'shfmt-on-save-mode)
-(add-hook 'bash-ts-mode-hook 'shfmt-on-save-mode)
-(add-hook 'terraform-mode-hook 'terraform-format-on-save-mode)
+
+(setq lsp-pyright-langserver-command "basedpyright")
+(add-hook! 'python-ts-mode-hook 'lsp-deferred)
 (setq js-indent-level 2)
 (setq-default js2-basic-offset 2)
 (add-hook
@@ -54,10 +62,8 @@
 (after! magit (setq git-commit-summary-max-length 72))
 (after! lsp-mode
   (setq lsp-ui-sideline-enable nil)
-  ;; If an LSP server isn't present when I start a prog-mode buffer, you
-  ;; don't need to tell me. I know. On some machines I don't care to have
-  ;; a whole development environment for some ecosystems.
   (setq lsp-enable-suggest-server-download nil)
+  (setq lsp-headerline-breadcrumb-enable nil)
   (setq lsp-ui-sideline-enable nil)
   (setq lsp-signature-auto-activate nil)
   (setq lsp-signature-render-documentation nil)
@@ -100,12 +106,11 @@
    ;; Prevents some cases of Emacs flickering.
    (inhibit-double-buffering . t)))
 ;; prettier window dividers in term
-(add-hook
+(add-hook!
  'window-configuration-change-hook
- (lambda ()
-   (let ((display-table (or buffer-display-table standard-display-table)))
-     (set-display-table-slot display-table 5 ?│)
-     (set-window-display-table (selected-window) display-table))))
+ (let ((display-table (or buffer-display-table standard-display-table)))
+   (set-display-table-slot display-table 5 ?│)
+   (set-window-display-table (selected-window) display-table)))
 ;; (custom-set-faces
 ;;  '(vertical-border ((t (:background "#1d1f21" :foreground "#0d0d0d")))))
 ;; line numbers are a _massive_ hit to performance
