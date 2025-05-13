@@ -1,11 +1,6 @@
-tap "homebrew/bundle"
-
 # taps
 tap "d12frosted/emacs-plus"
 tap "derailed/k9s"
-tap "macos-fuse-t/cask"
-tap "mas-cli/tap"
-brew "mas"
 
 # terminal/tmux/shell experience
 brew "atuin"
@@ -56,22 +51,25 @@ brew "pandoc"
 brew "pdsh"
 brew "presenterm"
 
-# personal computer
-cask "android-platform-tools"
-cask "cryptomator"
-cask "discord"
-cask "fuse-t"  # for cryptomator
-cask "keepassxc"
-cask "signal"
-cask "steam"
-cask "wireshark"
+# personal tools
+cask "android-platform-tools" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "cryptomator" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "discord" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "keepassxc" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "signal" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "steam" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "wireshark" if ENV['HOMEBREW_MACHINE'] != "work"
+# for cryptomator
+tap "macos-fuse-t/cask" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "fuse-t" if ENV['HOMEBREW_MACHINE'] != "work"
 
-# mac app store install
-mas "Parcel", id: 639968404
+# mac app store installs
+brew "mas" if ENV['HOMEBREW_MACHINE'] != "work"
+mas "Parcel", id: 639968404 if ENV['HOMEBREW_MACHINE'] != "work"
 
-# Just to note other formulae used in the past
+# formulae used in the past that are nice to track
 # cask "ableton-live-suite"  # only one install :c
-# cask "alacritty", args: {"no-quarantine": true}
+# cask "alacritty", args: {"no-quarantine": true}  # switched to ghostty
 # cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "figma"
 # cask "jiggler"
