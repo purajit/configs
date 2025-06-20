@@ -15,7 +15,7 @@ brew "zsh-syntax-highlighting"
 # essentials
 brew "emacs-plus@30"
 brew "fd"
-cask "librewolf"
+cask "librewolf", args: { no_quarantine: true }
 brew "fzf"
 brew "gnupg"
 cask "hammerspoon"
@@ -28,6 +28,7 @@ brew "yq"
 # second-level essentials
 brew "colima"
 brew "derailed/k9s/k9s"
+brew "direnv"
 brew "docker"
 brew "gh"
 cask "google-drive"

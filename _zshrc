@@ -81,8 +81,8 @@ function _get_k8s_context_prompt {
     if [[ "$k8s_context" == "" ]]; then
         return
     fi
-    # the cut is to just get the environment, so we can shorten the display
-    echo " | %F{blue}󱃾 $(echo "$k8s_context" | cut -d- -f1)%F{reset}"
+    # get_k8s_context_display is implemented in _zshlocal, since it depends on custom patterns
+    echo " | %F{blue}󱃾 $(get_k8s_context_display "$k8s_context")%F{reset}"
 }
 
 function _get_venv_prompt {
