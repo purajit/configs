@@ -1,9 +1,10 @@
 #!/bin/zsh -f
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$PATH"
+export PATH="$HOME/.config/emacs/bin:$HOME/code/gitstack:$HOME/go/bin:$PATH"
 export COLIMA_SAVE_CONFIG=0
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
+export GPG_TTY="$(tty)"
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
