@@ -9,6 +9,7 @@ cask "font-mononoki-nerd-font"
 cask "ghostty@tip"
 brew "reattach-to-user-namespace"
 brew "tmux"
+brew "crystal"  # to build tmux-fingers from source
 brew "vivid"
 brew "zsh-syntax-highlighting"
 
