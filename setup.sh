@@ -95,8 +95,8 @@ function setup_shell {
 	# tmux plugins
 	mkdir -p "${HOME}/.tmux/plugins"
 	overwrite_with_symlink "${CONFIG_HOME}/tmux-wifiorethernet" "${HOME}/.tmux/plugins/tmux-wifiorethernet"
-	clone_repo "https://github.com/fcsonline/tmux-thumbs.git"
-	overwrite_with_symlink "${HOME}/code/tmux-thumbs" "${HOME}/.tmux/plugins/tmux-thumbs"
+	clone_repo "https://github.com/Morantron/tmux-fingers.git"
+	overwrite_with_symlink "${HOME}/code/tmux-fingers" "${HOME}/.tmux/plugins/tmux-fingers"
 	clone_repo "https://github.com/tmux-plugins/tmux-cpu.git"
 	overwrite_with_symlink "${HOME}/code/tmux-cpu" "${HOME}/.tmux/plugins/tmux-cpu"
 	clone_repo "https://github.com/purajit/tmux-battery.git"
