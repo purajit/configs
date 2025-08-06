@@ -1,0 +1,15 @@
+<base>
+[esc]>[lctr]
+[lctr]>[rwin]
+[eql]>[esc]
+[caps]>[eql]
+[hk3]>[vol+]
+[hk4]>[vol-]
+
+<keypad>
+
+<function1>
+
+<function2>
+
+<function3>
