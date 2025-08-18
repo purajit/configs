@@ -30,8 +30,10 @@
   :config
   (with-eval-after-load 'apheleia
     ;; apheleia uses black by default
-    (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff-isort ruff)))
-  )
+    (setf (alist-get 'python-ts-mode apheleia-mode-alist) '(ruff-isort ruff))
+    ;; set --filename so that it loads editorconfig
+    (setf (alist-get 'shfmt apheleia-formatters) '("shfmt" "--filename" filepath))
+    ))
 
 ;;;;;; CODING MODES
 (use-package treesit-auto
@@ -75,7 +77,8 @@
 ;; treat doom-tomorrow-night/day as safe themes
 (custom-set-variables
  '(custom-safe-themes
-   '("e1f4f0158cd5a01a9d96f1f7cdcca8d6724d7d33267623cc433fe1c196848554" "7e377879cbd60c66b88e51fad480b3ab18d60847f31c435f15f5df18bdb18184" default)))
+   '("7771c8496c10162220af0ca7b7e61459cb42d18c35ce272a63461c0fc1336015"
+     "5c8a1b64431e03387348270f50470f64e28dfae0084d33108c33a81c1e126ad6" default)))
 ;; scratch and mini buffer use the same background as normal buffers
 (custom-theme-set-faces! 'doom-tomorrow-night
   '(vertical-border :background "#1d1f21")
@@ -116,6 +119,10 @@
 ;; line numbers are a _massive_ hit to performance
 (setq display-line-numbers-type nil)
 (menu-bar-mode -1)
+(defun disable-menu-bar (frame)
+  (with-selected-frame frame
+    (menu-bar-mode -1)))
+(add-hook 'after-make-frame-functions #'disable-menu-bar)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 (global-hl-line-mode -1)

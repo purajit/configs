@@ -181,6 +181,8 @@ function setup_misc {
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	fi
 
+	clone_repo "https://github.com/purajit/mono.git"
+	overwrite_with_symlink "${CONFIG_HOME}/_editorconfig" "${HOME}/.editorconfig"
 	overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/.config/k9s"
 	mkdir -p "${HOME}/.ipython/profile_default/"
 	overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"

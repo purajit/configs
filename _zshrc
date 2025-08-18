@@ -38,7 +38,7 @@ add-zsh-hook chpwd venv_manager_switch_venv
 # completions, and case-insensitive at that
 autoload -U compinit
 # https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2767420
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
+if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
   compinit;
 else
   compinit -C;
@@ -66,7 +66,7 @@ source "$HOME/.aliases"
 
 # rest of the file is theming zsh prompt
 function _get_aws_profile_prompt {
-    if [[ "$AWS_PROFILE" == "" ]]; then
+    if [[ "${AWS_PROFILE-}" == "" ]]; then
         return
     fi
     # the cut is to get the suffix without the "namespace"/company name, to help shorten display
