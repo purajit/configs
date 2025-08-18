@@ -1,6 +1,6 @@
 # Somewhat based on Axual
 
-bgColor: &bgColor "#1d1f21"
+bgColor: &bgColor "default"
 fgColor: &fgColor "#ffaf01"
 red: &red "#D7595F"
 cyan: &cyan "#47B0AB"
