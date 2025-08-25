@@ -109,5 +109,5 @@ setopt PROMPT_SUBST
 # since RPROMPT won't be included, but it can be useful to know what RPROMPT context a command ran in
 setopt transient_rprompt
 PROMPT='
-%F{#05cc00}%D{%H:%M:%S %Z} %F{reset} '
+%F{#05cc00}%D{%H:%M:%S %Z}%F{reset}  '
 RPROMPT='$(_get_pwd_prompt)$(_get_git_prompt)$(_get_venv_prompt)$(_get_aws_profile_prompt)$(_get_k8s_context_prompt)%F{reset}'

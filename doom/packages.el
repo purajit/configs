@@ -11,6 +11,7 @@
 
 (package! apheleia)
 (package! auto-dark)
+(package! bazel)
 (package! csv-mode)
 (package! flymake-shellcheck)
 (package! lsp-mode)
