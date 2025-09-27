@@ -20,13 +20,13 @@ function overwrite_with_symlink {
 	# set -x
 	if [[ -L "$2" && "$(readlink "$2")" = "$1" ]]; then
 		# symlink to expected file already exists, no action needed
-		printf "│ %s%s %s   %s\n" "${GREEN}" "${RESET}" "$2" "$1"
+		printf "%s%s %s   %s\n" "${GREEN}" "${RESET}" "$2" "$1"
 		return
 	elif [[ -d "$2" ]]; then
 		rm -rf "$2"
 	fi
 	ln -Fs "$1" "$2"
-	printf "│ %s%s %s   %s\n" "${GREEN}" "${RESET}" "$2" "$1"
+	printf "%s%s %s   %s\n" "${GREEN}" "${RESET}" "$2" "$1"
 }
 
 function clone_repo {
@@ -35,44 +35,40 @@ function clone_repo {
 	if [[ "${RECLONE}" == "true" || ! -d "${git_repo_folder}" ]]; then
 		rm -rf "${git_repo_folder}"
 		GIT_TERMINAL_PROMPT=0 git clone --single-branch --recursive "${repo}" "${git_repo_folder}"
-		printf "│ %s%s %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
+		printf "%s%s %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
 	elif [[ -z "${DONT_PULL}" ]]; then
 		GIT_TERMINAL_PROMPT=0 git -C "$git_repo_folder" pull
 		GIT_TERMINAL_PROMPT=0 git -C "$git_repo_folder" submodule update --init --recursive
-		printf "│ %s%s Pulled latest %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
+		printf "%s%s Pulled latest %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
 	else
-		printf "│ %s%s %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
+		printf "%s%s %s   %s\n" "${GREEN}" "${RESET}" "${repo}" "${git_repo_folder}"
 	fi
 }
 
 # individual setup steps
 function setup_init {
-	printf "%s... init ...%s\n" "${YELLOW}" "${RESET}"
 	mkdir -p "${HOME}/.config/"
-	printf "│ %s%s ~/.config present\n" "${GREEN}" "${RESET}"
+	printf "%s%s ~/.config present\n" "${GREEN}" "${RESET}"
 }
 
 function setup_brew {
-	printf "%s  Brew, bundles%s\n" "${YELLOW}" "${RESET}"
-	if command -v brew &>/dev/null; then
-		printf "│ %s%s Homebrew already installed\n" "${GREEN}" "${RESET}"
+	if command -v brew &> /dev/null; then
+		printf "%s%s Homebrew already installed\n" "${GREEN}" "${RESET}"
 	else
-		printf "│ %s %s Installing Homebrew\n" "${YELLOW}" "${RESET}"
+		printf "%s %s Installing Homebrew\n" "${YELLOW}" "${RESET}"
 		/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 	fi
 	brew update
 	brew bundle --file="${CONFIG_HOME}/Brewfile"
-	printf "│ %s%s Finished install from Brewfile\n" "${GREEN}" "${RESET}"
+	printf "%s%s Finished install from Brewfile\n" "${GREEN}" "${RESET}"
 	brew doctor
 }
 
 function setup_shell {
-	printf "%s zsh, tmux, terminals%s\n" "${YELLOW}" "${RESET}"
-
 	# common shell configs
 	overwrite_with_symlink "${CONFIG_HOME}/_aliases" "${HOME}/.aliases"
 	touch "${CONFIG_HOME}/_zshlocal"
-	printf "│ %s%s %s/_zshlocal ready\n" "${GREEN}" "${RESET}" "${CONFIG_HOME}"
+	printf "%s%s %s/_zshlocal ready\n" "${GREEN}" "${RESET}" "${CONFIG_HOME}"
 	overwrite_with_symlink "${CONFIG_HOME}/_zshlocal" "${HOME}/.zshlocal"
 
 	# LSCOLORS via vivid + trapd00r
@@ -101,11 +97,11 @@ function setup_shell {
 	overwrite_with_symlink "${HOME}/code/tmux-cpu" "${HOME}/.tmux/plugins/tmux-cpu"
 	clone_repo "https://github.com/purajit/tmux-battery.git"
 	overwrite_with_symlink "${HOME}/code/tmux-battery" "${HOME}/.tmux/plugins/tmux-battery"
-	printf "│ %s%s Terraform plugins installed\n" "${GREEN}" "${RESET}"
+	printf "%s%s Terraform plugins installed\n" "${GREEN}" "${RESET}"
 
 	if [ -n "$TMUX" ]; then
 		tmux source "${HOME}/.tmux.conf"
-		printf "│ %s%s Active tmux session updated to latest configs\n" "${GREEN}" "${RESET}"
+		printf "%s%s Active tmux session updated to latest configs\n" "${GREEN}" "${RESET}"
 	fi
 
 	# Alacritty
@@ -119,21 +115,18 @@ function setup_shell {
 	rm /Applications/Alacritty.app/Contents/Resources/alacritty.icns
 	cp "${CONFIG_HOME}/alacritty.icns" /Applications/Alacritty.app/Contents/Resources/alacritty.icns
 	touch /Applications/Alacritty.app
-	printf "│ %s%s Replaced Alacritty icon\n" "${GREEN}" "${RESET}"
+	printf "%s%s Replaced Alacritty icon\n" "${GREEN}" "${RESET}"
 
 	# Ghostty
 	overwrite_with_symlink "${CONFIG_HOME}/ghostty" "${HOME}/.config/ghostty"
-	printf "│ %s%s Configured Ghostty\n" "${GREEN}" "${RESET}"
+	printf "%s%s Configured Ghostty\n" "${GREEN}" "${RESET}"
 }
 
 function setup_automation {
-	printf "%s󱚣  Automation tools%s\n" "${YELLOW}" "${RESET}"
 	overwrite_with_symlink "${CONFIG_HOME}/_hammerspoon" "${HOME}/.hammerspoon"
 }
 
 function setup_emacs {
-	printf "%s  Emacs%s\n" "${YELLOW}" "${RESET}"
-
 	rm -f "${HOME}/.emacs" "${HOME}/.emacs.d"
 	DONT_PULL=1 clone_repo "https://github.com/hlissner/doom-emacs.git"
 
@@ -141,43 +134,39 @@ function setup_emacs {
 	"${HOME}/.config/emacs/bin/doom" install
 	overwrite_with_symlink "${CONFIG_HOME}/doom" "${HOME}/.config/doom"
 	"${HOME}/.config/emacs/bin/doom" sync
-	printf "│ %s%s Installed and sync'd doomemacs\n" "${GREEN}" "${RESET}"
+	printf "%s%s Installed and sync'd doomemacs\n" "${GREEN}" "${RESET}"
 }
 
 function setup_git {
-	printf "%s  Git%s\n" "${YELLOW}" "${RESET}"
 	overwrite_with_symlink "${CONFIG_HOME}/_gitconfig" "${HOME}/.gitconfig"
 	overwrite_with_symlink "${CONFIG_HOME}/_gitignore_global" "${HOME}/.gitignore_global"
 }
 
 function setup_defaults {
-	printf "%s defaults/plists%s\n" "${YELLOW}" "${RESET}"
 	defaults write org.p0deje.Maccy clipboardCheckInterval 2
-	printf "│ %s%s Increased Maccy check interval to 2s\n" "${GREEN}" "${RESET}"
+	printf "%s%s Increased Maccy check interval to 2s\n" "${GREEN}" "${RESET}"
 
 	defaults write com.apple.screencapture location "${HOME}/Documents/Screenshots"
 	mkdir -p "${HOME}/Documents/Screenshots"
-	printf "│ %s%s Screenshots will be stored in %s/Documents/Screenshots\n" "${GREEN}" "${RESET}" "${HOME}"
+	printf "%s%s Screenshots will be stored in %s/Documents/Screenshots\n" "${GREEN}" "${RESET}" "${HOME}"
 
 	# at the end
 	killall SystemUIServer
 	killall Finder
 	killall Dock
-	printf "│ %s%s Restarted UI elements so certain changes go into effect\n" "${GREEN}" "${RESET}"
+	printf "%s%s Restarted UI elements so certain changes go into effect\n" "${GREEN}" "${RESET}"
 }
 
 function setup_misc {
-	printf "%s󱁢 m 󰅟  i    s  󰹑    c    🦀%s\n" "${YELLOW}" "${RESET}"
-
-	if brew list rust &>/dev/null; then
+	if brew list rust &> /dev/null; then
 		brew uninstall rust
-		printf "│ %s%s Uninstalled Brew-maintained rust toolchain (in favor of rustup)\n" "${GREEN}" "${RESET}"
+		printf "%s%s Uninstalled Brew-maintained rust toolchain (in favor of rustup)\n" "${GREEN}" "${RESET}"
 	fi
 
-	if command -v cargo &>/dev/null; then
-		printf "│ %s%s Rust 🦀 toolchain already installed\n" "${GREEN}" "${RESET}"
+	if command -v cargo &> /dev/null; then
+		printf "%s%s Rust 🦀 toolchain already installed\n" "${GREEN}" "${RESET}"
 	else
-		printf "│ %s %s Running rustup\n" "${YELLOW}" "${RESET}"
+		printf "%s %s Running rustup\n" "${YELLOW}" "${RESET}"
 		curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 	fi
 
@@ -192,7 +181,7 @@ function setup_misc {
 	overwrite_with_symlink "${CONFIG_HOME}/ssh_config" "${HOME}/.ssh/config"
 	overwrite_with_symlink "${CONFIG_HOME}/_terraformrc" "${HOME}/.terraformrc"
 	mkdir -p "${HOME}/.terraform.d/plugin-cache"
-	printf "│ %s%s Created Terraform global plugin cache\n" "${GREEN}" "${RESET}"
+	printf "%s%s Created Terraform global plugin cache\n" "${GREEN}" "${RESET}"
 }
 
 ALL_MODULES=(
@@ -216,7 +205,31 @@ else
 fi
 for module in "${modules[@]}"; do
 	printf "╭─ "
-	bad_module=false
+	if [ "$module" = "init" ]; then
+		printf "%s... init ...%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "brew" ]; then
+		printf "%s  Brew, bundles%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "shell" ]; then
+		printf "%s zsh, tmux, terminals%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "automation" ]; then
+		printf "%s󱚣  Automation tools%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "emacs" ]; then
+		printf "%s  Emacs%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "git" ]; then
+		printf "%s  Git%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "defaults" ]; then
+		printf "%s defaults/plists%s\n" "${YELLOW}" "${RESET}"
+	elif [ "$module" = "misc" ]; then
+		printf "%s󱁢 m 󰅟  i    s  󰹑    c    🦀%s\n" "${YELLOW}" "${RESET}"
+	else
+		printf "\n╰─ %sUnknown module  %s  :c%s\n" "${RED}" "${module}" "${RESET}"
+		continue
+	fi
+
+	exec 3>&1 4>&2
+	exec > >(sed -u 's/^/│ /')
+	exec 2> >(sed -u 's/^/│ /' >&2)
+
 	if [ "$module" = "init" ]; then
 		setup_init
 	elif [ "$module" = "brew" ]; then
@@ -233,13 +246,12 @@ for module in "${modules[@]}"; do
 		setup_defaults
 	elif [ "$module" = "misc" ]; then
 		setup_misc
-	else
-		printf "\n╰─ %sUnknown module  %s  :c%s\n" "${RED}" "${module}" "${RESET}"
-		bad_module=true
 	fi
-	if [ "$bad_module" = "false" ]; then
-		printf "╰─ %sFinished!%s\n\n" "${GREEN}" "${RESET}"
-	fi
+
+	exec 1>&3 2>&4
+	exec 3>&- 4>&-
+
+	printf "╰─ %sFinished!%s\n\n" "${GREEN}" "${RESET}"
 done
 
-printf "\nAll done!"
+printf "All done!"

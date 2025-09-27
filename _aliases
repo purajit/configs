@@ -3,7 +3,6 @@
 # FILE SYSTEM
 alias cp='cp -i'
 alias mv='mv -i'
-alias ls='gls --color=auto'
 
 alias homer='cd ~/code/random'
 
@@ -113,6 +112,11 @@ function dont_starve_upload {
 
 function fix_itb {
 	sed -i 'bkp' 's/\["iUndoTurn"\] = 0/["iUndoTurn"] = 1/g' ~/Library/Application\ Support/IntoTheBreach/profile_Alpha/saveData.lua
+}
+
+function fix_librewolf {
+	xattr -d com.apple.quarantine /Applications/LibreWolf.app
+	tccutil reset ScreenCapture org.mozilla.librewolf
 }
 
 function man() {

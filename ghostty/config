@@ -32,6 +32,7 @@ shell-integration = zsh
 # QUICK TERMINAL
 initial-window = false
 macos-hidden = always
+quick-terminal-size = 100%,100%
 quick-terminal-animation-duration = 0
 quick-terminal-screen = mouse
 quick-terminal-autohide = false
