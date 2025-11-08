@@ -30,7 +30,7 @@ autoload run-help
 HELPDIR="/usr/share/zsh/${ZSH_VERSION}/help"
 
 # activate venv_manager, and prevent venvs from modifying prompt
-source "$HOME/code/venv_manager/venv_manager.plugin.zsh"
+source "$HOME/code/purajit/venv_manager/venv_manager.plugin.zsh"
 export VIRTUAL_ENV_DISABLE_PROMPT=1
 autoload -Uz add-zsh-hook
 add-zsh-hook chpwd venv_manager_switch_venv

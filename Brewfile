@@ -20,7 +20,7 @@ cask "librewolf", args: { no_quarantine: true }
 brew "fzf"
 brew "gnupg"
 cask "hammerspoon"
-cask "logi-options-plus"
+cask "logi-options+"
 cask "maccy"
 brew "ripgrep"
 brew "jq"
@@ -35,6 +35,7 @@ brew "gh"
 cask "google-drive"
 brew "helm"
 brew "kubectl"
+brew "terraformer"
 
 # linters and code management
 brew "aspell"
