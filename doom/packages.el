@@ -18,6 +18,7 @@
 (package! lsp-pyright)
 (package! terraform-mode)
 (package! thrift)
+(package! tmux-mode)
 (package! treesit-auto)
 
 

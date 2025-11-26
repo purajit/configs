@@ -70,7 +70,7 @@ function _get_aws_profile_prompt {
         return
     fi
     # the cut is to get the suffix without the "namespace"/company name, to help shorten display
-    echo " | %F{yellow} $(echo "$AWS_PROFILE" | cut -d- -f2-)%F{reset}"
+    echo " | %F{yellow} $AWS_PROFILE%F{reset}"
 }
 
 function _get_k8s_context_prompt {
@@ -97,7 +97,7 @@ function _get_git_prompt {
   fi
   # TODO: make this more generic. Right now, the `cut` is to help shorten the branch name since
   # I automatically add the datetime as prefix
-  echo "${ref#refs/heads/}" | cut -d- -f2- | perl -ne "s/(..*)/ | %F{#3fb951} \1%F{reset}/g; print"
+  echo "${ref#refs/heads/}" | cut -d- -f2- | perl -ne "s/(..*)/ %F{#3fb951} \1%F{reset}/g; print"
 }
 
 function _get_pwd_prompt {
@@ -109,5 +109,6 @@ setopt PROMPT_SUBST
 # since RPROMPT won't be included, but it can be useful to know what RPROMPT context a command ran in
 setopt transient_rprompt
 PROMPT='
+$(_get_pwd_prompt)
 %F{#05cc00}%D{%H:%M:%S %Z}%F{reset}  '
-RPROMPT='$(_get_pwd_prompt)$(_get_git_prompt)$(_get_venv_prompt)$(_get_aws_profile_prompt)$(_get_k8s_context_prompt)%F{reset}'
+RPROMPT='$(_get_git_prompt)$(_get_venv_prompt)$(_get_aws_profile_prompt)$(_get_k8s_context_prompt)%F{reset}'
