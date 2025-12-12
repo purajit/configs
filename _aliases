@@ -47,7 +47,7 @@ function gitsummary() {
     repo_root="$(dirname "${dot_git}")"
     repo_name="$(basename "${repo_root}")"
     printf "%srepo: %s%s%s" $'\033[1;31m' $'\033[1;34m' $'\033[0m' "${repo_name}"
-    if command -v gst >/dev/null 2>&1; then
+    if command -v gst > /dev/null 2>&1; then
       branches="$(cd "$repo_root" && gst p)"
     fi
     branches="$(git -C "${repo_root}" branch | grep -v "^[\* ] main$" | grep -v "^[\* ] master$")"
@@ -82,7 +82,7 @@ function gitb {
     from_branch="$(get_trunk)"
   fi
 
-  if command -v gst &>/dev/null; then
+  if command -v gst &> /dev/null; then
     gst b "$new_branch_name" "$from_branch"
   else
     if [[ "$from_branch" == "." ]]; then

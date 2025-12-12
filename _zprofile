@@ -8,5 +8,5 @@ export GPG_TTY="$(tty)"
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
-    . "$HOME/.cargo/env"
+  . "$HOME/.cargo/env"
 fi
