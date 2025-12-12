@@ -128,7 +128,11 @@ function setup_shell {
 }
 
 function setup_automation {
-  overwrite_with_symlink "${CONFIG_HOME}/_hammerspoon" "${HOME}/.hammerspoon"
+  mkdir -p "${HOME}/.hammerspoon/Spoons"
+  overwrite_with_symlink "${CONFIG_HOME}/hammerspoon_init.lua" "${HOME}/.hammerspoon/init.lua"
+  for spoon in "${MONO_HOME}/Spoons/"*; do
+    overwrite_with_symlink "$spoon" "${HOME}/.hammerspoon/Spoons/$(basename "$spoon")"
+  done
 }
 
 function setup_emacs {
