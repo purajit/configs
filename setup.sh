@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 CONFIG_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+MONO_HOME="${HOME}/code/purajit/mono"
 RED=$'\033[0;31m'
 GREEN=$'\033[0;32m'
 YELLOW=$'\033[0;33m'
@@ -52,6 +53,7 @@ function clone_repo {
 function setup_init {
   mkdir -p "${HOME}/.config/"
   printf "%s%s ~/.config present\n" "${GREEN}" "${RESET}"
+  clone_repo "https://github.com/purajit/mono.git"
 }
 
 function setup_brew {
@@ -93,7 +95,7 @@ function setup_shell {
 
   # tmux plugins
   mkdir -p "${HOME}/.tmux/plugins"
-  overwrite_with_symlink "${CONFIG_HOME}/tmux-wifiorethernet" "${HOME}/.tmux/plugins/tmux-wifiorethernet"
+  overwrite_with_symlink "${MONO_HOME}/tmux-wifiorethernet" "${HOME}/.tmux/plugins/tmux-wifiorethernet"
   clone_repo "https://github.com/purajit/tmux-fingers.git" "purajit-forks"
   overwrite_with_symlink "${HOME}/code/purajit-forks/tmux-fingers" "${HOME}/.tmux/plugins/tmux-fingers"
   clone_repo "https://github.com/tmux-plugins/tmux-cpu.git" "tmux-plugins"
@@ -173,7 +175,6 @@ function setup_misc {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   fi
 
-  clone_repo "https://github.com/purajit/mono.git"
   overwrite_with_symlink "${CONFIG_HOME}/_editorconfig" "${HOME}/.editorconfig"
   overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/.config/k9s"
   mkdir -p "${HOME}/.ipython/profile_default/"
