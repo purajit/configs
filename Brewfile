@@ -20,6 +20,7 @@ cask "librewolf", args: { no_quarantine: true }
 brew "fzf"
 brew "gnupg"
 cask "hammerspoon"
+cask "iina"
 cask "logi-options+"
 cask "maccy"
 brew "ripgrep"
