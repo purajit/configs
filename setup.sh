@@ -190,6 +190,7 @@ function setup_misc {
   overwrite_with_symlink "${CONFIG_HOME}/_terraformrc" "${HOME}/.terraformrc"
   mkdir -p "${HOME}/.terraform.d/plugin-cache"
   printf "%s%s Created Terraform global plugin cache\n" "${GREEN}" "${RESET}"
+  overwrite_with_symlink "${CONFIG_HOME}/iina.conf" "${HOME}/Library/Application Support/com.colliderli.iina/input_conf/custom.conf"
 }
 
 ALL_MODULES=(
