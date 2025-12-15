@@ -59,6 +59,7 @@ cask "android-platform-tools" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "cryptomator" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "discord" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "keepassxc" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "mullvad-vpn@beta" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "signal" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "steam" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "wireshark" if ENV['HOMEBREW_MACHINE'] != "work"
@@ -68,7 +69,7 @@ cask "fuse-t" if ENV['HOMEBREW_MACHINE'] != "work"
 
 # mac app store installs
 brew "mas" if ENV['HOMEBREW_MACHINE'] != "work"
-mas "Parcel", id: 639968404 if ENV['HOMEBREW_MACHINE'] != "work"
+mas "Parcel", id: 375589283 if ENV['HOMEBREW_MACHINE'] != "work"
 
 # formulae used in the past that are nice to track
 # cask "ableton-live-suite"  # only one install :c
