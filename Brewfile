@@ -17,6 +17,7 @@ brew "zsh-syntax-highlighting"
 brew "emacs-plus@30"
 brew "fd"
 cask "librewolf", args: { no_quarantine: true }
+brew "font-asap-condensed"  # for subtitles in IINA
 brew "fzf"
 brew "gnupg"
 cask "hammerspoon"
