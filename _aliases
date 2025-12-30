@@ -39,7 +39,7 @@ function get_trunk {
   git remote show origin | sed -n '/HEAD branch/s/.*: //p'
 }
 
-alias gtu='git push && gh pr create --draft --fill'
+alias gtu='git push && gh pr create --draft --fill-first'
 alias git-undo-wp-changes='git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -'
 
 function gitsummary() {
