@@ -13,6 +13,8 @@
 	pushRemote = no_push
 [branch "develop"]
 	pushRemote = no_push
+[branch "work-no-push"]
+	pushRemote = no_push
 [alias]
 	a = commit -am update
 	b = branch
