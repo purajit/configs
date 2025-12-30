@@ -100,8 +100,8 @@ function setup_shell {
   overwrite_with_symlink "${HOME}/code/purajit-forks/tmux-fingers" "${HOME}/.tmux/plugins/tmux-fingers"
   clone_repo "https://github.com/tmux-plugins/tmux-cpu.git" "tmux-plugins"
   overwrite_with_symlink "${HOME}/code/tmux-plugins/tmux-cpu" "${HOME}/.tmux/plugins/tmux-cpu"
-  clone_repo "https://github.com/purajit/tmux-battery.git" "purajit-forks"
-  overwrite_with_symlink "${HOME}/code/purajit-forks/tmux-battery" "${HOME}/.tmux/plugins/tmux-battery"
+  clone_repo "https://github.com/tmux-plugins/tmux-battery.git" "tmux-plugins"
+  overwrite_with_symlink "${HOME}/code/tmux-plugins/tmux-battery" "${HOME}/.tmux/plugins/tmux-battery"
   printf "%s%s Terraform plugins installed\n" "${GREEN}" "${RESET}"
 
   if [ -n "$TMUX" ]; then
