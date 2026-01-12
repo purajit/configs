@@ -5,6 +5,7 @@ export PATH="$HOME/.config/emacs/bin:$HOME/code/purajit/gitstack:$HOME/code/pura
 export COLIMA_SAVE_CONFIG=0
 export K9S_CONFIG_DIR="$HOME/.config/k9s"
 export GPG_TTY="$(tty)"
+export KUBECONFIG=$(find "$HOME/.kube" -maxdepth 1 -type f -name 'config*' | tr -s '\n' ':')
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
