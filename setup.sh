@@ -149,6 +149,7 @@ function setup_emacs {
 function setup_git {
   overwrite_with_symlink "${CONFIG_HOME}/_gitconfig" "${HOME}/.gitconfig"
   overwrite_with_symlink "${CONFIG_HOME}/_gitignore_global" "${HOME}/.gitignore_global"
+  overwrite_with_symlink "${CONFIG_HOME}/git" "${HOME}/.config/git"
 }
 
 function setup_defaults {
