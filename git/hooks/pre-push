@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if [[ "${BYPASS_PUSH:-}" == "1" ]]; then
+  exit 0
+fi
+
+protected_re='^(refs/heads/)?(main|master|trunk|develop|release|prod|.*no-push.*)$'
+
+# git feeds lines on stdin:
+while read -r _ _ remote_ref _; do
+  if [[ "$remote_ref" =~ $protected_re ]]; then
+    echo "refusing to push directly to protected branch '$remote_ref'"
+    exit 1
+  fi
+done
