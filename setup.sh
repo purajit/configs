@@ -143,6 +143,13 @@ function setup_emacs {
   "${HOME}/.config/emacs/bin/doom" install --force
   overwrite_with_symlink "${CONFIG_HOME}/doom" "${HOME}/.config/doom"
   "${HOME}/.config/emacs/bin/doom" sync
+
+  # https://github.com/ghostty-org/ghostty/discussions/5902
+  emacs_launch_plist="$HOME/Library/LaunchAgents/homebrew.mxcl.emacs-plus@30.plist"
+  /usr/libexec/PlistBuddy -c "Print :EnvironmentVariables:TERMINFO" "$emacs_launch_plist" > /dev/null 2>&1 \
+    || /usr/libexec/PlistBuddy -c "Add :EnvironmentVariables:TERMINFO string /Applications/Ghostty.app/Contents/Resources/terminfo" "$emacs_launch_plist"
+  printf "%s%s Configured TERMINFO for emacs launchagent\n" "${GREEN}" "${RESET}"
+
   printf "%s%s Installed and sync'd doomemacs\n" "${GREEN}" "${RESET}"
 }
 
