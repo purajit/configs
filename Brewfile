@@ -37,6 +37,7 @@ brew "gh"
 cask "google-drive"
 brew "helm"
 brew "kubectl"
+brew "libpq"
 brew "terraformer"
 
 # linters and code management
