@@ -2,16 +2,6 @@
 
 source "$HOME/.zprofile"
 
-if [ "$TMUX" = "" ]; then
-  if tmux list-sessions 2>/dev/null | grep -q '(attached)'; then
-    echo "Not in tmux, and there's already an attached session, so creating a new one"
-    tmux new-session
-  else
-    echo "Not in tmux, and there are no attached sessions, so creating the main one or attaching to it"
-    tmux new-session -A -s main
-  fi
-fi
-
 # word-splitting characters, notably leaving out -_^
 WORDCHARS=' :*?[]~=&;!#$%(){}<>/.'
 autoload -Uz select-word-style
