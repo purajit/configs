@@ -16,7 +16,7 @@ brew "zsh-syntax-highlighting"
 # essentials
 brew "emacs-plus@30"
 brew "fd"
-cask "librewolf", args: { no_quarantine: true }
+cask "librewolf"
 cask "font-asap-condensed"  # for subtitles in IINA
 brew "fzf"
 brew "gnupg"
@@ -33,6 +33,7 @@ brew "colima"
 brew "derailed/k9s/k9s"
 brew "direnv"
 brew "docker"
+cask "docker-desktop"
 brew "gh"
 cask "google-drive"
 brew "helm"
