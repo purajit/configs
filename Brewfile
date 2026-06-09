@@ -16,7 +16,8 @@ brew "zsh-syntax-highlighting"
 # essentials
 brew "emacs-plus@30"
 brew "fd"
-cask "librewolf"
+cask "firefox" if ENV['HOMEBREW_MACHINE'] == "work"
+cask "librewolf" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "font-asap-condensed"  # for subtitles in IINA
 brew "fzf"
 brew "gnupg"
