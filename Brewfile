@@ -40,7 +40,7 @@ cask "google-drive"
 brew "helm"
 brew "kubectl"
 brew "libpq"
-brew "terraformer"
+cask "markedit"
 
 # linters and code management
 brew "aspell"
