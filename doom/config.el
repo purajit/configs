@@ -155,3 +155,4 @@
 ;;;;;; MISC
 (setq org-directory "~/Documents/org/")
 (setq confirm-kill-emacs nil)
+(setq magit-commit-show-diff nil)

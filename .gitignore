@@ -1,3 +1,4 @@
 _zshlocal
 Brewfile.lock.json
 k9s/clusters
+k9s/plugins.yaml

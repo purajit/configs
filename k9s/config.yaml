@@ -18,7 +18,6 @@ k9s:
     reactive: false # watch for disk artifacts changes and update the UI
     skin: deep-theme
     defaultsToFullScreen: true # defaults to fullscreen in certain views (yaml, helm history, describe, value_extender, details, logs)
-    useGVRTitleFormat: true # show Group/Version/Resource vs just Resource
   skipLatestRevCheck: true # check for latest revision from GitHub tags
   keepMissingClusters: false # prevent k9s from cleaning up inactive cluster configs
   logger:
