@@ -19,6 +19,7 @@
 	park = town park
 	set-parent = town set-parent
 	sync = town sync
+	rc = rebase --continue
 [advice]
 	statusHints = false
 [credential "https://github.com"]
