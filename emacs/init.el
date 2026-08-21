@@ -9,37 +9,37 @@
   (file-name-as-directory (file-truename user-emacs-directory)))
 (defconst pm/data-directory
   (file-name-as-directory
-   (expand-file-name "emacs" (or (getenv "XDG_DATA_HOME") "~/.local/share"))))
+    (expand-file-name "emacs" (or (getenv "XDG_DATA_HOME") "~/.local/share"))))
 (defconst pm/cache-directory
   (file-name-as-directory
-   (expand-file-name "emacs" (or (getenv "XDG_CACHE_HOME") "~/.cache"))))
+    (expand-file-name "emacs" (or (getenv "XDG_CACHE_HOME") "~/.cache"))))
 (defconst pm/state-directory
   (file-name-as-directory
-   (expand-file-name "emacs" (or (getenv "XDG_STATE_HOME") "~/.local/state"))))
+    (expand-file-name "emacs" (or (getenv "XDG_STATE_HOME") "~/.local/state"))))
 
 (dolist (directory (list pm/data-directory pm/cache-directory pm/state-directory))
   (make-directory directory t))
 
 (setq custom-file (expand-file-name "custom.el" pm/state-directory)
-      package-user-dir (expand-file-name "elpa/" pm/data-directory)
-      backup-directory-alist `(("." . ,(expand-file-name "backups/" pm/cache-directory)))
-      auto-save-file-name-transforms `((".*" ,(expand-file-name "auto-save/" pm/cache-directory) t))
-      auto-save-list-file-prefix (expand-file-name "auto-save-list/.saves-" pm/cache-directory)
-      savehist-file (expand-file-name "history.el" pm/state-directory)
-      save-place-file (expand-file-name "places.el" pm/state-directory)
-      recentf-save-file (expand-file-name "recentf.el" pm/state-directory)
-      project-list-file (expand-file-name "projects.el" pm/state-directory)
-      bookmark-default-file (expand-file-name "bookmarks.el" pm/state-directory)
-      abbrev-file-name (expand-file-name "abbrev.el" pm/state-directory)
-      tramp-persistency-file-name (expand-file-name "tramp.el" pm/state-directory)
-      tramp-auto-save-directory (expand-file-name "tramp-auto-save/" pm/cache-directory)
-      url-configuration-directory (expand-file-name "url/" pm/state-directory)
-      server-auth-dir (expand-file-name "server/" pm/state-directory)
-      eshell-directory-name (expand-file-name "eshell/" pm/state-directory)
-      org-persist-directory (expand-file-name "org-persist/" pm/state-directory)
-      transient-history-file (expand-file-name "transient/history.el" pm/state-directory)
-      transient-levels-file (expand-file-name "transient/levels.el" pm/state-directory)
-      transient-values-file (expand-file-name "transient/values.el" pm/state-directory))
+  package-user-dir (expand-file-name "elpa/" pm/data-directory)
+  backup-directory-alist `(("." . ,(expand-file-name "backups/" pm/cache-directory)))
+  auto-save-file-name-transforms `((".*" ,(expand-file-name "auto-save/" pm/cache-directory) t))
+  auto-save-list-file-prefix (expand-file-name "auto-save-list/.saves-" pm/cache-directory)
+  savehist-file (expand-file-name "history.el" pm/state-directory)
+  save-place-file (expand-file-name "places.el" pm/state-directory)
+  recentf-save-file (expand-file-name "recentf.el" pm/state-directory)
+  project-list-file (expand-file-name "projects.el" pm/state-directory)
+  bookmark-default-file (expand-file-name "bookmarks.el" pm/state-directory)
+  abbrev-file-name (expand-file-name "abbrev.el" pm/state-directory)
+  tramp-persistency-file-name (expand-file-name "tramp.el" pm/state-directory)
+  tramp-auto-save-directory (expand-file-name "tramp-auto-save/" pm/cache-directory)
+  url-configuration-directory (expand-file-name "url/" pm/state-directory)
+  server-auth-dir (expand-file-name "server/" pm/state-directory)
+  eshell-directory-name (expand-file-name "eshell/" pm/state-directory)
+  org-persist-directory (expand-file-name "org-persist/" pm/state-directory)
+  transient-history-file (expand-file-name "transient/history.el" pm/state-directory)
+  transient-levels-file (expand-file-name "transient/levels.el" pm/state-directory)
+  transient-values-file (expand-file-name "transient/values.el" pm/state-directory))
 (make-directory (cdar backup-directory-alist) t)
 (make-directory (cadar auto-save-file-name-transforms) t)
 (make-directory (file-name-directory auto-save-list-file-prefix) t)
@@ -51,27 +51,27 @@
 ;; Package repositories and builds live outside this config repo.  Only the
 ;; exact revisions in versions.el are checked in.
 (setq straight-base-dir pm/data-directory
-      straight-profiles `((nil . ,(expand-file-name "versions.el" pm/config-directory)))
-      straight-use-version-specific-build-dir t
-      straight-check-for-modifications '(check-on-save find-when-checking))
+  straight-profiles `((nil . ,(expand-file-name "versions.el" pm/config-directory)))
+  straight-use-version-specific-build-dir t
+  straight-check-for-modifications '(check-on-save find-when-checking))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
-       (expand-file-name "straight/repos/straight.el/bootstrap.el" straight-base-dir))
-      (bootstrap-version 7))
+        (expand-file-name "straight/repos/straight.el/bootstrap.el" straight-base-dir))
+       (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-        (url-retrieve-synchronously
-         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
-         'silent 'inhibit-cookies)
+      (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
 (require 'use-package)
 (setq straight-use-package-by-default t
-      use-package-always-defer t
-      use-package-expand-minimally t)
+  use-package-always-defer t
+  use-package-expand-minimally t)
 
 (defun pm/upgrade-packages ()
   "Update, rebuild, and lock all packages.
@@ -85,48 +85,42 @@ startup and restores the old lockfile and package checkouts if that fails."
 (defun pm/smoke-test ()
   "Load the important deferred packages, failing on any error."
   (dolist (feature '(vertico orderless marginalia consult corfu cape
-                     apheleia treesit-auto eglot magit envrc doom-themes
-                     doom-modeline anzu kkp))
+                      dumb-jump apheleia treesit-auto eglot magit envrc doom-themes
+                      doom-modeline anzu kkp))
     (require feature))
   (message "Emacs package smoke test passed"))
-
-(defun pm/run-package-upgrade ()
-  "Run the checked, automatically-rolling-back package upgrade script."
-  (interactive)
-  (compile (shell-quote-argument
-            (expand-file-name "bin/upgrade" pm/config-directory))))
 
 ;;;; Fast, quiet defaults
 
 (setq user-full-name "purajit"
-      inhibit-startup-screen t
-      initial-scratch-message nil
-      initial-major-mode 'text-mode
-      confirm-kill-emacs nil
-      ring-bell-function #'ignore
-      use-short-answers t
-      sentence-end-double-space nil
-      create-lockfiles nil
-      make-backup-files t
-      version-control t
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      vc-follow-symlinks t
-      require-final-newline t
-      tab-always-indent 'complete
-      visible-bell nil
-      scroll-conservatively 101
-      scroll-margin 2
-      hscroll-margin 2
-      show-paren-delay 0
-      copy-region-blink-delay 0
-      xref-search-program 'ripgrep)
+  inhibit-startup-screen t
+  initial-scratch-message nil
+  initial-major-mode 'text-mode
+  confirm-kill-emacs nil
+  ring-bell-function #'ignore
+  use-short-answers t
+  sentence-end-double-space nil
+  create-lockfiles nil
+  make-backup-files t
+  version-control t
+  delete-old-versions t
+  kept-new-versions 6
+  kept-old-versions 2
+  vc-follow-symlinks t
+  require-final-newline t
+  tab-always-indent 'complete
+  visible-bell nil
+  scroll-conservatively 101
+  scroll-margin 2
+  hscroll-margin 2
+  show-paren-delay 0
+  copy-region-blink-delay 0
+  xref-search-program 'ripgrep)
 
 (setq-default indent-tabs-mode nil
-              tab-width 2
-              fill-column 80
-              display-line-numbers-width nil)
+  tab-width 2
+  fill-column 80
+  display-line-numbers-width nil)
 
 (menu-bar-mode -1)
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
@@ -134,6 +128,12 @@ startup and restores the old lockfile and package checkouts if that fails."
 (when (fboundp 'pixel-scroll-precision-mode) (pixel-scroll-precision-mode 1))
 (when (fboundp 'mouse-wheel-mode) (mouse-wheel-mode 1))
 (xterm-mouse-mode 1)
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+;; On a terminal, `window-divider-mode' renders a full character-cell bar and
+;; takes precedence over the thin `vertical-border' glyph below.
+(window-divider-mode -1)
 (global-display-line-numbers-mode -1)
 (global-hl-line-mode -1)
 (column-number-mode 1)
@@ -148,21 +148,22 @@ startup and restores the old lockfile and package checkouts if that fails."
 (which-key-mode 1)
 
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
-;; Keep the vertical separator legible in terminal frames.
+;; Use the same thin separator glyph in GUI and terminal frames.
 (add-hook 'window-configuration-change-hook
-          (lambda ()
-            (unless (display-graphic-p)
-              (let ((table (or buffer-display-table standard-display-table)))
-                (set-display-table-slot table 'vertical-border ?│)
-                (set-window-display-table (selected-window) table)))))
+  (lambda ()
+    (let ((table (or buffer-display-table
+                     standard-display-table
+                     (setq standard-display-table (make-display-table)))))
+      (set-display-table-slot table 'vertical-border ?│)
+      (set-window-display-table (selected-window) table))))
 
 ;;;; macOS and frames
 
 (setq ns-command-modifier 'hyper
-      mac-command-modifier 'hyper
-      ns-option-modifier 'meta
-      mac-option-modifier 'meta
-      ns-function-modifier 'super)
+  mac-command-modifier 'hyper
+  ns-option-modifier 'meta
+  mac-option-modifier 'meta
+  ns-function-modifier 'super)
 
 ;; The native NS clipboard functions work in GUI frames but do not own the
 ;; macOS pasteboard from a TTY frame.  Keep them for GUI Emacs and bridge
@@ -176,16 +177,16 @@ startup and restores the old lockfile and package checkouts if that fails."
     "Put TEXT on the macOS pasteboard from a terminal frame."
     (setq pm/last-pbcopy-text text)
     (let ((coding-system-for-write 'utf-8-unix)
-          (process-connection-type nil))
+           (process-connection-type nil))
       (with-temp-buffer
         (insert text)
         (call-process-region (point-min) (point-max)
-                             "/usr/bin/pbcopy" nil nil nil))))
+          "/usr/bin/pbcopy" nil nil nil))))
 
   (defun pm/pbpaste ()
     "Return new text from the macOS pasteboard, or nil if Emacs put it there."
     (let ((coding-system-for-read 'utf-8-unix)
-          (process-connection-type nil))
+           (process-connection-type nil))
       (with-temp-buffer
         (when (zerop (call-process "/usr/bin/pbpaste" nil t nil))
           (let ((text (buffer-string)))
@@ -193,24 +194,24 @@ startup and restores the old lockfile and package checkouts if that fails."
               text))))))
 
   (setq interprogram-cut-function
-        (lambda (text)
-          (if (and (display-graphic-p)
-                   pm/native-interprogram-cut-function)
-              (funcall pm/native-interprogram-cut-function text)
-            (pm/pbcopy text)))
-        interprogram-paste-function
-        (lambda ()
-          (if (and (display-graphic-p)
-                   pm/native-interprogram-paste-function)
-              (funcall pm/native-interprogram-paste-function)
-            (pm/pbpaste)))))
+    (lambda (text)
+      (if (and (display-graphic-p)
+            pm/native-interprogram-cut-function)
+        (funcall pm/native-interprogram-cut-function text)
+        (pm/pbcopy text)))
+    interprogram-paste-function
+    (lambda ()
+      (if (and (display-graphic-p)
+            pm/native-interprogram-paste-function)
+        (funcall pm/native-interprogram-paste-function)
+        (pm/pbpaste)))))
 
 (dolist (setting '((left . 0)
-                   (width . 120)
-                   (fullscreen . fullheight)
-                   (undecorated . t)
-                   (inhibit-double-buffering . t)
-                   (font . "Mononoki Nerd Font-14")))
+                    (width . 120)
+                    (fullscreen . fullheight)
+                    (undecorated . t)
+                    (inhibit-double-buffering . t)
+                    (font . "Mononoki Nerd Font-14")))
   (add-to-list 'default-frame-alist setting))
 
 ;; `default-frame-alist' covers daemon/client frames; the separate initial
@@ -218,18 +219,18 @@ startup and restores the old lockfile and package checkouts if that fails."
 (add-to-list 'initial-frame-alist '(undecorated . t))
 
 (add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (with-selected-frame frame
-              (menu-bar-mode -1)
-              (when (display-graphic-p)
-                (select-frame-set-input-focus frame)))))
+  (lambda (frame)
+    (with-selected-frame frame
+      (menu-bar-mode -1)
+      (when (display-graphic-p)
+        (select-frame-set-input-focus frame)))))
 
 ;;;; Keys: standard Emacs bindings, with a few deliberate conveniences
 
 (global-set-key (kbd "M-g") #'goto-line)
-(global-set-key (kbd "M-,") #'pop-global-mark)
+(global-set-key (kbd "M-.") #'xref-find-definitions)
+(global-set-key (kbd "M-,") #'xref-go-back)
 (global-set-key (kbd "C-c SPC") #'avy-goto-char-timer)
-(global-set-key (kbd "C-c p u") #'pm/run-package-upgrade)
 
 ;;;; Minibuffer and in-buffer completion
 
@@ -251,7 +252,7 @@ startup and restores the old lockfile and package checkouts if that fails."
   (completion-styles '(orderless basic))
   (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion basic))
-                                   (eglot (styles orderless basic)))))
+                                    (eglot (styles orderless basic)))))
 
 (use-package marginalia
   :demand t
@@ -259,10 +260,21 @@ startup and restores the old lockfile and package checkouts if that fails."
 
 (use-package consult
   :bind (("C-x b" . consult-buffer)
-         ("M-y" . consult-yank-pop)
-         ([remap goto-line] . consult-goto-line)
-         ([remap imenu] . consult-imenu)
-         ([remap recentf-open-files] . consult-recent-file)))
+          ("M-y" . consult-yank-pop)
+          ([remap goto-line] . consult-goto-line)
+          ([remap imenu] . consult-imenu)
+          ([remap recentf-open-files] . consult-recent-file)))
+
+(use-package dumb-jump
+  :commands dumb-jump-xref-activate
+  :init
+  ;; Buffer-local semantic backends such as Eglot and Elisp run before global
+  ;; hooks.  Dumb Jump then provides a ripgrep fallback ahead of legacy TAGS.
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate)
+  :custom
+  (dumb-jump-force-searcher 'rg)
+  (xref-show-definitions-function #'consult-xref)
+  (xref-show-xrefs-function #'consult-xref))
 
 (use-package corfu
   :demand t
@@ -282,7 +294,7 @@ startup and restores the old lockfile and package checkouts if that fails."
 
 (use-package cape
   :hook ((prog-mode . pm/add-code-capfs)
-         (text-mode . pm/add-text-capfs))
+          (text-mode . pm/add-text-capfs))
   :init
   (defun pm/add-code-capfs ()
     (add-hook 'completion-at-point-functions #'cape-file -10 t)
@@ -302,9 +314,9 @@ startup and restores the old lockfile and package checkouts if that fails."
   (undo-strong-limit 2000000)
   (undo-outer-limit 36000000)
   :bind (([remap undo] . undo-fu-only-undo)
-         ([remap redo] . undo-fu-only-redo)
-         ("C-_" . undo-fu-only-undo)
-         ("M-_" . undo-fu-only-redo)))
+          ([remap redo] . undo-fu-only-redo)
+          ("C-_" . undo-fu-only-undo)
+          ("M-_" . undo-fu-only-redo)))
 
 (use-package undo-fu-session
   :after undo-fu
@@ -345,7 +357,7 @@ startup and restores the old lockfile and package checkouts if that fails."
     "Install any missing grammars in `pm/tree-sitter-languages'."
     (interactive)
     (let ((treesit-auto-install t)
-          (treesit-auto-langs pm/tree-sitter-languages))
+           (treesit-auto-langs pm/tree-sitter-languages))
       (treesit-auto-install-all)
       ;; Make newly installed modes available without requiring a restart.
       (treesit-auto-add-to-auto-mode-alist)))
@@ -354,9 +366,9 @@ startup and restores the old lockfile and package checkouts if that fails."
     (make-directory grammar-directory t)
     (add-to-list 'treesit-extra-load-path grammar-directory)
     (advice-add
-     #'treesit-install-language-grammar :filter-args
-     (lambda (args)
-       (list (car args) (or (cadr args) grammar-directory)))))
+      #'treesit-install-language-grammar :filter-args
+      (lambda (args)
+        (list (car args) (or (cadr args) grammar-directory)))))
   ;; Check the small configured set once at startup.  Do not enable
   ;; `global-treesit-auto-mode': it probes every grammar whenever any buffer
   ;; chooses a major mode, which makes opening even plain text files slow.
@@ -389,8 +401,8 @@ startup and restores the old lockfile and package checkouts if that fails."
   (eglot-sync-connect nil)
   :config
   (add-to-list 'eglot-server-programs
-               '((python-mode python-ts-mode)
-                 . ("basedpyright-langserver" "--stdio"))))
+    '((python-mode python-ts-mode)
+       . ("basedpyright-langserver" "--stdio"))))
 
 ;;;; Project and file tools
 
@@ -416,7 +428,7 @@ startup and restores the old lockfile and package checkouts if that fails."
 (use-package anzu
   :demand t
   :bind (([remap query-replace] . anzu-query-replace)
-         ([remap query-replace-regexp] . anzu-query-replace-regexp))
+          ([remap query-replace-regexp] . anzu-query-replace-regexp))
   :custom
   (anzu-cons-mode-line-p nil)
   :config
@@ -469,13 +481,13 @@ startup and restores the old lockfile and package checkouts if that fails."
   ;; definitions and never prompts during an appearance-change callback.
   (load-theme 'doom-tomorrow-night t t)
   (load-theme 'doom-tomorrow-day t t)
-  ;; Match the small face adjustments from the previous Doom config.
-  (custom-theme-set-faces
-   'doom-tomorrow-night
-   '(vertical-border ((t (:background "#1d1f21")))))
-  (custom-theme-set-faces
-   'doom-tomorrow-day
-   '(vertical-border ((t (:background "#ffffff"))))))
+  ;; Themes otherwise paint the entire terminal border cell.  Matching its
+  ;; background to the buffer leaves only the thin `│' foreground visible.
+  (defun pm/style-window-divider (&optional _theme)
+    (set-face-background 'vertical-border
+                         (face-background 'default nil t)
+                         nil))
+  (add-hook 'enable-theme-functions #'pm/style-window-divider))
 
 (use-package auto-dark
   :demand t
@@ -501,6 +513,6 @@ startup and restores the old lockfile and package checkouts if that fails."
 (use-package web-mode :mode "\\.html?\\'")
 
 (setq js-indent-level 2
-      org-directory "~/Documents/org/")
+  org-directory "~/Documents/org/")
 
 ;;; init.el ends here

@@ -10,6 +10,7 @@
  ("csv-mode" . "b7eca7304ef7757700be5c2bc23ef6204c60eb75")
  ("dash.el" . "d746dd9edcb67a108818beb0cdc78dc1cb466832")
  ("doom-modeline" . "2d6828870bce42c3de6feebe1e70d9edc46515a6")
+ ("dumb-jump" . "cf06b4ccdce6a39346c32f05139f9ee8b77ee229")
  ("el-get" . "447b7efc9fca29a087f4ec29c5d8ccb580cd1c78")
  ("emacs-bazel-mode" . "0a5dec6508afdbcc79d98300717c5be530f12497")
  ("emacs-undo-fu" . "5684ef2aef5f60176472916b21869cf221e018cc")

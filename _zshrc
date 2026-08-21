@@ -6,7 +6,7 @@
 WORDCHARS=' :*?[]~=&;!#$%(){}<>/._-^@'
 autoload -Uz select-word-style
 select-word-style normal
-zstyle ':zle:*' word-style standard
+zstyle ':zle:*' word-style unspecified
 
 # zsh syntax highlighting; make -/-- options dimmer
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets regexp)
