@@ -47,8 +47,60 @@ autoload -Uz +X bashcompinit && bashcompinit  # for `complete`
 (( $+commands[aws_completer] )) && complete -C "$commands[aws_completer]" aws
 
 # tools and hooks - atuin, direnv, ls colors
-eval "$(atuin init zsh)"
-eval "$(direnv hook zsh)"
+# Atuin emits hundreds of lines of shell code. Generate and compile them only
+# when the binary changes, then source the cached bytecode on normal startups.
+_zsh_cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/zsh
+_atuin_init=$_zsh_cache_dir/atuin-init.zsh
+if [[ ! -s $_atuin_init || $commands[atuin] -nt $_atuin_init ]]; then
+  [[ -d $_zsh_cache_dir ]] || command mkdir -p -- $_zsh_cache_dir
+  command atuin init zsh >| "${_atuin_init}.new" &&
+    command mv -f -- "${_atuin_init}.new" $_atuin_init &&
+    zcompile -R -- "${_atuin_init}.zwc" $_atuin_init
+fi
+# Atuin otherwise forks `atuin uuid` for every new shell. A session identifier
+# only needs to be unique, so build a UUID-shaped value from zsh's own PRNG.
+if [[ -z ${ATUIN_SESSION-} || ${ATUIN_SHLVL-} != $SHLVL ]]; then
+  printf -v ATUIN_SESSION '%04x%04x-%04x-4%03x-%x%03x-%04x%04x%04x' \
+    $RANDOM $RANDOM $RANDOM $((RANDOM & 0xfff)) \
+    $((8 + RANDOM % 4)) $((RANDOM & 0xfff)) $RANDOM $RANDOM $RANDOM
+  export ATUIN_SESSION ATUIN_SHLVL=$SHLVL
+fi
+source $_atuin_init
+unset _atuin_init _zsh_cache_dir
+
+# The generated direnv hook runs a process before every prompt. Environments
+# only change when entering/leaving a directory here; `direnv reload` remains
+# available when an .envrc is edited in place.
+function _direnv_hook {
+  trap -- '' INT
+  eval "$(command /opt/homebrew/bin/direnv export zsh)"
+  trap - INT
+}
+function _direnv_maybe_hook {
+  local dir=$PWD
+  if [[ -n ${DIRENV_DIR-} ]]; then
+    _direnv_hook
+    return
+  fi
+  while [[ $dir != / ]]; do
+    if [[ -f $dir/.envrc ]]; then
+      _direnv_hook
+      return
+    fi
+    dir=${dir:h}
+  done
+}
+function direnv {
+  command /opt/homebrew/bin/direnv "$@"
+  local status=$?
+  if (( status == 0 )) && [[ $1 == (allow|reload) ]]; then
+    _direnv_hook
+  fi
+  return $status
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _direnv_maybe_hook
+_direnv_maybe_hook
 source ~/.lscolors
 
 # source other files
