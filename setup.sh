@@ -161,17 +161,133 @@ function setup_git {
 }
 
 function setup_defaults {
-  defaults write org.p0deje.Maccy clipboardCheckInterval 2
+  # Apps
+  defaults write org.p0deje.Maccy clipboardCheckInterval -float 2
   printf "%s%s Increased Maccy check interval to 2s\n" "${GREEN}" "${RESET}"
 
-  defaults write com.apple.screencapture location "${HOME}/Documents/Screenshots"
+  # Appearance and text input
+  defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
+  printf "%s%s Scroll bars will only appear while scrolling\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
+  printf "%s%s Windows will always prefer opening documents in tabs\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+  printf "%s%s Disabled automatic capitalization\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+  printf "%s%s Disabled smart dash substitution\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticInlinePredictionEnabled -bool false
+  printf "%s%s Disabled inline predictive text\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+  printf "%s%s Disabled inserting a period after a double-space\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+  printf "%s%s Disabled smart quote substitution\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+  defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false
+  printf "%s%s Disabled automatic spelling correction in native and web views\n" "${GREEN}" "${RESET}"
+
+  # Keyboard and trackpad
+  defaults -currentHost write NSGlobalDomain \
+    "com.apple.keyboard.modifiermapping.0-0-0" -array \
+    '{ HIDKeyboardModifierMappingSrc = 30064771129; HIDKeyboardModifierMappingDst = 30064771300; }'
+  printf "%s%s Mapped Caps Lock to Right Control\n" "${GREEN}" "${RESET}"
+
+  defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 3
+  for trackpad_domain in \
+    com.apple.AppleMultitouchTrackpad \
+    com.apple.driver.AppleBluetoothMultitouch.trackpad; do
+    defaults write "${trackpad_domain}" Clicking -bool true
+    defaults write "${trackpad_domain}" Dragging -bool true
+    defaults write "${trackpad_domain}" DragLock -bool true
+    defaults write "${trackpad_domain}" TrackpadTwoFingerDoubleTapGesture -int 0
+  done
+  printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
+
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerDoubleTapGesture -int 0
+  printf "%s%s Disabled the two-finger Smart Zoom gesture\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool false
+  defaults write com.apple.AppleMultitouchTrackpad ActuateDetents -int 0
+  defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool true
+  printf "%s%s Disabled Force Click and haptic detents\n" "${GREEN}" "${RESET}"
+
+  # Dock
+  defaults write com.apple.dock autohide -bool true
+  printf "%s%s Dock will hide automatically\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock magnification -bool true
+  defaults write com.apple.dock tilesize -int 34
+  defaults write com.apple.dock largesize -int 39
+  printf "%s%s Adjusted Dock magnification\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock persistent-apps -array
+  defaults write com.apple.dock persistent-others -array
+  printf "%s%s Removed all Dock entries\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock show-recents -bool false
+  printf "%s%s Dock will not show recently used apps\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock showDesktopGestureEnabled -bool false
+  printf "%s%s Disabled the trackpad gesture for showing the desktop\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock wvous-bl-corner -int 13
+  defaults write com.apple.dock wvous-bl-modifier -int 0
+  printf "%s%s Bottom-left Hot Corner will lock the screen\n" "${GREEN}" "${RESET}"
+
+  # Finder
+  defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+  printf "%s%s Finder will show all filename extensions\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
+  printf "%s%s New Finder windows will use list view\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.finder NewWindowTarget -string "PfHm"
+  printf "%s%s New Finder windows will open the home folder\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
+  defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
+  printf "%s%s Finder will show external and removable drives on the desktop\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.finder ShowRecentTags -bool false
+  printf "%s%s Finder will hide recent tags in the sidebar\n" "${GREEN}" "${RESET}"
+
+  # Desktop and windows
+  defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true
+  defaults write com.apple.WindowManager HideDesktop -bool true
+  printf "%s%s Desktop icons will be hidden\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
+  printf "%s%s Tiled windows will not have margins between them\n" "${GREEN}" "${RESET}"
+
+  # Screenshots
   mkdir -p "${HOME}/Documents/Screenshots"
+  defaults write com.apple.screencapture location -string "${HOME}/Documents/Screenshots"
   printf "%s%s Screenshots will be stored in %s/Documents/Screenshots\n" "${GREEN}" "${RESET}" "${HOME}"
 
+  # Apps bundled with macOS
+  defaults write com.apple.TextEdit RichText -int 0
+  printf "%s%s TextEdit will create plain-text documents by default\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.TextEdit CorrectSpellingAutomatically -bool false
+  defaults write com.apple.TextEdit SmartCopyPaste -bool false
+  defaults write com.apple.TextEdit SmartDashes -bool false
+  defaults write com.apple.TextEdit SmartQuotes -bool false
+  defaults write com.apple.TextEdit SmartSubstitutionsEnabledInRichTextOnly -bool false
+  defaults write com.apple.TextEdit TextReplacement -bool false
+  printf "%s%s Disabled TextEdit spelling correction and smart substitutions\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.ActivityMonitor ShowCategory -int 100
+  printf "%s%s Activity Monitor will show all processes\n" "${GREEN}" "${RESET}"
+
   # at the end
-  killall SystemUIServer
-  killall Finder
-  killall Dock
+  killall SystemUIServer 2> /dev/null || true
+  killall Finder 2> /dev/null || true
+  killall Dock 2> /dev/null || true
   printf "%s%s Restarted UI elements so certain changes go into effect\n" "${GREEN}" "${RESET}"
 }
 
