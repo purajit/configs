@@ -238,9 +238,8 @@ function setup_defaults {
     '{ HIDKeyboardModifierMappingSrc = 30064771129; HIDKeyboardModifierMappingDst = 30064771300; }'
   printf "%s%s Mapped Caps Lock to Right Control\n" "${GREEN}" "${RESET}"
 
-  defaults import com.apple.symbolichotkeys "${CONFIG_HOME}/macos/symbolichotkeys.plist"
-  printf "%s%s Disabled 63 unwanted macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
-  printf "%s%s Command-Shift-3/4 will copy screenshots; add Control to save them to files\n" "${GREEN}" "${RESET}"
+  bash "${CONFIG_HOME}/macos/symbolic_hotkeys.sh"
+  printf "%s%s Configured macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
 
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 3
   for trackpad_domain in \
