@@ -172,6 +172,12 @@ function setup_defaults {
   defaults write NSGlobalDomain AppleWindowTabbingMode -string "always"
   printf "%s%s Windows will always prefer opening documents in tabs\n" "${GREEN}" "${RESET}"
 
+  defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
+  printf "%s%s Double-clicking a title bar will not minimize its window\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSGlassDiffusionSetting -bool false
+  printf "%s%s Liquid Glass will use the clear appearance\n" "${GREEN}" "${RESET}"
+
   defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
   printf "%s%s Disabled automatic capitalization\n" "${GREEN}" "${RESET}"
 
@@ -204,9 +210,42 @@ function setup_defaults {
     defaults write "${trackpad_domain}" Clicking -bool true
     defaults write "${trackpad_domain}" Dragging -bool true
     defaults write "${trackpad_domain}" DragLock -bool true
+    defaults write "${trackpad_domain}" TrackpadCornerSecondaryClick -int 0
+    defaults write "${trackpad_domain}" TrackpadFiveFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFourFingerHorizSwipeGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFourFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFourFingerVertSwipeGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadHorizScroll -int 1
+    defaults write "${trackpad_domain}" TrackpadMomentumScroll -bool true
+    defaults write "${trackpad_domain}" TrackpadPinch -int 1
+    defaults write "${trackpad_domain}" TrackpadRightClick -bool true
+    defaults write "${trackpad_domain}" TrackpadRotate -int 1
+    defaults write "${trackpad_domain}" TrackpadScroll -bool true
+    defaults write "${trackpad_domain}" TrackpadThreeFingerDrag -bool false
+    defaults write "${trackpad_domain}" TrackpadThreeFingerHorizSwipeGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadThreeFingerTapGesture -int 0
+    defaults write "${trackpad_domain}" TrackpadThreeFingerVertSwipeGesture -int 2
     defaults write "${trackpad_domain}" TrackpadTwoFingerDoubleTapGesture -int 0
+    defaults write "${trackpad_domain}" TrackpadTwoFingerFromRightEdgeSwipeGesture -int 3
+    defaults write "${trackpad_domain}" USBMouseStopsTrackpad -int 0
   done
   printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
+  printf "%s%s Preserved trackpad scrolling, swiping, pinching, and rotation gestures\n" "${GREEN}" "${RESET}"
+
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.rotateGesture -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.scrollBehavior -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -int 0
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerHorizSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerTapGesture -int 0
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerVertSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerFromRightEdgeSwipeGesture -int 3
 
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.twoFingerDoubleTapGesture -int 0
   printf "%s%s Disabled the two-finger Smart Zoom gesture\n" "${GREEN}" "${RESET}"
@@ -264,10 +303,32 @@ function setup_defaults {
   defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false
   printf "%s%s Tiled windows will not have margins between them\n" "${GREEN}" "${RESET}"
 
+  defaults write com.apple.WindowManager AppWindowGroupingBehavior -int 1
+  defaults write com.apple.WindowManager AutoHide -bool true
+  defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+  defaults write com.apple.WindowManager StageManagerHideWidgets -bool false
+  defaults write com.apple.WindowManager StandardHideWidgets -bool false
+  printf "%s%s Preserved Stage Manager grouping, auto-hide, widget, and desktop-click behavior\n" "${GREEN}" "${RESET}"
+
+  # Menu bar and Control Center
+  defaults write com.apple.menuextra.clock ShowAMPM -bool true
+  defaults write com.apple.menuextra.clock ShowDate -int 0
+  defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
+  printf "%s%s Menu bar clock will show the weekday and AM/PM, with the date when space allows\n" "${GREEN}" "${RESET}"
+
+  for control_center_item in Battery Bluetooth Clock Sound WiFi; do
+    defaults write com.apple.controlcenter "NSStatusItem VisibleCC ${control_center_item}" -bool true
+  done
+  printf "%s%s Battery, Bluetooth, clock, sound, and Wi-Fi will be available in Control Center\n" "${GREEN}" "${RESET}"
+
   # Screenshots
   mkdir -p "${HOME}/Documents/Screenshots"
   defaults write com.apple.screencapture location -string "${HOME}/Documents/Screenshots"
   printf "%s%s Screenshots will be stored in %s/Documents/Screenshots\n" "${GREEN}" "${RESET}" "${HOME}"
+
+  defaults write com.apple.screencapture showsClicks -bool true
+  defaults write com.apple.screencapture showsCursor -bool true
+  printf "%s%s Screen recordings will include pointer movement and click indicators\n" "${GREEN}" "${RESET}"
 
   # Apps bundled with macOS
   defaults write com.apple.TextEdit RichText -int 0
@@ -283,6 +344,31 @@ function setup_defaults {
 
   defaults write com.apple.ActivityMonitor ShowCategory -int 100
   printf "%s%s Activity Monitor will show all processes\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+  printf "%s%s Enabled Secure Keyboard Entry in Terminal\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.Preview PVInspectorWindowOpenOnStart -bool true
+  defaults write com.apple.Preview PVMarkupToolbarVisibleForImages -bool true
+  defaults write com.apple.Preview PVMarkupToolbarVisibleForPDFs -bool true
+  printf "%s%s Preview will open its inspector and show markup tools for images and PDFs\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.keyboard.preferences IsMixmojiSuggestionsEnabled -bool false
+  printf "%s%s Disabled Mixmoji suggestions\n" "${GREEN}" "${RESET}"
+
+  # Login items
+  for login_app in Hammerspoon Ghostty Maccy; do
+    if [[ ! -d "/Applications/${login_app}.app" ]]; then
+      printf "%s!%s Skipped missing login app %s\n" "${YELLOW}" "${RESET}" "${login_app}"
+      continue
+    fi
+    if [[ "$(osascript -e "tell application \"System Events\" to login item \"${login_app}\" exists")" == "true" ]] \
+      || osascript -e "tell application \"System Events\" to make login item at end with properties {name:\"${login_app}\", path:\"/Applications/${login_app}.app\", hidden:false}" > /dev/null; then
+      printf "%s%s %s will open at login\n" "${GREEN}" "${RESET}" "${login_app}"
+    else
+      printf "%s!%s Could not add %s as a login item\n" "${YELLOW}" "${RESET}" "${login_app}"
+    fi
+  done
 
   # at the end
   killall SystemUIServer 2> /dev/null || true

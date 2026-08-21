@@ -227,6 +227,15 @@ startup and restores the old lockfile and package checkouts if that fails."
 
 ;;;; Keys: standard Emacs bindings, with a few deliberate conveniences
 
+(defun pm/backward-to-bol-or-indent ()
+  "Move to indentation, then toggle between it and the true line beginning."
+  (interactive "^")
+  (let ((origin (point)))
+    (back-to-indentation)
+    (when (= origin (point))
+      (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") #'pm/backward-to-bol-or-indent)
 (global-set-key (kbd "M-g") #'goto-line)
 (global-set-key (kbd "M-.") #'xref-find-definitions)
 (global-set-key (kbd "M-,") #'xref-go-back)
