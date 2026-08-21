@@ -1,0 +1,6 @@
+[tools]
+pipx = { version = "latest", uvx = "true", pipx_args = "--include-deps" }
+
+[settings]
+idiomatic_version_file_enable_tools = []
+experimental = true

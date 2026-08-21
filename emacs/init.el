@@ -20,6 +20,14 @@
 (dolist (directory (list pm/data-directory pm/cache-directory pm/state-directory))
   (make-directory directory t))
 
+;; `early-init.el' handles this during normal startup.  Repeat it here so
+;; explicitly loading init.el (including batch checks) cannot write into the
+;; configuration directory either.
+(when (fboundp 'startup-redirect-eln-cache)
+  (let ((eln-cache (expand-file-name "eln-cache/" pm/cache-directory)))
+    (make-directory eln-cache t)
+    (startup-redirect-eln-cache eln-cache)))
+
 (setq custom-file (expand-file-name "custom.el" pm/state-directory)
   package-user-dir (expand-file-name "elpa/" pm/data-directory)
   backup-directory-alist `(("." . ,(expand-file-name "backups/" pm/cache-directory)))

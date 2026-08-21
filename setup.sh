@@ -85,13 +85,16 @@ function setup_shell {
   # shell tools
   clone_repo "https://github.com/purajit/venv_manager.git"
   overwrite_with_symlink "${CONFIG_HOME}/atuin-config.toml" "${HOME}/.config/atuin/config.toml"
+  mkdir -p "${HOME}/.config/mise"
+  overwrite_with_symlink "${CONFIG_HOME}/mise-config.toml" "${HOME}/.config/mise/config.toml"
 
   # zsh
   overwrite_with_symlink "${CONFIG_HOME}/_zshrc" "${HOME}/.zshrc"
   overwrite_with_symlink "${CONFIG_HOME}/_zprofile" "${HOME}/.zprofile"
 
-  # tmux
+  # tmux and screen
   overwrite_with_symlink "${CONFIG_HOME}/_tmux.conf" "${HOME}/.tmux.conf"
+  overwrite_with_symlink "${CONFIG_HOME}/screenrc" "${HOME}/.screenrc"
 
   # tmux plugins
   mkdir -p "${HOME}/.tmux/plugins"
@@ -162,8 +165,40 @@ function setup_git {
 
 function setup_defaults {
   # Apps
-  defaults write org.p0deje.Maccy clipboardCheckInterval -float 2
-  printf "%s%s Increased Maccy check interval to 2s\n" "${GREEN}" "${RESET}"
+  defaults write org.p0deje.Maccy KeyboardShortcuts_delete -string \
+    '{"carbonKeyCode":51,"carbonModifiers":2048}'
+  defaults write org.p0deje.Maccy KeyboardShortcuts_pin -int 0
+  defaults write org.p0deje.Maccy KeyboardShortcuts_popup -string \
+    '{"carbonModifiers":768,"carbonKeyCode":9}'
+  defaults write org.p0deje.Maccy KeyboardShortcuts_togglePreview -int 0
+  defaults write org.p0deje.Maccy previewWidth -int 400
+  defaults write org.p0deje.Maccy searchVisibility -string "always"
+  defaults write org.p0deje.Maccy showFooter -bool false
+  defaults write org.p0deje.Maccy showSearch -bool true
+  defaults write org.p0deje.Maccy showTitle -bool false
+  defaults write org.p0deje.Maccy SUEnableAutomaticChecks -bool false
+  printf "%s%s Configured Maccy and its shortcuts\n" "${GREEN}" "${RESET}"
+
+  defaults write org.hammerspoon.Hammerspoon HSConsoleDarkModeKey -bool true
+  defaults write org.hammerspoon.Hammerspoon MJKeepConsoleOnTopKey -bool true
+  defaults write org.hammerspoon.Hammerspoon SUAutomaticallyUpdate -bool false
+  defaults write org.hammerspoon.Hammerspoon SUEnableAutomaticChecks -bool false
+  defaults write org.hammerspoon.Hammerspoon SUSendProfileInfo -bool false
+  printf "%s%s Configured Hammerspoon and its console\n" "${GREEN}" "${RESET}"
+
+  defaults write com.colliderli.iina PluginEnabled.io.iina.opensub -bool true
+  defaults write com.colliderli.iina PluginEnabled.io.iina.user-script -bool true
+  defaults write com.colliderli.iina PluginEnabled.io.iina.ytdl -bool true
+  printf "%s%s Enabled IINA's OpenSubtitles, user-script, and yt-dlp plugins\n" "${GREEN}" "${RESET}"
+
+  defaults write app.cyan.markedit NSAllowContinuousSpellChecking -bool true
+  defaults write app.cyan.markedit WebAutomaticLinkDetectionEnabled -bool true
+  defaults write app.cyan.markedit WebAutomaticSpellingCorrectionEnabled -bool true
+  defaults write app.cyan.markedit WebAutomaticTextReplacementEnabled -bool true
+  defaults write app.cyan.markedit WebContinuousSpellCheckingEnabled -bool true
+  defaults write app.cyan.markedit WebGrammarCheckingEnabled -bool true
+  defaults write app.cyan.markedit editor.overwrite-text-checker -bool true
+  printf "%s%s Configured MarkEdit\n" "${GREEN}" "${RESET}"
 
   # Appearance and text input
   defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
@@ -234,7 +269,7 @@ function setup_defaults {
     defaults write "${trackpad_domain}" USBMouseStopsTrackpad -int 0
   done
   printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
-  printf "%s%s Preserved trackpad scrolling, swiping, pinching, and rotation gestures\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured trackpad scrolling, swiping, pinching, and rotation gestures\n" "${GREEN}" "${RESET}"
 
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -int 1
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
@@ -312,7 +347,7 @@ function setup_defaults {
   defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
   defaults write com.apple.WindowManager StageManagerHideWidgets -bool false
   defaults write com.apple.WindowManager StandardHideWidgets -bool false
-  printf "%s%s Preserved Stage Manager grouping, auto-hide, widget, and desktop-click behavior\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured Stage Manager grouping, auto-hide, widget, and desktop-click behavior\n" "${GREEN}" "${RESET}"
 
   # Menu bar and Control Center
   defaults write com.apple.menuextra.clock ShowAMPM -bool true
@@ -400,6 +435,9 @@ function setup_misc {
   overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"
   mkdir -p "${HOME}/.config/gh-dash"
   overwrite_with_symlink "${CONFIG_HOME}/gh-dash-config.yml" "${HOME}/.config/gh-dash/config.yml"
+  mkdir -p "${HOME}/.config/zed"
+  overwrite_with_symlink "${CONFIG_HOME}/zed-settings.json" "${HOME}/.config/zed/settings.json"
+
   mkdir -p "${HOME}/.ssh"
   overwrite_with_symlink "${CONFIG_HOME}/ssh_config" "${HOME}/.ssh/config"
   overwrite_with_symlink "${CONFIG_HOME}/_terraformrc" "${HOME}/.terraformrc"

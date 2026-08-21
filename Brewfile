@@ -42,6 +42,7 @@ brew "helm"
 brew "kubectl"
 brew "libpq"
 cask "markedit"
+brew "mise"
 
 # linters and code management
 brew "aspell"
