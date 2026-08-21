@@ -1,11 +1,17 @@
 #!/usr/bin/env bash
+set -u
+
 CONFIG_HOME="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MONO_HOME="${HOME}/code/purajit/mono"
 RED=$'\033[0;31m'
 GREEN=$'\033[0;32m'
 YELLOW=$'\033[0;33m'
 PURPLE=$'\033[0;35m'
+WHITE=$'\033[0;37m'
 RESET=$'\033[0m'
+
+: ${RECLONE:=}
+: ${DONT_PULL:=}
 
 printf "Beginning configuration setup\n"
 printf -- "- Using %s%s%s as source of config truth\n" "${PURPLE}" "${CONFIG_HOME}" "${RESET}"
@@ -49,6 +55,39 @@ function clone_repo {
   fi
 }
 
+function set_symbolic_hotkey {
+  local symbolic_hotkeys_plist="$1"
+  local shortcut_id="$2"
+  local enabled="$3"
+  local description="$4"
+  shift 4
+
+  local plist_key=":AppleSymbolicHotKeys:${shortcut_id}"
+  /usr/libexec/PlistBuddy -c "Add ${plist_key} dict" "${symbolic_hotkeys_plist}"
+  /usr/libexec/PlistBuddy -c "Add ${plist_key}:enabled bool ${enabled}" "${symbolic_hotkeys_plist}"
+
+  if [[ "$#" -eq 3 ]]; then
+    local character_code="$1"
+    local virtual_key_code="$2"
+    local modifiers="$3"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value dict" "${symbolic_hotkeys_plist}"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value:parameters array" "${symbolic_hotkeys_plist}"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value:parameters:0 integer ${character_code}" "${symbolic_hotkeys_plist}"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value:parameters:1 integer ${virtual_key_code}" "${symbolic_hotkeys_plist}"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value:parameters:2 integer ${modifiers}" "${symbolic_hotkeys_plist}"
+    /usr/libexec/PlistBuddy -c "Add ${plist_key}:value:type string standard" "${symbolic_hotkeys_plist}"
+  elif [[ "$#" -ne 0 ]]; then
+    printf "Invalid symbolic hotkey definition for ID %s\n" "${shortcut_id}" >&2
+    return 1
+  fi
+
+  if [[ "$enabled" == "true" ]]; then
+    printf "%s%s Set shortcut for \"$description\" (${shortcut_id})\n" "${GREEN}" "${RESET}"
+  else
+    printf "%s%s Disabled shortcut for \"$description\" (${shortcut_id})\n" "${GREEN}" "${RESET}"
+  fi
+}
+
 # individual setup steps
 function setup_init {
   mkdir -p "${HOME}/.config/"
@@ -87,6 +126,7 @@ function setup_shell {
   overwrite_with_symlink "${CONFIG_HOME}/atuin-config.toml" "${HOME}/.config/atuin/config.toml"
   mkdir -p "${HOME}/.config/mise"
   overwrite_with_symlink "${CONFIG_HOME}/mise-config.toml" "${HOME}/.config/mise/config.toml"
+  overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/.config/k9s"
 
   # zsh
   overwrite_with_symlink "${CONFIG_HOME}/_zshrc" "${HOME}/.zshrc"
@@ -394,25 +434,108 @@ function setup_defaults {
   defaults write com.apple.keyboard.preferences IsMixmojiSuggestionsEnabled -bool false
   printf "%s%s Disabled Mixmoji suggestions\n" "${GREEN}" "${RESET}"
 
-  # Login items
-  for login_app in Hammerspoon Ghostty Maccy; do
-    if [[ ! -d "/Applications/${login_app}.app" ]]; then
-      printf "%s!%s Skipped missing login app %s\n" "${YELLOW}" "${RESET}" "${login_app}"
-      continue
-    fi
-    if [[ "$(osascript -e "tell application \"System Events\" to login item \"${login_app}\" exists")" == "true" ]] \
-      || osascript -e "tell application \"System Events\" to make login item at end with properties {name:\"${login_app}\", path:\"/Applications/${login_app}.app\", hidden:false}" > /dev/null; then
-      printf "%s%s %s will open at login\n" "${GREEN}" "${RESET}" "${login_app}"
-    else
-      printf "%s!%s Could not add %s as a login item\n" "${YELLOW}" "${RESET}" "${login_app}"
-    fi
-  done
-
   # at the end
   killall SystemUIServer 2> /dev/null || true
   killall Finder 2> /dev/null || true
   killall Dock 2> /dev/null || true
   printf "%s%s Restarted UI elements so certain changes go into effect\n" "${GREEN}" "${RESET}"
+}
+
+function setup_shortcuts {
+  readonly MOD_NONE=0
+  readonly MOD_SHIFT=131072
+  readonly MOD_CONTROL=262144
+  readonly MOD_OPTION=524288
+  readonly MOD_COMMAND=1048576
+  readonly MOD_FUNCTION=8388608
+
+  symbolic_hotkeys_plist="$(mktemp)"
+  trap 'rm -f "${symbolic_hotkeys_plist}"' EXIT
+  plutil -create xml1 "${symbolic_hotkeys_plist}"
+  /usr/libexec/PlistBuddy -c "Add :AppleSymbolicHotKeys dict" "${symbolic_hotkeys_plist}"
+
+  # Screenshots - make clipboard copy the easier one
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 28 true "Save the screen to a file with Control-Command-Shift-3" 51 20 $((MOD_COMMAND | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 29 true "Copy the screen with Command-Shift-3" 51 20 $((MOD_COMMAND | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 30 true "Save the selected area to a file with Control-Command-Shift-4" 52 21 $((MOD_COMMAND | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 31 true "Copy the selected area with Command-Shift-4" 52 21 $((MOD_COMMAND | MOD_SHIFT))
+
+  # Keyboard navigation configuration - disable all
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 12 false "Turn keyboard access on or off" 65535 122 $((MOD_FUNCTION | MOD_CONTROL))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 13 false "Change how Tab moves focus" 65535 98 $((MOD_FUNCTION | MOD_CONTROL))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 159 false "Show the contextual menu" 65535 36 ${MOD_CONTROL}
+
+  # Accessibility display speech, captions, etc controls - disable all
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 15 false "Turn accessibility zoom on or off"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 16 false "Turn accessibility zoom on or off slowly (legacy companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 17 false "Accessibility zoom in"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 18 false "Accessibility zoom in slowly (legacy companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 19 false "Accessibility zoom out"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 20 false "Accessibility zoom out slowly (legacy companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 21 false "Invert display colors"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 22 false "Invert display colors slowly (legacy companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 23 false "Turn zoom image smoothing on or off"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 24 false "Turn zoom image smoothing on or off slowly (legacy companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 25 false "Increase display contrast"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 26 false "Decrease display contrast"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 59 false "Turn VoiceOver on or off" 65535 96 $((MOD_FUNCTION | MOD_COMMAND))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 162 false "Show Accessibility controls" 65535 96 $((MOD_FUNCTION | MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 164 false "Legacy or reserved Notification Center shortcut" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 215 false "Turn Live Captions on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 216 false "Pause or resume Live Captions transcription" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 217 false "Turn Live Captions Type to Speak on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 218 false "Switch Live Captions between computer audio and microphone" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 219 false "Keep Live Captions onscreen" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 223 false "Turn the large Presenter Overlay on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 224 false "Turn the small Presenter Overlay on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 225 false "Turn Live Speech on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 226 false "Toggle Live Speech visibility" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 227 false "Pause or resume Live Speech" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 228 false "Cancel Live Speech" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 229 false "Hide or show Live Speech phrases" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 230 false "Turn Speak Selection on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 231 false "Turn Speak Item Under the Pointer on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 232 false "Turn typing feedback on or off" 65535 65535 ${MOD_NONE}
+
+  # Dock, Mission Control, and Spaces - disable all except space
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 33 false "Show application windows" 65535 125 $((MOD_FUNCTION | MOD_CONTROL))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 36 false "Show the desktop" 65535 103 ${MOD_FUNCTION}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 52 false "Turn Dock hiding on or off" 100 2 $((MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 79 true "Move to the previous Space"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 80 true "Move to the previous Space slowly (companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 81 true "Move to the next Space"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 82 true "Move to the next Space slowly (companion)"
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 175 false "Turn Do Not Disturb on or off" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 190 false "Create a Quick Note" 113 12 ${MOD_FUNCTION}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 222 false "Turn Stage Manager on or off" 65535 65535 ${MOD_NONE}
+
+  # Input sources, search, and help - disable all
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 60 false "Select the previous input source" 32 49 ${MOD_CONTROL}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 61 false "Select the next source in the Input menu" 32 49 $((MOD_CONTROL | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 65 false "Show a Finder search window" 32 49 $((MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 98 false "Show the Help menu" 47 44 $((MOD_COMMAND | MOD_SHIFT))
+
+  # Window management - disable all
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 233 false "Minimize the active window" 109 46 ${MOD_COMMAND}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 235 false "Zoom the active window" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 237 false "Fill the active window" 102 3 $((MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 238 false "Center the active window" 99 8 $((MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 239 false "Return the active window to its previous size" 114 15 $((MOD_FUNCTION | MOD_CONTROL))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 240 false "Tile the active window to the left half" 65535 123 $((MOD_FUNCTION | MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 241 false "Tile the active window to the right half" 65535 124 $((MOD_FUNCTION | MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 242 false "Tile the active window to the top half" 65535 126 $((MOD_FUNCTION | MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 243 false "Tile the active window to the bottom half" 65535 125 $((MOD_FUNCTION | MOD_COMMAND | MOD_OPTION))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 244 false "Tile the active window to the top-left quarter" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 245 false "Tile the active window to the top-right quarter" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 246 false "Tile the active window to the bottom-left quarter" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 247 false "Tile the active window to the bottom-right quarter" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 248 false "Arrange windows left and right" 65535 123 $((MOD_FUNCTION | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 249 false "Arrange windows right and left" 65535 124 $((MOD_FUNCTION | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 250 false "Arrange windows top and bottom" 65535 126 $((MOD_FUNCTION | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 251 false "Arrange windows bottom and top" 65535 125 $((MOD_FUNCTION | MOD_CONTROL | MOD_SHIFT))
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 256 false "Arrange windows in quarters" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 257 false "Full-screen tile a window to the left" 65535 65535 ${MOD_NONE}
+  set_symbolic_hotkey "$symbolic_hotkeys_plist" 258 false "Full-screen tile a window to the right" 65535 65535 ${MOD_NONE}
 }
 
 function setup_misc {
@@ -428,8 +551,21 @@ function setup_misc {
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
   fi
 
+  # Login items
+  for login_app in Hammerspoon Ghostty Maccy; do
+    if [[ ! -d "/Applications/${login_app}.app" ]]; then
+      printf "%s!%s Skipped missing login app %s\n" "${YELLOW}" "${RESET}" "${login_app}"
+      continue
+    fi
+    if [[ "$(osascript -e "tell application \"System Events\" to login item \"${login_app}\" exists")" == "true" ]] \
+      || osascript -e "tell application \"System Events\" to make login item at end with properties {name:\"${login_app}\", path:\"/Applications/${login_app}.app\", hidden:false}" > /dev/null; then
+      printf "%s%s %s will open at login\n" "${GREEN}" "${RESET}" "${login_app}"
+    else
+      printf "%s!%s Could not add %s as a login item\n" "${YELLOW}" "${RESET}" "${login_app}"
+    fi
+  done
+
   overwrite_with_symlink "${CONFIG_HOME}/_editorconfig" "${HOME}/.editorconfig"
-  overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/.config/k9s"
   mkdir -p "${HOME}/.ipython/profile_default/"
   overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"
   mkdir -p "${HOME}/.config/gh-dash"
@@ -456,6 +592,7 @@ ALL_MODULES=(
   # the rest
   "git"
   "defaults"
+  "shortcuts"
   "misc"
 )
 
@@ -480,6 +617,8 @@ for module in "${modules[@]}"; do
     printf "%s  Git%s\n" "${YELLOW}" "${RESET}"
   elif [ "$module" = "defaults" ]; then
     printf "%s defaults/plists%s\n" "${YELLOW}" "${RESET}"
+  elif [ "$module" = "shortcuts" ]; then
+    printf "%s󰌌 Shortcuts%s\n" "${YELLOW}" "${RESET}"
   elif [ "$module" = "misc" ]; then
     printf "%s󱁢 m 󰅟  i    s  󰹑    c    🦀%s\n" "${YELLOW}" "${RESET}"
   else
@@ -505,6 +644,8 @@ for module in "${modules[@]}"; do
     setup_git
   elif [ "$module" = "defaults" ]; then
     setup_defaults
+  elif [ "$module" = "shortcuts" ]; then
+    setup_shortcuts
   elif [ "$module" = "misc" ]; then
     setup_misc
   fi
