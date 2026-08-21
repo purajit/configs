@@ -19,7 +19,6 @@ k9s:
     skin: deep-theme
     defaultsToFullScreen: true # defaults to fullscreen in certain views (yaml, helm history, describe, value_extender, details, logs)
   skipLatestRevCheck: true # check for latest revision from GitHub tags
-  keepMissingClusters: false # prevent k9s from cleaning up inactive cluster configs
   logger:
     tail: 200 # number of lines to return
     buffer: 1000 # maximum number of log lines to keep in display
