@@ -6,7 +6,12 @@ alias mv='mv -i'
 
 alias homer='cd ~/code/random'
 
-alias changemac="sudo ifconfig en0 ether $(openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/.$//')"
+changemac() {
+  local hex
+  hex=$(openssl rand -hex 6) || return
+  sudo ifconfig en0 ether \
+    "${hex[1,2]}:${hex[3,4]}:${hex[5,6]}:${hex[7,8]}:${hex[9,10]}:${hex[11,12]}"
+}
 
 updatedb() {
   (cd / && sudo /usr/libexec/locate.updatedb)
@@ -36,7 +41,9 @@ alias et='emacsclient -t'
 
 # swap two files/folders
 swap() {
-  local timestamp=$(date "+%s")
+  zmodload -F zsh/datetime b:strftime
+  local timestamp
+  strftime -s timestamp %s $EPOCHSECONDS
   mv "$1" "$1.$timestamp"
   mv "$2" "$1"
   mv "$1.$timestamp" "$2"

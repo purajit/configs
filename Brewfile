@@ -1,4 +1,5 @@
 # taps
+# Why not plain emacs? https://github.com/d12frosted/homebrew-emacs-plus#tldr
 tap "d12frosted/emacs-plus"
 tap "derailed/k9s"
 
@@ -79,7 +80,6 @@ mas "Parcel", id: 375589283 if ENV['HOMEBREW_MACHINE'] != "work"
 # formulae used in the past that are nice to track
 # cask "ableton-live-suite"  # only one install :c
 # cask "alacritty", args: {"no-quarantine": true}  # switched to ghostty
-# cask "emacs"  # Emacs For MacOS X does not work with Doomemacs
 # cask "figma"
 # cask "jiggler"
 # cask "mactex"

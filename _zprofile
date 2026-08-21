@@ -1,10 +1,30 @@
 #!/bin/zsh -f
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-export PATH="$HOME/.config/emacs/bin:$HOME/code/purajit/gitstack:$HOME/code/purajit/mono/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
+# used in zshrc
+typeset -g _CONFIG_ZPROFILE_LOADED=1
+
+# Hardcode results of `brew shellenv`
+export HOMEBREW_PREFIX=/opt/homebrew
+export HOMEBREW_CELLAR=/opt/homebrew/Cellar
+export HOMEBREW_REPOSITORY=/opt/homebrew
+export INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+
+typeset -gU path PATH fpath FPATH
+path=(
+  "$HOME/.config/emacs/bin"
+  "$HOME/code/purajit/gitstack"
+  "$HOME/code/purajit/mono/bin"
+  "$HOME/.local/bin"
+  "$HOME/go/bin"
+  "$HOME/.local/share/mise/shims"
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  $path
+)
+fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 export COLIMA_SAVE_CONFIG=0
-export K9S_CONFIG_DIR="$HOME/.config/k9s"
-export GPG_TTY="$(tty)"
+# $TTY is a zsh-provided parameter, this avoids `tty` forking
+export GPG_TTY=$TTY
 
 # rust
 if [[ -f "$HOME/.cargo/env" ]]; then
