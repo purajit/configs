@@ -20,6 +20,14 @@
 (dolist (directory (list pm/data-directory pm/cache-directory pm/state-directory))
   (make-directory directory t))
 
+;; `early-init.el' handles this during normal startup.  Repeat it here so
+;; explicitly loading init.el (including batch checks) cannot write into the
+;; configuration directory either.
+(when (fboundp 'startup-redirect-eln-cache)
+  (let ((eln-cache (expand-file-name "eln-cache/" pm/cache-directory)))
+    (make-directory eln-cache t)
+    (startup-redirect-eln-cache eln-cache)))
+
 (setq custom-file (expand-file-name "custom.el" pm/state-directory)
   package-user-dir (expand-file-name "elpa/" pm/data-directory)
   backup-directory-alist `(("." . ,(expand-file-name "backups/" pm/cache-directory)))
@@ -227,6 +235,15 @@ startup and restores the old lockfile and package checkouts if that fails."
 
 ;;;; Keys: standard Emacs bindings, with a few deliberate conveniences
 
+(defun pm/backward-to-bol-or-indent ()
+  "Move to indentation, then toggle between it and the true line beginning."
+  (interactive "^")
+  (let ((origin (point)))
+    (back-to-indentation)
+    (when (= origin (point))
+      (move-beginning-of-line 1))))
+
+(global-set-key (kbd "C-a") #'pm/backward-to-bol-or-indent)
 (global-set-key (kbd "M-g") #'goto-line)
 (global-set-key (kbd "M-.") #'xref-find-definitions)
 (global-set-key (kbd "M-,") #'xref-go-back)
