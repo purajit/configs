@@ -1,6 +1,6 @@
 #!/bin/zsh -f
 
-source "$HOME/.zprofile"
+[[ -n ${_CONFIG_ZPROFILE_LOADED-} ]] || source "$HOME/.zprofile"
 
 # word-splitting characters, notably leaving out -_^
 WORDCHARS=' :*?[]~=&;!#$%(){}<>/._-^@'
@@ -12,10 +12,10 @@ zstyle ':zle:*' word-style unspecified
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets regexp)
 typeset -A ZSH_HIGHLIGHT_REGEXP
 ZSH_HIGHLIGHT_REGEXP+=(' -{1,2}[a-zA-Z0-9_-]*' fg=244)
-source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # run-help is alias'd to man by default; change it so we can get zsh builtins
-[ "$(type -w run-help)" = 'run-help: alias' ] && unalias run-help
+(( $+aliases[run-help] )) && unalias run-help
 autoload run-help
 HELPDIR="/usr/share/zsh/${ZSH_VERSION}/help"
 
@@ -26,13 +26,14 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 # add-zsh-hook chpwd venv_manager_switch_venv
 
 # completions, and case-insensitive at that
-autoload -U compinit
+autoload -Uz compinit
 # https://gist.github.com/ctechols/ca1035271ad134841284#gistcomment-2767420
 if [[ -n ${HOME}/.zcompdump(#qN.mh+24) ]]; then
-  compinit;
+  compinit
+  zcompile -R -- "$HOME/.zcompdump.zwc" "$HOME/.zcompdump"
 else
-  compinit -C;
-fi;
+  compinit -C
+fi
 
 # case-insensitive completions
 zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -42,12 +43,64 @@ bindkey '^[[Z' reverse-menu-complete
 # disable history completions so ! stops being a snowflake
 setopt no_bang_hist
 
-autoload -U +X bashcompinit && bashcompinit  # for `complete`
-complete -C "$(which aws_completer)" aws
+autoload -Uz +X bashcompinit && bashcompinit  # for `complete`
+(( $+commands[aws_completer] )) && complete -C "$commands[aws_completer]" aws
 
 # tools and hooks - atuin, direnv, ls colors
-eval "$(atuin init zsh)"
-eval "$(direnv hook zsh)"
+# Atuin emits hundreds of lines of shell code. Generate and compile them only
+# when the binary changes, then source the cached bytecode on normal startups.
+_zsh_cache_dir=${XDG_CACHE_HOME:-$HOME/.cache}/zsh
+_atuin_init=$_zsh_cache_dir/atuin-init.zsh
+if [[ ! -s $_atuin_init || $commands[atuin] -nt $_atuin_init ]]; then
+  [[ -d $_zsh_cache_dir ]] || command mkdir -p -- $_zsh_cache_dir
+  command atuin init zsh >| "${_atuin_init}.new" &&
+    command mv -f -- "${_atuin_init}.new" $_atuin_init &&
+    zcompile -R -- "${_atuin_init}.zwc" $_atuin_init
+fi
+# Atuin otherwise forks `atuin uuid` for every new shell. A session identifier
+# only needs to be unique, so build a UUID-shaped value from zsh's own PRNG.
+if [[ -z ${ATUIN_SESSION-} || ${ATUIN_SHLVL-} != $SHLVL ]]; then
+  printf -v ATUIN_SESSION '%04x%04x-%04x-4%03x-%x%03x-%04x%04x%04x' \
+    $RANDOM $RANDOM $RANDOM $((RANDOM & 0xfff)) \
+    $((8 + RANDOM % 4)) $((RANDOM & 0xfff)) $RANDOM $RANDOM $RANDOM
+  export ATUIN_SESSION ATUIN_SHLVL=$SHLVL
+fi
+source $_atuin_init
+unset _atuin_init _zsh_cache_dir
+
+# The generated direnv hook runs a process before every prompt. Environments
+# only change when entering/leaving a directory here; `direnv reload` remains
+# available when an .envrc is edited in place.
+function _direnv_hook {
+  trap -- '' INT
+  eval "$(command /opt/homebrew/bin/direnv export zsh)"
+  trap - INT
+}
+function _direnv_maybe_hook {
+  local dir=$PWD
+  if [[ -n ${DIRENV_DIR-} ]]; then
+    _direnv_hook
+    return
+  fi
+  while [[ $dir != / ]]; do
+    if [[ -f $dir/.envrc ]]; then
+      _direnv_hook
+      return
+    fi
+    dir=${dir:h}
+  done
+}
+function direnv {
+  command /opt/homebrew/bin/direnv "$@"
+  local status=$?
+  if (( status == 0 )) && [[ $1 == (allow|reload) ]]; then
+    _direnv_hook
+  fi
+  return $status
+}
+autoload -Uz add-zsh-hook
+add-zsh-hook chpwd _direnv_maybe_hook
+_direnv_maybe_hook
 source ~/.lscolors
 
 # source other files
@@ -55,46 +108,72 @@ source "$HOME/.aliases"
 [[ -f "$HOME/.zshlocal" ]] && source "$HOME/.zshlocal"
 
 # rest of the file is theming zsh prompt
-function _get_aws_profile_prompt {
-    if [[ "${AWS_PROFILE-}" == "" ]]; then
-        return
+# Find the repository once per directory change. This handles both ordinary
+# repositories and worktrees without invoking git.
+function _find_git_dir {
+  local dir=$PWD marker
+  _prompt_git_dir=
+  while [[ $dir != / ]]; do
+    marker=$dir/.git
+    if [[ -d $marker ]]; then
+      _prompt_git_dir=$marker
+      return
+    elif [[ -f $marker ]]; then
+      IFS= read -r marker < $marker
+      marker=${marker#gitdir: }
+      [[ $marker == /* ]] || marker=$dir/$marker
+      _prompt_git_dir=${marker:A}
+      return
     fi
-    # the cut is to get the suffix without the "namespace"/company name, to help shorten display
-    echo " | %F{yellow} $AWS_PROFILE%F{reset}"
+    dir=${dir:h}
+  done
 }
 
-function _get_k8s_context_prompt {
-    if [[ ! -f ~/.kube/config ]]; then
-        return
-    fi
-    local k8s_context=$(sed -n "s/^current-context: \(.*\)$/\1/p" ~/.kube/config)
-    if [[ "$k8s_context" == "" ]]; then
-        return
-    fi
-    # get_k8s_context_display is implemented in _zshlocal, since it depends on custom patterns
-    echo " | %F{blue}󱃾 $(get_k8s_context_display "$k8s_context")%F{reset}"
-}
+function _update_prompt {
+  local line branch aws_prompt git_prompt
+  local -a file_mtime
 
-function _get_git_prompt {
-  local ref
-  ref="$(git symbolic-ref --quiet HEAD 2> /dev/null)"
-  if [[ $? != 0 ]]; then
-    return
+  if [[ -n $_prompt_git_dir && -r $_prompt_git_dir/HEAD ]]; then
+    IFS= read -r line < $_prompt_git_dir/HEAD
+    if [[ $line == 'ref: refs/heads/'* ]]; then
+      branch=${line#ref: refs/heads/}
+      branch=${branch#*-}
+      git_prompt=" %F{#3fb951} ${branch}%f"
+    fi
   fi
-  # TODO: make this more generic. Right now, the `cut` is to help shorten the branch name since
-  # I automatically add the datetime as prefix
-  echo "${ref#refs/heads/}" | cut -d- -f2- | perl -ne "s/(..*)/ %F{#3fb951} \1%F{reset}/g; print"
+
+  [[ -n ${AWS_PROFILE-} ]] && aws_prompt=" | %F{yellow} ${AWS_PROFILE}%f"
+
+  if zstat -A file_mtime +mtime $HOME/.kube/config 2>/dev/null; then
+    if [[ $file_mtime[1] != $_prompt_kube_mtime ]]; then
+      local contents k8s_context
+      contents=$(<$HOME/.kube/config)
+      k8s_context=${${(M)${(f)contents}:#current-context: *}#current-context: }
+      _prompt_kube_mtime=$file_mtime[1]
+      _prompt_k8s=
+      if [[ -n $k8s_context ]]; then
+        get_k8s_context_display "$k8s_context"
+        _prompt_k8s=" | %F{blue}󱃾 ${REPLY}%f"
+      fi
+    fi
+  elif [[ $_prompt_kube_mtime != -1 ]]; then
+    _prompt_kube_mtime=-1
+    _prompt_k8s=
+  fi
+
+  RPROMPT="${git_prompt}${aws_prompt}${_prompt_k8s}"
 }
 
-function _get_pwd_prompt {
-  echo "%F{#9E923C}%~%F{reset}"
-}
+autoload -Uz add-zsh-hook
+zmodload -F zsh/stat b:zstat
+typeset -g _prompt_kube_mtime=-1 _prompt_k8s=
+add-zsh-hook chpwd _find_git_dir
+add-zsh-hook precmd _update_prompt
+_find_git_dir
 
-setopt PROMPT_SUBST
 # to make RPROMPT go away after no longer active. keeps things clean, and allows easier copy-paste
 # since RPROMPT won't be included, but it can be useful to know what RPROMPT context a command ran in
 setopt transient_rprompt
 PROMPT='
-$(_get_pwd_prompt)
-%F{#05cc00}%D{%H:%M:%S %Z}%F{reset}  '
-RPROMPT='$(_get_git_prompt)$(_get_aws_profile_prompt)$(_get_k8s_context_prompt)%F{reset}'
+%F{#9E923C}%~%f
+%F{#05cc00}%D{%H:%M:%S %Z}%f  '

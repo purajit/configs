@@ -137,12 +137,13 @@ function setup_automation {
 
 function setup_emacs {
   rm -f "${HOME}/.emacs" "${HOME}/.emacs.d"
-  DONT_PULL=1 clone_repo "https://github.com/hlissner/doom-emacs.git" "hlissner"
-
-  overwrite_with_symlink "${HOME}/code/hlissner/doom-emacs" "${HOME}/.config/emacs"
-  "${HOME}/.config/emacs/bin/doom" install --force
-  overwrite_with_symlink "${CONFIG_HOME}/doom" "${HOME}/.config/doom"
-  "${HOME}/.config/emacs/bin/doom" sync
+  overwrite_with_symlink "${CONFIG_HOME}/emacs" "${HOME}/.config/emacs"
+  emacs --batch --init-directory "${HOME}/.config/emacs" \
+    -l "${HOME}/.config/emacs/early-init.el" \
+    -l "${HOME}/.config/emacs/init.el" \
+    --eval '(pm/install-tree-sitter-grammars)' \
+    --eval '(pm/smoke-test)' \
+    --eval '(message "Emacs packages and tree-sitter grammars installed")'
 
   # https://github.com/ghostty-org/ghostty/discussions/5902
   emacs_launch_plist="$HOME/Library/LaunchAgents/homebrew.mxcl.emacs-plus@30.plist"
@@ -150,7 +151,7 @@ function setup_emacs {
     || /usr/libexec/PlistBuddy -c "Add :EnvironmentVariables:TERMINFO string /Applications/Ghostty.app/Contents/Resources/terminfo" "$emacs_launch_plist"
   printf "%s%s Configured TERMINFO for emacs launchagent\n" "${GREEN}" "${RESET}"
 
-  printf "%s%s Installed and sync'd doomemacs\n" "${GREEN}" "${RESET}"
+  printf "%s%s Installed and configured Emacs\n" "${GREEN}" "${RESET}"
 }
 
 function setup_git {
