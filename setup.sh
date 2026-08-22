@@ -127,6 +127,7 @@ function setup_shell {
   mkdir -p "${HOME}/.config/mise"
   overwrite_with_symlink "${CONFIG_HOME}/mise-config.toml" "${HOME}/.config/mise/config.toml"
   overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/.config/k9s"
+  overwrite_with_symlink "${CONFIG_HOME}/k9s" "${HOME}/Library/Application Support/k9s"
 
   # zsh
   overwrite_with_symlink "${CONFIG_HOME}/_zshrc" "${HOME}/.zshrc"
