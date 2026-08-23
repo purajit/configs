@@ -279,9 +279,6 @@ function setup_defaults {
     '{ HIDKeyboardModifierMappingSrc = 30064771129; HIDKeyboardModifierMappingDst = 30064771300; }'
   printf "%s%s Mapped Caps Lock to Right Control\n" "${GREEN}" "${RESET}"
 
-  bash "${CONFIG_HOME}/macos/symbolic_hotkeys.sh"
-  printf "%s%s Configured macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
-
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 3
   for trackpad_domain in \
     com.apple.AppleMultitouchTrackpad \
@@ -290,9 +287,9 @@ function setup_defaults {
     defaults write "${trackpad_domain}" Dragging -bool true
     defaults write "${trackpad_domain}" DragLock -bool true
     defaults write "${trackpad_domain}" TrackpadCornerSecondaryClick -int 0
-    defaults write "${trackpad_domain}" TrackpadFiveFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFiveFingerPinchGesture -int 0
     defaults write "${trackpad_domain}" TrackpadFourFingerHorizSwipeGesture -int 2
-    defaults write "${trackpad_domain}" TrackpadFourFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFourFingerPinchGesture -int 0
     defaults write "${trackpad_domain}" TrackpadFourFingerVertSwipeGesture -int 2
     defaults write "${trackpad_domain}" TrackpadHorizScroll -int 1
     defaults write "${trackpad_domain}" TrackpadMomentumScroll -bool true
@@ -309,12 +306,12 @@ function setup_defaults {
     defaults write "${trackpad_domain}" USBMouseStopsTrackpad -int 0
   done
   printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
-  printf "%s%s Configured trackpad scrolling, swiping, pinching, and rotation gestures\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured trackpad scrolling, swiping, pinching\n" "${GREEN}" "${RESET}"
 
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -int 1
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwipeGesture -int 2
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -int 1
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -int 1
@@ -537,6 +534,10 @@ function setup_shortcuts {
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 256 false "Arrange windows in quarters" 65535 65535 ${MOD_NONE}
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 257 false "Full-screen tile a window to the left" 65535 65535 ${MOD_NONE}
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 258 false "Full-screen tile a window to the right" 65535 65535 ${MOD_NONE}
+
+  defaults import com.apple.symbolichotkeys "${symbolic_hotkeys_plist}"
+  killall SystemUIServer 2> /dev/null || true
+  printf "%s%s Applied macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
 }
 
 function setup_misc {
