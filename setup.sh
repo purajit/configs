@@ -205,32 +205,40 @@ function setup_git {
 }
 
 function setup_defaults {
-  # Apps
   defaults write org.p0deje.Maccy KeyboardShortcuts_delete -string \
     '{"carbonKeyCode":51,"carbonModifiers":2048}'
   defaults write org.p0deje.Maccy KeyboardShortcuts_pin -int 0
   defaults write org.p0deje.Maccy KeyboardShortcuts_popup -string \
     '{"carbonModifiers":768,"carbonKeyCode":9}'
   defaults write org.p0deje.Maccy KeyboardShortcuts_togglePreview -int 0
+  defaults write org.p0deje.Maccy ignoredApps -array \
+    "com.apple.keychainaccess"
+  defaults write org.p0deje.Maccy ignoredPasteboardTypes -array \
+    "net.antelle.keeweb" \
+    "de.petermaurer.TransientPasteboardType" \
+    "com.typeit4me.clipping" \
+    "Pasteboard generator type" \
+    "com.agilebits.onepassword"
+  defaults write org.p0deje.Maccy popupPosition -string "cursor"
   defaults write org.p0deje.Maccy previewWidth -int 400
   defaults write org.p0deje.Maccy searchVisibility -string "always"
   defaults write org.p0deje.Maccy showFooter -bool false
   defaults write org.p0deje.Maccy showSearch -bool true
   defaults write org.p0deje.Maccy showTitle -bool false
   defaults write org.p0deje.Maccy SUEnableAutomaticChecks -bool false
-  printf "%s%s Configured Maccy and its shortcuts\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured Maccy\n" "${GREEN}" "${RESET}"
 
   defaults write org.hammerspoon.Hammerspoon HSConsoleDarkModeKey -bool true
   defaults write org.hammerspoon.Hammerspoon MJKeepConsoleOnTopKey -bool true
   defaults write org.hammerspoon.Hammerspoon SUAutomaticallyUpdate -bool false
   defaults write org.hammerspoon.Hammerspoon SUEnableAutomaticChecks -bool false
   defaults write org.hammerspoon.Hammerspoon SUSendProfileInfo -bool false
-  printf "%s%s Configured Hammerspoon and its console\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured Hammerspoon\n" "${GREEN}" "${RESET}"
 
   defaults write com.colliderli.iina PluginEnabled.io.iina.opensub -bool true
   defaults write com.colliderli.iina PluginEnabled.io.iina.user-script -bool true
   defaults write com.colliderli.iina PluginEnabled.io.iina.ytdl -bool true
-  printf "%s%s Enabled IINA's OpenSubtitles, user-script, and yt-dlp plugins\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured IINA\n" "${GREEN}" "${RESET}"
 
   defaults write app.cyan.markedit NSAllowContinuousSpellChecking -bool true
   defaults write app.cyan.markedit WebAutomaticLinkDetectionEnabled -bool true
@@ -251,6 +259,15 @@ function setup_defaults {
   defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
   printf "%s%s Double-clicking a title bar will not minimize its window\n" "${GREEN}" "${RESET}"
 
+  defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+  printf "%s%s Enabled full keyboard access for controls in windows and dialogs\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain AppleEnableSwipeNavigateWithScrolls -bool true
+  printf "%s%s Enabled swipe navigation\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain AppleSpacesSwitchOnActivate -bool true
+  printf "%s%s Switch spaces when activating an app\n" "${GREEN}" "${RESET}"
+
   defaults write NSGlobalDomain NSGlassDiffusionSetting -bool false
   printf "%s%s Liquid Glass will use the clear appearance\n" "${GREEN}" "${RESET}"
 
@@ -269,18 +286,37 @@ function setup_defaults {
   defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
   printf "%s%s Disabled smart quote substitution\n" "${GREEN}" "${RESET}"
 
+  defaults delete NSGlobalDomain NSUserDictionaryReplacementItems 2> /dev/null || true
+  printf "%s%s Disabled custom system text replacements\n" "${GREEN}" "${RESET}"
+
   defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
   defaults write NSGlobalDomain WebAutomaticSpellingCorrectionEnabled -bool false
   printf "%s%s Disabled automatic spelling correction in native and web views\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSCloseAlwaysConfirmsChanges -bool true
+  printf "%s%s Closing a document with unsaved changes will require confirmation\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSNavPanelFileLastListModeForOpenModeKey -int 2
+  defaults write NSGlobalDomain NSNavPanelFileListModeForOpenMode2 -int 2
+  defaults write NSGlobalDomain NavPanelFileListModeForOpenMode -int 2
+  defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+  printf "%s%s Open and save panels will use list view, with save panels expanded\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+  printf "%s%s New documents will default to local storage instead of iCloud\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain com.apple.sound.beep.flash -bool false
+  printf "%s%s Disabled the screen flash for alert sounds\n" "${GREEN}" "${RESET}"
+
+  defaults write NSGlobalDomain com.apple.springing.delay -float 0.5
+  defaults write NSGlobalDomain com.apple.springing.enabled -bool true
+  printf "%s%s Enabled spring-loaded folders\n" "${GREEN}" "${RESET}"
 
   # Keyboard and trackpad
   defaults -currentHost write NSGlobalDomain \
     "com.apple.keyboard.modifiermapping.0-0-0" -array \
     '{ HIDKeyboardModifierMappingSrc = 30064771129; HIDKeyboardModifierMappingDst = 30064771300; }'
   printf "%s%s Mapped Caps Lock to Right Control\n" "${GREEN}" "${RESET}"
-
-  bash "${CONFIG_HOME}/macos/symbolic_hotkeys.sh"
-  printf "%s%s Configured macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
 
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 3
   for trackpad_domain in \
@@ -290,10 +326,11 @@ function setup_defaults {
     defaults write "${trackpad_domain}" Dragging -bool true
     defaults write "${trackpad_domain}" DragLock -bool true
     defaults write "${trackpad_domain}" TrackpadCornerSecondaryClick -int 0
-    defaults write "${trackpad_domain}" TrackpadFiveFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFiveFingerPinchGesture -int 0
     defaults write "${trackpad_domain}" TrackpadFourFingerHorizSwipeGesture -int 2
-    defaults write "${trackpad_domain}" TrackpadFourFingerPinchGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadFourFingerPinchGesture -int 0
     defaults write "${trackpad_domain}" TrackpadFourFingerVertSwipeGesture -int 2
+    defaults write "${trackpad_domain}" TrackpadHandResting -bool true
     defaults write "${trackpad_domain}" TrackpadHorizScroll -int 1
     defaults write "${trackpad_domain}" TrackpadMomentumScroll -bool true
     defaults write "${trackpad_domain}" TrackpadPinch -int 1
@@ -309,12 +346,12 @@ function setup_defaults {
     defaults write "${trackpad_domain}" USBMouseStopsTrackpad -int 0
   done
   printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
-  printf "%s%s Configured trackpad scrolling, swiping, pinching, and rotation gestures\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configured trackpad scrolling, swiping, pinching\n" "${GREEN}" "${RESET}"
 
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -int 1
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 2
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwipeGesture -int 2
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -int 1
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -int 1
@@ -331,7 +368,10 @@ function setup_defaults {
 
   defaults write NSGlobalDomain com.apple.trackpad.forceClick -bool false
   defaults write com.apple.AppleMultitouchTrackpad ActuateDetents -int 0
+  defaults write com.apple.AppleMultitouchTrackpad FirstClickThreshold -int 1
   defaults write com.apple.AppleMultitouchTrackpad ForceSuppressed -bool true
+  defaults write com.apple.AppleMultitouchTrackpad SecondClickThreshold -int 1
+  defaults write com.apple.preference.trackpad ForceClickSavedState -bool false
   printf "%s%s Disabled Force Click and haptic detents\n" "${GREEN}" "${RESET}"
 
   # Dock
@@ -350,31 +390,47 @@ function setup_defaults {
   defaults write com.apple.dock show-recents -bool false
   printf "%s%s Dock will not show recently used apps\n" "${GREEN}" "${RESET}"
 
+  defaults write com.apple.dock minimize-to-application -bool true
+  printf "%s%s Minimized windows will be stored in their application icons\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.dock mru-spaces -bool false
+  printf "%s%s Arrange spaces in custom order\n" "${GREEN}" "${RESET}"
+
   defaults write com.apple.dock showDesktopGestureEnabled -bool false
-  printf "%s%s Disabled the trackpad gesture for showing the desktop\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.dock showLaunchpadGestureEnabled -bool false
+  printf "%s%s Disabled trackpad gestures for showing the desktop and Launchpad\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.dock wvous-bl-corner -int 13
   defaults write com.apple.dock wvous-bl-modifier -int 0
   printf "%s%s Bottom-left Hot Corner will lock the screen\n" "${GREEN}" "${RESET}"
 
   # Finder
+  defaults write com.apple.finder FXArrangeGroupViewBy -string "Name"
+  defaults write com.apple.finder RecentsArrangeGroupViewBy -string "Date Last Opened"
   defaults write NSGlobalDomain AppleShowAllExtensions -bool true
-  printf "%s%s Finder will show all filename extensions\n" "${GREEN}" "${RESET}"
-
   defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
-  printf "%s%s New Finder windows will use list view\n" "${GREEN}" "${RESET}"
-
   defaults write com.apple.finder NewWindowTarget -string "PfHm"
-  printf "%s%s New Finder windows will open the home folder\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
+  printf "%s%s Configure Finder view\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
   defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
   printf "%s%s Finder will show external and removable drives on the desktop\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.finder ShowRecentTags -bool false
-  printf "%s%s Finder will hide recent tags in the sidebar\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.finder ShowStatusBar -bool false
+  defaults write com.apple.finder ShowPreviewPane -bool true
+  defaults write com.apple.finder ShowSidebar -bool true
+  defaults write com.apple.finder SidebarDevicesSectionDisclosedState -bool true
+  defaults write com.apple.finder SidebariCloudDriveSectionDisclosedState -bool true
+  defaults write com.apple.finder SidebarPlacesSectionDisclosedState -bool true
+  defaults write com.apple.finder SidebarShowingiCloudDesktop -bool false
+  defaults write com.apple.finder SidebarShowingSignedIntoiCloud -bool true
+  printf "%s%s Configure Finder sidebar and panes\n" "${GREEN}" "${RESET}"
 
-  # Desktop and windows
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+  printf "%s%s Finder will not create .DS_Store files on network volumes\n" "${GREEN}" "${RESET}"
+
   defaults write com.apple.WindowManager StandardHideDesktopIcons -bool true
   defaults write com.apple.WindowManager HideDesktop -bool true
   printf "%s%s Desktop icons will be hidden\n" "${GREEN}" "${RESET}"
@@ -385,47 +441,77 @@ function setup_defaults {
   defaults write com.apple.WindowManager AppWindowGroupingBehavior -int 1
   defaults write com.apple.WindowManager AutoHide -bool true
   defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false
+  defaults write com.apple.WindowManager GloballyEnabled -bool false
+  defaults write com.apple.WindowManager GloballyEnabledEver -bool true
   defaults write com.apple.WindowManager StageManagerHideWidgets -bool false
   defaults write com.apple.WindowManager StandardHideWidgets -bool false
-  printf "%s%s Configured Stage Manager grouping, auto-hide, widget, and desktop-click behavior\n" "${GREEN}" "${RESET}"
+  printf "%s%s Disable and configured Stage Manager\n" "${GREEN}" "${RESET}"
 
   # Menu bar and Control Center
   defaults write com.apple.menuextra.clock ShowAMPM -bool true
   defaults write com.apple.menuextra.clock ShowDate -int 0
   defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
-  printf "%s%s Menu bar clock will show the weekday and AM/PM, with the date when space allows\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
+  defaults write com.apple.menuextra.clock Show24Hour -bool false
+  defaults write com.apple.menuextra.clock ShowSeconds -bool false
+  printf "%s%s Configure Menu bar clock\n" "${GREEN}" "${RESET}"
 
-  for control_center_item in Battery Bluetooth Clock Sound WiFi; do
-    defaults write com.apple.controlcenter "NSStatusItem VisibleCC ${control_center_item}" -bool true
-  done
-  printf "%s%s Battery, Bluetooth, clock, sound, and Wi-Fi will be available in Control Center\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.TextInputMenu visible -bool false
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Battery" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Bluetooth" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Clock" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Sound" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC WiFi" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position AirDrop" -int 403
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Battery" -int 217
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Bluetooth" -int 295
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Display" -int 473
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position FocusModes" -int 327
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position NowPlaying" -int 403
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Sound" -int 365
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position UserSwitcher" -int 306
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position WiFi" -int 179
+  defaults write com.apple.controlcenter "NSStatusItem Visible AirDrop" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Clock" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Display" -bool false
+  defaults write com.apple.controlcenter "NSStatusItem Visible FaceTime" -bool false
+  defaults write com.apple.controlcenter "NSStatusItem Visible FocusModes" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible NowPlaying" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Sound" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible WiFi" -bool true
+  printf "%s%s Configure Control Center and menu bar\n" "${GREEN}" "${RESET}"
 
-  # Screenshots
   mkdir -p "${HOME}/Documents/Screenshots"
   defaults write com.apple.screencapture location -string "${HOME}/Documents/Screenshots"
-  printf "%s%s Screenshots will be stored in %s/Documents/Screenshots\n" "${GREEN}" "${RESET}" "${HOME}"
-
   defaults write com.apple.screencapture showsClicks -bool true
   defaults write com.apple.screencapture showsCursor -bool true
-  printf "%s%s Screen recordings will include pointer movement and click indicators\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configure screen capturing\n" "${GREEN}" "${RESET}"
 
   # Apps bundled with macOS
-  defaults write com.apple.TextEdit RichText -int 0
-  printf "%s%s TextEdit will create plain-text documents by default\n" "${GREEN}" "${RESET}"
 
+  defaults write com.apple.TextEdit RichText -int 0
+  defaults write com.apple.TextEdit NSFixedPitchFont -string "Mononoki Nerd Font"
+  defaults write com.apple.TextEdit NSFixedPitchFontSize -int 18
+  defaults write com.apple.TextEdit ShowRuler -bool false
   defaults write com.apple.TextEdit CorrectSpellingAutomatically -bool false
   defaults write com.apple.TextEdit SmartCopyPaste -bool false
   defaults write com.apple.TextEdit SmartDashes -bool false
   defaults write com.apple.TextEdit SmartQuotes -bool false
   defaults write com.apple.TextEdit SmartSubstitutionsEnabledInRichTextOnly -bool false
   defaults write com.apple.TextEdit TextReplacement -bool false
-  printf "%s%s Disabled TextEdit spelling correction and smart substitutions\n" "${GREEN}" "${RESET}"
+  printf "%s%s Configure TextEdit\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.ActivityMonitor ShowCategory -int 100
   printf "%s%s Activity Monitor will show all processes\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.Terminal SecureKeyboardEntry -bool true
   printf "%s%s Enabled Secure Keyboard Entry in Terminal\n" "${GREEN}" "${RESET}"
+
+  defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
+  printf "%s%s Raised the minimum Bluetooth audio bit pool for higher-quality audio\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.Preview PVInspectorWindowOpenOnStart -bool true
   defaults write com.apple.Preview PVMarkupToolbarVisibleForImages -bool true
@@ -537,6 +623,10 @@ function setup_shortcuts {
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 256 false "Arrange windows in quarters" 65535 65535 ${MOD_NONE}
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 257 false "Full-screen tile a window to the left" 65535 65535 ${MOD_NONE}
   set_symbolic_hotkey "$symbolic_hotkeys_plist" 258 false "Full-screen tile a window to the right" 65535 65535 ${MOD_NONE}
+
+  defaults import com.apple.symbolichotkeys "${symbolic_hotkeys_plist}"
+  killall SystemUIServer 2> /dev/null || true
+  printf "%s%s Applied macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
 }
 
 function setup_misc {
