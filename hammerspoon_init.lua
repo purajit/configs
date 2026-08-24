@@ -36,3 +36,6 @@ spoon.PopClick.actions = {
   }
 }
 spoon.PopClick:bindHotkey({"control", "command"}, "p")
+
+hs.loadSpoon("AmbientDarkLightSwitcher")
+spoon.AmbientDarkLightSwitcher.luxThreshold = 25
