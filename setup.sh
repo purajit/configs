@@ -457,10 +457,32 @@ function setup_defaults {
   printf "%s%s Configure Menu bar clock\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.TextInputMenu visible -bool false
-  for control_center_item in Battery Bluetooth Clock Sound WiFi; do
-    defaults write com.apple.controlcenter "NSStatusItem VisibleCC ${control_center_item}" -bool true
-  done
-  printf "%s%s Battery, Bluetooth, clock, sound, and Wi-Fi will be available in Control Center\n" "${GREEN}" "${RESET}"
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Battery" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Bluetooth" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Clock" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC Sound" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem VisibleCC WiFi" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position AirDrop" -int 403
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Battery" -int 217
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Bluetooth" -int 295
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Display" -int 473
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position FocusModes" -int 327
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position NowPlaying" -int 403
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position Sound" -int 365
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position UserSwitcher" -int 306
+  defaults write com.apple.controlcenter "NSStatusItem Preferred Position WiFi" -int 179
+  defaults write com.apple.controlcenter "NSStatusItem Visible AirDrop" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Clock" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Display" -bool false
+  defaults write com.apple.controlcenter "NSStatusItem Visible FaceTime" -bool false
+  defaults write com.apple.controlcenter "NSStatusItem Visible FocusModes" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible NowPlaying" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible Sound" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible UserSwitcher" -bool true
+  defaults write com.apple.controlcenter "NSStatusItem Visible WiFi" -bool true
+  printf "%s%s Configure Control Center and menu bar\n" "${GREEN}" "${RESET}"
 
   mkdir -p "${HOME}/Documents/Screenshots"
   defaults write com.apple.screencapture location -string "${HOME}/Documents/Screenshots"
