@@ -313,10 +313,7 @@ function setup_defaults {
   printf "%s%s Enabled spring-loaded folders\n" "${GREEN}" "${RESET}"
 
   # Keyboard and trackpad
-  defaults -currentHost write NSGlobalDomain \
-    "com.apple.keyboard.modifiermapping.0-0-0" -array \
-    '{ HIDKeyboardModifierMappingSrc = 30064771129; HIDKeyboardModifierMappingDst = 30064771300; }'
-  printf "%s%s Mapped Caps Lock to Right Control\n" "${GREEN}" "${RESET}"
+  hidutil property --set '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000039,"HIDKeyboardModifierMappingDst":0x7000000E0}]}'
 
   defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 3
   for trackpad_domain in \
