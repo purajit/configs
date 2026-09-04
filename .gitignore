@@ -1,4 +1,6 @@
-_zshlocal
-Brewfile.lock.json
-k9s/clusters
-k9s/plugins.yaml
+/_zshlocal
+/Brewfile.lock.json
+/k9s/clusters
+/k9s/plugins.yaml
+/emacs/.local/
+/emacs/eln-cache/

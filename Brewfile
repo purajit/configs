@@ -43,6 +43,7 @@ brew "kubectl"
 brew "libpq"
 cask "markedit"
 brew "mise"
+brew "syntax-highlight"
 
 # linters and code management
 brew "aspell"
@@ -73,6 +74,11 @@ cask "wireshark" if ENV['HOMEBREW_MACHINE'] != "work"
 # for cryptomator
 tap "macos-fuse-t/cask" if ENV['HOMEBREW_MACHINE'] != "work"
 cask "fuse-t" if ENV['HOMEBREW_MACHINE'] != "work"
+# self-hosted things
+cask "home-assistant" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "jellyfin-media-player" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "element" if ENV['HOMEBREW_MACHINE'] != "work"
+cask "nextcloud" if ENV['HOMEBREW_MACHINE'] != "work"
 
 # mac app store installs
 brew "mas" if ENV['HOMEBREW_MACHINE'] != "work"
