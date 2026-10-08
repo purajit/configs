@@ -1,0 +1,18 @@
+from: gfm
+standalone: true
+pdf-engine: tectonic
+listings: true
+filters:
+  - break-inline-code.lua
+variables:
+  geometry:
+    - margin=0.65in
+  header-includes:
+    - |
+      \lstset{
+        basicstyle=\ttfamily,
+        breaklines=true,
+        breakatwhitespace=false,
+        columns=fullflexible,
+        keepspaces=true
+      }
