@@ -345,16 +345,16 @@ function setup_defaults {
   printf "%s%s Enabled tap to click and drag lock for trackpads\n" "${GREEN}" "${RESET}"
   printf "%s%s Configured trackpad scrolling, swiping, pinching\n" "${GREEN}" "${RESET}"
 
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.enableSecondaryClick -bool true
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fiveFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerHorizSwipeGesture -int 2
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerPinchSwipeGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.fourFingerVertSwipeGesture -int 2
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -int 1
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -int 1
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.rotateGesture -int 1
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.momentumScroll -bool true
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.pinchGesture -bool true
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.rotateGesture -bool true
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.scrollBehavior -int 2
-  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -int 0
+  defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerDragGesture -bool false
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerHorizSwipeGesture -int 2
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerTapGesture -int 0
   defaults -currentHost write NSGlobalDomain com.apple.trackpad.threeFingerVertSwipeGesture -int 2
@@ -470,6 +470,7 @@ function setup_defaults {
   defaults write com.apple.controlcenter "NSStatusItem Preferred Position WiFi" -int 179
   defaults write com.apple.controlcenter "NSStatusItem Visible AirDrop" -bool true
   defaults write com.apple.controlcenter "NSStatusItem Visible Battery" -bool true
+  defaults write com.apple.controlcenter BatteryShowPercentage -bool true
   defaults write com.apple.controlcenter "NSStatusItem Visible Bluetooth" -bool true
   defaults write com.apple.controlcenter "NSStatusItem Visible Clock" -bool true
   defaults write com.apple.controlcenter "NSStatusItem Visible Display" -bool false
@@ -623,6 +624,7 @@ function setup_shortcuts {
 
   defaults import com.apple.symbolichotkeys "${symbolic_hotkeys_plist}"
   killall SystemUIServer 2> /dev/null || true
+  /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
   printf "%s%s Applied macOS symbolic keyboard shortcuts\n" "${GREEN}" "${RESET}"
 }
 
