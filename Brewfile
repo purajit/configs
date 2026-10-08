@@ -60,6 +60,7 @@ brew "ffmpeg"
 brew "graphviz"
 brew "imagemagick"
 brew "pandoc"
+brew "tectonic"
 brew "pdsh"
 brew "presenterm"
 

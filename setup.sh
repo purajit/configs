@@ -454,6 +454,7 @@ function setup_defaults {
   printf "%s%s Configure Menu bar clock\n" "${GREEN}" "${RESET}"
 
   defaults write com.apple.TextInputMenu visible -bool false
+  defaults write com.apple.Spotlight "NSStatusItem Visible Item-0" -bool false
   defaults write com.apple.controlcenter "NSStatusItem VisibleCC Battery" -bool true
   defaults write com.apple.controlcenter "NSStatusItem VisibleCC Bluetooth" -bool true
   defaults write com.apple.controlcenter "NSStatusItem VisibleCC Clock" -bool true
@@ -656,6 +657,8 @@ function setup_misc {
   done
 
   overwrite_with_symlink "${CONFIG_HOME}/_editorconfig" "${HOME}/.editorconfig"
+  overwrite_with_symlink "${CONFIG_HOME}/pandoc" "${HOME}/.local/share/pandoc"
+
   mkdir -p "${HOME}/.ipython/profile_default/"
   overwrite_with_symlink "${CONFIG_HOME}/ipython_config.py" "${HOME}/.ipython/profile_default/ipython_config.py"
   mkdir -p "${HOME}/.config/gh-dash"
