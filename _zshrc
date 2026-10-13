@@ -72,8 +72,14 @@ unset _atuin_init _zsh_cache_dir
 # only change when entering/leaving a directory here; `direnv reload` remains
 # available when an .envrc is edited in place.
 function _direnv_hook {
+  setopt localoptions localtraps
+  local vars
+  if [[ ! -o interactive || $ZSH_SUBSHELL -ne 0 ]]; then
+    return
+  fi
+  vars="$(command /opt/homebrew/bin/direnv export zsh)"
   trap -- '' INT
-  eval "$(command /opt/homebrew/bin/direnv export zsh)"
+  eval "$vars"
   trap - INT
 }
 function _direnv_maybe_hook {
