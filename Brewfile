@@ -44,6 +44,7 @@ brew "kubectl"
 brew "libpq"
 cask "markedit"
 brew "mise"
+brew "ncdu"
 brew "syntax-highlight"
 
 # linters and code management
